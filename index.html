@@ -51,19 +51,18 @@
         .char-card { background:var(--card-bg); border:1px solid rgba(197,163,93,0.1); padding:20px; cursor:pointer; text-align:center; transition:0.3s; }
         .char-card:hover { border-color: var(--text-gold); transform: translateY(-5px); }
 
-        /* 랭킹/공지 스타일 */
-        .notice-board { border: var(--border-style); padding: 15px; }
-        .notice-item { display: flex; align-items: center; gap: 15px; padding: 10px; border-bottom: 1px solid #222; }
-        .notice-tag { font-size: 0.7rem; padding: 2px 6px; border: 1px solid var(--text-gold); color: var(--text-gold); }
-        .rank-badge { font-weight: bold; color: #fff; min-width: 60px; }
-
         /* 모달 */
         .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:10000; justify-content:center; align-items:center; padding:20px; }
         .modal-content { background:#0d0e12; border:1px solid var(--text-gold); width:100%; max-width:850px; display:flex; position:relative; overflow:hidden; }
-        .modal-left { flex: 1; background: #000; }
+        .modal-left { flex: 1; background: #000; position: relative; }
         .modal-left img { width: 100%; height: 100%; object-fit: contain; }
         .modal-right { flex: 1.2; padding: 30px; overflow-y: auto; max-height: 80vh; }
         .close-btn { position: absolute; top: 10px; right: 15px; font-size: 1.5rem; color: var(--text-gold); cursor: pointer; z-index: 10; }
+        
+        /* 썸네일 네비게이션 */
+        .thumb-nav { display: flex; gap: 5px; margin-top: 15px; flex-wrap: wrap; }
+        .thumb-nav img { width: 50px; height: 50px; object-fit: cover; cursor: pointer; border: 1px solid #333; opacity: 0.6; }
+        .thumb-nav img:hover { opacity: 1; border-color: var(--text-gold); }
     </style>
 </head>
 <body>
@@ -88,53 +87,85 @@
             <div class="section-img-placeholder">
                 <img src="https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/579d4411-d771-4529-a0d5-71a4311eae6e.png" alt="World Map">
                 <div style="position:absolute; inset:0; background:radial-gradient(circle, transparent 40%, rgba(0,0,0,0.8));"></div>
-                <div style="position:absolute; top:20px; right:20px; font-size:0.7rem; color:var(--text-gold); border:1px solid var(--text-gold); padding:2px 8px; letter-spacing:2px; background:rgba(0,0,0,0.5);">TOPOGRAPHIC DATA</div>
             </div>
             <h2 class="sec-title">MAP NAVIGATION</h2>
             <div class="dorm-item" style="border-style: dashed; background: rgba(197, 163, 93, 0.02); margin-bottom: 20px;">
                 <p style="font-size: 0.8rem; margin-bottom: 10px; color: var(--text-gold); font-weight: bold;">[ 인지 지침 ]</p>
                 <ul style="list-style: '◈ '; padding-left: 15px; font-size: 0.85rem;">
-                    <li>공간은 실제 <span style="color:#fff;">발을 딛는 지리</span>만 노출하며, 내부와 외부를 엄격히 분리한다.</li>
-                    <li>정교한 전경 묘사보다는 <span style="color:#fff;">이동 가능 여부와 시야</span>를 우선하여 감각한다.</li>
+                    <li>공간은 실제 발을 딛는 지리만 노출한다.</li>
+                    <li>이동 가능 여부와 시야를 우선하여 감각한다.</li>
                 </ul>
-            </div>
-            <div class="location-box">
-                <h3 style="color:var(--text-gold); font-size:1rem; margin-bottom:10px; display:flex; align-items:center; gap:8px;">
-                    <span style="width:8px; height:8px; background:var(--text-gold); border-radius:50%;"></span> ACADEMY INTERNAL
-                </h3>
-                <div class="dorm-grid">
-                    <div class="dorm-item"><h4>교육 및 생활 구역</h4><p style="font-size:0.8rem; opacity:0.8;">강의동, 실습장, 기숙사, 도서관.</p></div>
-                    <div class="dorm-item"><h4>제한 구역</h4><p style="font-size:0.8rem; opacity:0.8;">지하 연구실, 행정동. 포탈 연결됨.</p></div>
-                </div>
             </div>
         </section>
 
         <section id="tab-academy" class="archive-section">
             <h2 class="sec-title">기숙사 분류 (HOUSES)</h2>
             <div class="dorm-grid">
-                <div class="dorm-item"><h3>🦁 Vulcanus</h3><p style="font-size:0.8rem;">용기와 투지. 기사학부 중심.</p></div>
-                <div class="dorm-item"><h3>🐬 Neptunus</h3><p style="font-size:0.8rem;">지혜와 마법. 연구자들의 집합소.</p></div>
-                <div class="dorm-item"><h3>🦚 Aurelia</h3><p style="font-size:0.8rem;">고결과 사교. 황실/귀족 파벌.</p></div>
-                <div class="dorm-item"><h3>🦉 Minerva</h3><p style="font-size:0.8rem;">이성과 진리. 실무 위주 탐험가.</p></div>
+                <div class="dorm-item"><h3>🦁 Vulcanus</h3><p>용기와 투지. 기사학부 중심.</p></div>
+                <div class="dorm-item"><h3>🐬 Neptunus</h3><p>지혜와 마법. 연구자들의 집합소.</p></div>
+                <div class="dorm-item"><h3>🦚 Aurelia</h3><p>고결과 사교. 황실/귀족 파벌.</p></div>
+                <div class="dorm-item"><h3>🦉 Minerva</h3><p>이성과 진리. 실무 위주 탐험가.</p></div>
             </div>
         </section>
 
         <section id="tab-dungeon" class="archive-section">
-             <h2 class="sec-title" style="color:var(--danger); border-color:var(--danger);">포탈 게이트 및 조사 보고서</h2>
+             <h2 class="sec-title" style="color:var(--danger); border-color:var(--danger);">포탈 게이트 조사 보고서</h2>
              <div class="grid-layout">
-                <div class="grid-item" style="border-left: 3px solid #555;"><h3>하급 (F~D)</h3><p style="font-size:0.8rem;">시뮬레이션 구역.</p></div>
-                <div class="grid-item" style="border-left: 3px solid var(--text-gold);"><h3>중급 (C~B)</h3><p style="font-size:0.8rem;">위험지 노출 구역.</p></div>
-                <div class="grid-item" style="border-left: 3px solid var(--danger);"><h3>상급 (A~S)</h3><p style="font-size:0.8rem;">심연의 균열.</p></div>
+                <div class="grid-item" style="border-left: 3px solid #555;"><h3>하급 (F~D)</h3><p>시뮬레이션 구역.</p></div>
+                <div class="grid-item" style="border-left: 3px solid var(--text-gold);"><h3>중급 (C~B)</h3><p>위험지 노출 구역.</p></div>
+                <div class="grid-item" style="border-left: 3px solid var(--danger);"><h3>상급 (A~S)</h3><p>심연의 균열.</p></div>
             </div>
         </section>
 
-        <section id="tab-rank" class="archive-section">
-            <h2 class="sec-title">승급 규정</h2>
-            <div class="notice-board">
-                <div class="notice-item"><div class="notice-tag">NEWBIE</div><span class="rank-badge">F → E</span><span class="notice-title">기초 평가</span></div>
-                <div class="notice-item" style="background: rgba(197, 163, 93, 0.05);"><div class="notice-tag" style="background:var(--text-gold); color:#000;">ELITE</div><span class="rank-badge">C → B</span><span class="notice-title">상급 인원 선발</span></div>
+<section id="tab-rank" class="archive-section">
+    <h2 class="sec-title">RANK ADVANCEMENT (승급 규정)</h2>
+    
+    <div class="content-card" style="border: 1px solid rgba(197, 163, 93, 0.2); padding: 25px; background: rgba(10, 12, 18, 0.8);">
+        <p style="font-size: 0.75rem; color: var(--text-gold); letter-spacing: 2px; margin-bottom: 20px; text-align: center;">[ ASTREL ACADEMY ACADEMIC REGULATION ]</p>
+        
+        <div class="notice-board">
+            <div class="notice-item" style="display: flex; align-items: center; gap: 15px; padding: 12px; border-bottom: 1px solid #222;">
+                <div class="notice-tag" style="font-size: 0.7rem; padding: 2px 6px; border: 1px solid var(--text-gold); color: var(--text-gold);">NEWBIE</div>
+                <span class="rank-badge" style="font-weight: bold; color: #fff; min-width: 60px;">F → E</span>
+                <span class="notice-title" style="font-size: 0.85rem;">가상 시뮬레이션 환경 적응 및 기초 전술 평가</span>
             </div>
-        </section>
+
+            <div class="notice-item" style="display: flex; align-items: center; gap: 15px; padding: 12px; border-bottom: 1px solid #222;">
+                <div class="notice-tag" style="font-size: 0.7rem; padding: 2px 6px; border: 1px solid var(--text-gold); color: var(--text-gold);">TRAINEE</div>
+                <span class="rank-badge" style="font-weight: bold; color: #fff; min-width: 60px;">E → D</span>
+                <span class="notice-title" style="font-size: 0.85rem;">하급 구역 실전 파견 및 초동 대처 기록 검토</span>
+            </div>
+
+            <div class="notice-item" style="display: flex; align-items: center; gap: 15px; padding: 12px; border-bottom: 1px solid #222;">
+                <div class="notice-tag" style="font-size: 0.7rem; padding: 2px 6px; border: 1px solid var(--text-gold); color: var(--text-gold);">REGULAR</div>
+                <span class="rank-badge" style="font-weight: bold; color: #fff; min-width: 60px;">D → C</span>
+                <span class="notice-title" style="font-size: 0.85rem;">고위험군 포함 실무 조사 및 전투 지속력 측정</span>
+            </div>
+
+            <div class="notice-item highlight" style="display: flex; align-items: center; gap: 15px; padding: 12px; border-bottom: 1px solid #222; background: rgba(197, 163, 93, 0.08);">
+                <div class="notice-tag" style="font-size: 0.7rem; padding: 2px 6px; border: 1px solid var(--text-gold); background: var(--text-gold); color: #000;">ELITE</div>
+                <span class="rank-badge" style="font-weight: bold; color: #fff; min-width: 60px;">C → B</span>
+                <span class="notice-title" style="font-size: 0.85rem;">중급 구역 운용 능력 및 원외 정치/사회 기여도 심사</span>
+            </div>
+
+            <div class="notice-item" style="display: flex; align-items: center; gap: 15px; padding: 12px; border-bottom: 1px solid #222;">
+                <div class="notice-tag" style="font-size: 0.7rem; padding: 2px 6px; border: 1px solid #fff; color: #fff;">EXPERT</div>
+                <span class="rank-badge" style="font-weight: bold; color: #fff; min-width: 60px;">B → A</span>
+                <span class="notice-title" style="font-size: 0.85rem;">상급 균열 공식 토벌 기록 및 중대 사건 해결 증명</span>
+            </div>
+
+            <div class="notice-item" style="display: flex; align-items: center; gap: 15px; padding: 12px; border-bottom: none;">
+                <div class="notice-tag" style="font-size: 0.7rem; padding: 2px 6px; border: 1px solid var(--danger); color: var(--danger);">MASTER</div>
+                <span class="rank-badge" style="font-weight: bold; color: var(--danger); min-width: 60px;">A → S</span>
+                <span class="notice-title" style="font-size: 0.85rem;">심연의 궤적 공인 달성 및 국가 안보 위원회 최종 승인</span>
+            </div>
+        </div>
+
+        <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed rgba(197, 163, 93, 0.3); font-size: 0.8rem; text-align: right; color: var(--text-gold);">
+            * 모든 승급은 아카데미 학술 행정국의 최종 검토 후 확정됩니다.
+        </div>
+    </div>
+</section>
 
         <section id="tab-character" class="archive-section">
             <h3 class="char-category-title">STUDENTS</h3>
@@ -149,11 +180,14 @@
     <div id="charModal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div class="modal-left"><img id="modalImg" src=""></div>
+            <div class="modal-left">
+                <img id="modalImg" src="">
+            </div>
             <div class="modal-right">
                 <h2 id="modalName" style="color:var(--text-gold);"></h2>
                 <p id="modalQuote" style="font-style:italic; margin-bottom:15px; color:#888; font-size:0.9rem;"></p>
                 <div id="modalStory" style="color:#bbb; border-top:1px solid #222; padding-top:15px; font-size:0.85rem;"></div>
+                <div class="thumb-nav" id="thumbNav"></div>
             </div>
         </div>
     </div>
@@ -306,34 +340,25 @@
         };
 
 function startArchive() {
-            const prologue = document.getElementById('prologue');
-            const main = document.getElementById('mainArchive');
-            prologue.style.opacity = '0';
+            document.getElementById('prologue').style.opacity = '0';
             setTimeout(() => {
-                prologue.style.display = 'none';
-                main.style.display = 'block';
+                document.getElementById('prologue').style.display = 'none';
+                document.getElementById('mainArchive').style.display = 'block';
                 renderChars();
-                setTimeout(() => main.style.opacity = '1', 50);
+                setTimeout(() => document.getElementById('mainArchive').style.opacity = '1', 50);
             }, 800);
         }
 
         function switchTab(e, id) {
-            // 모든 버튼 비활성화
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            // 모든 섹션 숨김
             document.querySelectorAll('.archive-section').forEach(s => s.classList.remove('active'));
-            
-            // 클릭한 버튼 및 타겟 섹션 활성화
             e.target.classList.add('active');
-            const target = document.getElementById('tab-' + id);
-            if(target) target.classList.add('active');
+            document.getElementById('tab-' + id).classList.add('active');
         }
 
         function renderChars() {
-            const types = ['student', 'professor', 'belluna'];
-            types.forEach(type => {
+            ['student', 'professor', 'belluna'].forEach(type => {
                 const grid = document.getElementById('grid-' + type);
-                if(!grid) return;
                 grid.innerHTML = '';
                 for (let key in charactersData) {
                     const c = charactersData[key];
@@ -353,13 +378,22 @@ function startArchive() {
             document.getElementById('modalName').innerText = c.name;
             document.getElementById('modalQuote').innerText = c.quote;
             document.getElementById('modalStory').innerText = c.story;
-            document.getElementById('modalImg').src = c.img;
+            document.getElementById('modalImg').src = c.images[0];
+            
+            const thumbNav = document.getElementById('thumbNav');
+            thumbNav.innerHTML = '';
+            c.images.forEach(imgUrl => {
+                const thumb = document.createElement('img');
+                thumb.src = imgUrl;
+                thumb.onclick = () => document.getElementById('modalImg').src = imgUrl;
+                thumbNav.appendChild(thumb);
+            });
             document.getElementById('charModal').style.display = 'flex';
         }
 
         function closeModal() { document.getElementById('charModal').style.display = 'none'; }
 
-        // 입자 효과 (배경)
+        // 입자 효과
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
