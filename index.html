@@ -25,7 +25,6 @@
             min-height: 100vh;
         }
 
-        /* [수정] 무난하고 은은한 격자 & 도트 문양 */
         body::before {
             content: "";
             position: fixed;
@@ -40,7 +39,6 @@
 
         #manaCanvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 1000; }
 
-        /* 입장 화면 */
         .prologue-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle, #0f1118 0%, #050507 100%);
@@ -58,7 +56,6 @@
         }
         .enter-btn:hover { background: var(--text-gold); color: #000; }
 
-        /* 메인 레이아웃 */
         .main-archive { display: none; opacity: 0; padding: 40px 20px; max-width: 1400px; margin: 0 auto; transition: 1.5s; }
         
         .nav-tabs {
@@ -76,35 +73,34 @@
         .archive-section.active { display: block; animation: fadeIn 0.8s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 캐릭터 그리드 및 카드 크기 확대 */
         .sec-header { color: var(--text-gold); font-size: 2.2rem; letter-spacing: 8px; margin: 60px 0 40px; text-align: center; }
         .char-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* 더 크게 변경 */
-            gap: 40px; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 30px; 
             margin-bottom: 80px;
         }
         .char-card { 
             background: var(--card-bg); border: var(--border-style); 
-            padding: 60px 40px; cursor: pointer; text-align: center; 
+            padding: 50px 30px; cursor: pointer; text-align: center; 
             transition: 0.4s; border-radius: 12px;
         }
         .char-card:hover { border-color: var(--text-gold); transform: translateY(-10px); background: rgba(30, 35, 50, 0.9); }
-        .char-card h3 { font-size: 1.8rem; color: #fff; margin-top: 15px; }
-        .char-card .year-label { color: var(--text-gold); font-size: 1rem; font-weight: bold; }
+        .char-card h3 { font-size: 1.6rem; color: #fff; margin-top: 15px; }
+        .char-card .year-label { color: var(--text-gold); font-size: 0.9rem; font-weight: bold; text-transform: uppercase; }
 
         .info-box { background: var(--card-bg); border: var(--border-style); padding: 40px; margin-bottom: 40px; border-radius: 8px; line-height: 1.8; }
 
-        /* 모달 생략 (기존 스타일 동일) */
-        .modal { display: none; position: fixed; z-index: 6000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); justify-content: center; align-items: center; }
-        .modal-content { background: #0a0b10; border: 1px solid var(--text-gold); width: 95%; max-width: 1100px; max-height: 90vh; display: flex; position: relative; overflow: hidden; }
-        .modal-left { flex: 1; padding: 30px; background: #000; border-right: 1px solid rgba(197,163,93,0.2); }
+        /* 모달 스타일 수정 */
+        .modal { display: none; position: fixed; z-index: 6000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
+        .modal-content { background: #0a0b10; border: 1px solid var(--text-gold); width: 95%; max-width: 1000px; height: 85vh; display: flex; position: relative; overflow: hidden; }
+        .modal-left { flex: 1; padding: 30px; background: #000; border-right: 1px solid rgba(197,163,93,0.2); display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .modal-right { flex: 1.2; padding: 50px; overflow-y: auto; }
-        #modalImg { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 4px; }
-        .thumb-container { display: flex; gap: 10px; margin-top: 20px; justify-content: center; }
-        .thumb-img { width: 60px; height: 60px; object-fit: cover; cursor: pointer; opacity: 0.5; border: 1px solid #333; }
+        #modalImg { width: 100%; max-height: 70%; object-fit: contain; border-radius: 4px; transition: 0.3s; }
+        .thumb-container { display: flex; gap: 10px; margin-top: 20px; justify-content: center; flex-wrap: wrap; }
+        .thumb-img { width: 60px; height: 60px; object-fit: cover; cursor: pointer; opacity: 0.4; border: 1px solid #333; transition: 0.3s; }
         .thumb-img.active { opacity: 1; border-color: var(--text-gold); }
-        .close-btn { position: absolute; top: 20px; right: 25px; font-size: 2rem; color: var(--text-gold); cursor: pointer; }
+        .close-btn { position: absolute; top: 20px; right: 25px; font-size: 2.5rem; color: var(--text-gold); cursor: pointer; z-index: 10; }
         .info-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 30px 0; padding: 20px; background: rgba(255,255,255,0.05); }
     </style>
 </head>
@@ -138,7 +134,7 @@
                 <h3 style="color:var(--text-gold); margin-bottom:15px;">◈ 아카데미 시설 안내</h3>
                 <p>본교는 최첨단 마법 실습동과 기사 수련장을 갖추고 있으며, 학생들의 안전과 성장을 최우선으로 합니다.</p>
             </div>
-            </section>
+        </section>
 
         <section id="tab-character" class="archive-section">
             <h2 class="sec-header">STUDENTS</h2>
@@ -163,7 +159,7 @@
                 <h2 id="modalName" style="color:var(--text-gold); margin-bottom:10px;"></h2>
                 <p id="modalQuote" style="font-style:italic; color:#fff; margin-bottom:20px;"></p>
                 <div class="info-detail-grid" id="detailGrid"></div>
-                <p id="modalStory" style="line-height:1.8; color:#ccc;"></p>
+                <p id="modalStory" style="line-height:1.8; color:#ccc; white-space: pre-wrap;"></p>
             </div>
         </div>
     </div>
@@ -302,14 +298,14 @@
             }
         };
 
-function startArchive() {
+        function startArchive() {
             document.getElementById('prologue').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('prologue').style.display = 'none';
                 const main = document.getElementById('mainArchive');
                 main.style.display = 'block';
                 setTimeout(() => main.style.opacity = '1', 50);
-                init(); // 데이터 로드 실행
+                init(); 
             }, 800);
         }
 
@@ -325,50 +321,102 @@ function startArchive() {
             const fG = document.getElementById('facultyGrid');
             const bG = document.getElementById('bellunaGrid');
             
-            // 기존 내용 비우기
             sG.innerHTML = ''; fG.innerHTML = ''; bG.innerHTML = '';
 
-            for(let k in charactersData) {
-                const c = charactersData[k];
+            for(let key in charactersData) {
+                const char = charactersData[key];
                 const card = document.createElement('div');
                 card.className = 'char-card';
-                card.onclick = () => openModal(k);
-                card.innerHTML = `<div class="year-label">${c.year}</div><h3>${k}</h3>`;
+                card.onclick = () => openModal(key);
+                card.innerHTML = `
+                    <div class="year-label">${char.year}</div>
+                    <h3>${key}</h3>
+                `;
                 
-                if(c.faction === "벨루나") bG.appendChild(card);
-                else if(c.year.includes("교수")) fG.appendChild(card);
+                if(char.faction === "벨루나") bG.appendChild(card);
+                else if(char.year.includes("교수")) fG.appendChild(card);
                 else sG.appendChild(card);
             }
         }
 
         function openModal(id) {
             const d = charactersData[id];
+            const modal = document.getElementById('charModal');
+            const modalImg = document.getElementById('modalImg');
+            const thumbContainer = document.getElementById('thumbContainer');
+
             document.getElementById('modalName').innerText = d.name;
             document.getElementById('modalQuote').innerText = `"${d.quote}"`;
             document.getElementById('modalStory').innerText = d.story;
             document.getElementById('detailGrid').innerHTML = `
                 <div><b>소속</b> ${d.year}</div><div><b>학부</b> ${d.faculty}</div>
-                <div><b>속성</b> ${d.attr}</div><div><b>신장</b> ${d.height}</div>`;
-            document.getElementById('modalImg').src = d.images[0];
-            document.getElementById('charModal').style.display = 'flex';
+                <div><b>속성</b> ${d.attr}</div><div><b>신장</b> ${d.height}</div>
+            `;
+            
+            // 이미지 및 썸네일 초기화
+            modalImg.src = d.images[0];
+            thumbContainer.innerHTML = '';
+            
+            d.images.forEach((imgSrc, idx) => {
+                const thumb = document.createElement('img');
+                thumb.src = imgSrc;
+                thumb.className = 'thumb-img' + (idx === 0 ? ' active' : '');
+                thumb.onclick = (e) => {
+                    document.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
+                    e.target.classList.add('active');
+                    modalImg.src = imgSrc;
+                };
+                thumbContainer.appendChild(thumb);
+            });
+
+            modal.style.display = 'flex';
         }
 
         function closeModal() { document.getElementById('charModal').style.display = 'none'; }
 
-        // 마력 입자 효과 생략 (성능 위해 간소화 가능)
+        // 마력 효과
         const canvas = document.getElementById('manaCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.onresize = resize; resize();
-        class P { constructor(x,y){this.x=x;this.y=y;this.s=Math.random()*2;this.l=1;} update(){this.y-=0.5;this.l-=0.01;} }
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x; this.y = y;
+                this.size = Math.random() * 2 + 1;
+                this.speedY = Math.random() * -1 - 0.5;
+                this.life = 1;
+            }
+            update() { this.y += this.speedY; this.life -= 0.01; }
+            draw() {
+                ctx.globalAlpha = this.life;
+                ctx.fillStyle = '#c5a35d';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
         function animate() {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            particles.forEach((p,i) => { p.update(); ctx.globalAlpha=p.l; ctx.fillStyle='#c5a35d'; ctx.beginPath(); ctx.arc(p.x,p.y,p.s,0,7); ctx.fill(); if(p.l<=0) particles.splice(i,1); });
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].life <= 0) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
             requestAnimationFrame(animate);
         }
-        window.onmousemove = e => { if(particles.length<40) particles.push(new P(e.clientX, e.clientY)); };
+        window.onmousemove = e => {
+            if(particles.length < 50) particles.push(new Particle(e.clientX, e.clientY));
+        };
         animate();
+        
+        // 초기 로드 시 데이터 미리 생성 (입장 버튼 누르기 전에도 내부 데이터는 구성됨)
+        window.onload = init;
     </script>
 </body>
 </html>
