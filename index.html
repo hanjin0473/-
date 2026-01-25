@@ -3,63 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTREL ACADEMY</title>
+    <title>ASTREL ACADEMY ARCHIVE</title>
     <style>
-        :root { --bg-color:#050507; --text-gold:#c5a35d; --text-dim:#a0a0a5; --card-bg:rgba(15,17,23,0.95); --border-style:1px solid rgba(197,163,93,0.3); --danger:#ff4d4d; }
+        :root { 
+            --bg-color:#050507; 
+            --text-gold:#c5a35d; 
+            --text-dim:#a0a0a5; 
+            --card-bg:rgba(15,17,23,0.95); 
+            --border-style:1px solid rgba(197,163,93,0.3); 
+            --danger:#ff4d4d; 
+        }
         * { margin:0; padding:0; box-sizing:border-box; }
         body { background:var(--bg-color); color:var(--text-dim); font-family:'Nanum Myeongjo',serif; line-height:1.6; overflow-x:hidden; }
-        body::before { content:""; position:fixed; inset:0; background-image:radial-gradient(rgba(197,163,93,0.05) 1px,transparent 0); background-size:40px 40px; z-index:-1; }
         
+        #particle-canvas { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+
         .prologue-overlay { position:fixed; inset:0; background:#050507; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:99999; transition:1s; }
         .enter-btn { background:none; border:1px solid var(--text-gold); color:var(--text-gold); padding:15px 50px; cursor:pointer; letter-spacing:5px; transition:0.4s; }
         .enter-btn:hover { background:var(--text-gold); color:#000; box-shadow:0 0 20px var(--text-gold); }
-        
+
         .main-archive { display:none; opacity:0; padding:20px; max-width:1100px; margin:0 auto; transition:1s; }
         .nav-tabs { display:flex; justify-content:center; gap:10px; margin-bottom:30px; position:sticky; top:0; background:var(--bg-color); padding:15px; z-index:100; border-bottom:var(--border-style); }
-        .tab-btn { background:none; border:none; color:var(--text-dim); cursor:pointer; padding:5px 15px; font-weight: bold; }
+        .tab-btn { background:none; border:none; color:var(--text-dim); cursor:pointer; padding:5px 15px; font-weight: bold; letter-spacing: 1px; }
         .tab-btn.active { color:var(--text-gold); border-bottom:2px solid var(--text-gold); }
-        
+
         .archive-section { display:none; animation:fadeIn 0.6s forwards; }
         .archive-section.active { display:block; }
         @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
-        
-        .section-img-placeholder { width:100%; height:250px; background:#111; border:var(--border-style); margin-bottom:25px; position:relative; overflow:hidden; }
-        .section-img-placeholder img { width:100%; height:100%; object-fit:cover; opacity:0.5; }
+
         .sec-title { color:var(--text-gold); border-left:3px solid var(--text-gold); padding-left:15px; margin:30px 0 20px; font-size:1.4rem; }
-        .content-card { background:rgba(255,255,255,0.03); padding:25px; border:1px solid rgba(197,163,93,0.1); margin-bottom:20px; }
+        .content-card { background:rgba(255,255,255,0.03); padding:20px; border:1px solid rgba(197,163,93,0.1); margin-bottom:20px; }
         
-        .dorm-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:15px; margin:20px 0; }
-        .dorm-item { padding:20px; background:rgba(255,255,255,0.02); border:1px solid rgba(197,163,93,0.1); transition:0.4s; }
-        
-        .char-category-title { color: var(--text-gold); margin: 40px 0 20px; font-size: 1.2rem; letter-spacing: 2px; border-bottom: 1px solid rgba(197,163,93,0.2); padding-bottom: 5px; }
-        .char-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:15px; margin-bottom: 30px; }
+        .section-img-placeholder { position:relative; width:100%; height:300px; overflow:hidden; border:1px solid rgba(197,163,93,0.3); margin-bottom:20px; }
+        .section-img-placeholder img { width:100%; height:100%; object-fit:cover; opacity:0.7; }
+
+        .location-box { border:1px solid rgba(255,255,255,0.05); padding:15px; background:rgba(255,255,255,0.01); margin-bottom:20px; }
+        .dorm-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:15px; margin:15px 0; }
+        .dorm-item { background:rgba(197,163,93,0.05); border:1px solid rgba(197,163,93,0.1); padding:15px; }
+        .dorm-item h3 { color:var(--text-gold); margin-bottom:5px; font-size:1rem; }
+
+        .grid-layout { display:grid; grid-template-columns:repeat(3, 1fr); gap:15px; }
+        .grid-item { background:rgba(255,255,255,0.02); padding:15px; border:1px solid #222; }
+
+        .notice-board { display:flex; flex-direction:column; gap:10px; }
+        .notice-item { background:rgba(255,255,255,0.03); padding:15px; border:1px solid #222; display:grid; grid-template-columns: 100px 100px 1fr; align-items: center; }
+        .notice-tag { font-size:0.7rem; font-weight:bold; color:var(--text-dim); }
+        .rank-badge { color:var(--text-gold); font-weight:bold; }
+        .notice-title { color:#fff; }
+        .notice-body { grid-column: 1 / -1; margin-top:10px; font-size:0.8rem; opacity:0.7; }
+
+        .char-category-title { color: var(--text-gold); margin: 40px 0 20px; font-size: 1.2rem; border-bottom: 1px solid rgba(197,163,93,0.2); }
+        .char-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:15px; }
         .char-card { background:var(--card-bg); border:1px solid rgba(197,163,93,0.1); padding:20px; cursor:pointer; text-align:center; transition:0.3s; }
         .char-card:hover { border-color: var(--text-gold); transform: translateY(-5px); }
 
-        .notice-board { display:flex; flex-direction:column; gap:15px; }
-        .notice-item { background:rgba(255,255,255,0.03); border:1px solid rgba(197,163,93,0.1); padding:15px; }
-        .rank-badge { font-weight:bold; color:var(--text-gold); border:1px solid var(--text-gold); padding:2px 8px; font-size:0.8rem; margin-right:10px; }
-
-        /* Modal Styles */
-        .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:10000; justify-content:center; align-items:center; padding:20px; }
-        .modal-content { background:#0d0e12; border:1px solid var(--text-gold); width:100%; max-width:900px; display:flex; position:relative; max-height: 90vh; overflow: hidden; }
-        .modal-left { flex: 1; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:10000; justify-content:center; align-items:center; padding:20px; }
+        .modal-content { background:#0d0e12; border:1px solid var(--text-gold); width:100%; max-width:900px; display:flex; position:relative; max-height:90vh; }
+        .modal-left { flex: 1; background: #000; display:flex; align-items:center; }
         .modal-left img { width: 100%; height: 100%; object-fit: contain; }
-        .modal-right { flex: 1.2; padding: 30px; overflow-y: auto; }
-        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 2rem; color: var(--text-gold); cursor: pointer; z-index: 10; }
+        .modal-right { flex: 1.2; padding: 30px; overflow-y:auto; }
+        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 1.5rem; color: var(--text-gold); cursor: pointer; z-index:10; }
         
-        .info-table { width:100%; font-size:0.85rem; border-collapse:collapse; margin: 20px 0; }
-        .info-table td { padding:8px; border-bottom:1px solid #222; }
-        .info-label { color: var(--text-gold); width: 60px; font-weight: bold; }
+        .info-table { width:100%; font-size:0.8rem; border-collapse:collapse; margin:15px 0; }
+        .info-table td { padding:5px; border-bottom:1px solid #222; }
+        .info-label { color:var(--text-gold); width:60px; font-weight:bold; }
+        .thumb-nav { display:flex; gap:10px; margin-top:15px; }
+        .thumb-img { width:50px; height:50px; object-fit:cover; cursor:pointer; border:1px solid #333; opacity:0.6; }
+        .thumb-img.active { border-color:var(--text-gold); opacity:1; }
 
-        .thumb-nav { display: flex; gap: 10px; margin-top: 15px; }
-        .thumb-item { width: 50px; height: 50px; object-fit: cover; border: 1px solid #444; cursor: pointer; opacity: 0.6; }
-        .thumb-item.active { border-color: var(--text-gold); opacity: 1; }
-
-        @media (max-width:768px) { .modal-content { flex-direction:column; overflow-y:auto; } .modal-left { height: 300px; } }
+        @media (max-width:768px) { .modal-content { flex-direction:column; overflow-y:auto; } .grid-layout { grid-template-columns:1fr; } }
     </style>
 </head>
 <body>
+
+    <canvas id="particle-canvas"></canvas>
 
     <div class="prologue-overlay" id="prologue">
         <h1 style="font-size:2.5rem; color:var(--text-gold); letter-spacing:10px; margin-bottom:2rem; text-align:center;">ASTREL<br>ARCHIVE</h1>
@@ -79,9 +96,52 @@
             <div class="section-img-placeholder">
                 <img src="https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/579d4411-d771-4529-a0d5-71a4311eae6e.png" alt="World Map">
                 <div style="position:absolute; inset:0; background:radial-gradient(circle, transparent 40%, rgba(0,0,0,0.8));"></div>
+                <div style="position:absolute; top:20px; right:20px; font-size:0.7rem; color:var(--text-gold); border:1px solid var(--text-gold); padding:2px 8px; letter-spacing:2px; background:rgba(0,0,0,0.5);">TOPOGRAPHIC DATA</div>
             </div>
             <h2 class="sec-title">MAP NAVIGATION</h2>
-            <div class="content-card">아카데미 내부 및 외부 지리 정보가 표시됩니다.</div>
+            <div class="content-card" style="border-style: dashed; background: rgba(197, 163, 93, 0.02);">
+                <p style="font-size: 0.8rem; margin-bottom: 10px; color: var(--text-gold); font-weight: bold;">[ 인지 지침 ]</p>
+                <ul style="list-style: '◈ '; padding-left: 15px; font-size: 0.85rem;">
+                    <li>공간은 실제 <span style="color:#fff;">발을 딛는 지리</span>만 노출하며, 내부와 외부를 엄격히 분리한다.</li>
+                    <li>정교한 전경 묘사보다는 <span style="color:#fff;">이동 가능 여부와 시야</span>를 우선하여 감각한다.</li>
+                </ul>
+            </div>
+            <div class="location-box">
+                <h3 style="color:var(--text-gold); font-size:1rem; margin-bottom:10px; display:flex; align-items:center; gap:8px;">
+                    <span style="width:8px; height:8px; background:var(--text-gold); border-radius:50%;"></span> ACADEMY INTERNAL
+                </h3>
+                <div class="dorm-grid">
+                    <div class="dorm-item"><h4>교육 및 생활 구역</h4><p style="font-size:0.8rem; opacity:0.8;">강의동, 실습장, 기숙사, 도서관.</p></div>
+                    <div class="dorm-item"><h4>제한 구역</h4><p style="font-size:0.8rem; opacity:0.8;">지하 연구실, 행정동. 포탈 연결됨.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-academy" class="archive-section">
+            <h2 class="sec-title">기숙사 분류 (HOUSES)</h2>
+            <div class="dorm-grid">
+                <div class="dorm-item"><h3>🦁 Vulcanus</h3><p style="font-size:0.8rem;">용기와 투지. 기사학부 중심.</p></div>
+                <div class="dorm-item"><h3>🐬 Neptunus</h3><p style="font-size:0.8rem;">지혜와 마법. 연구자들의 집합소.</p></div>
+                <div class="dorm-item"><h3>🦚 Aurelia</h3><p style="font-size:0.8rem;">고결과 사교. 황실/귀족 파벌.</p></div>
+                <div class="dorm-item"><h3>Owl Minerva</h3><p style="font-size:0.8rem;">이성과 진리. 실무 위주 탐험가.</p></div>
+            </div>
+        </section>
+
+        <section id="tab-dungeon" class="archive-section">
+             <h2 class="sec-title" style="color:var(--danger); border-color:var(--danger);">포탈 게이트 및 조사 보고서</h2>
+             <div class="grid-layout">
+                <div class="grid-item" style="border-left: 3px solid #555;"><h3>하급 (F~D)</h3><p style="font-size:0.8rem;">시뮬레이션 구역.</p></div>
+                <div class="grid-item" style="border-left: 3px solid var(--text-gold);"><h3>중급 (C~B)</h3><p style="font-size:0.8rem;">위험지 노출 구역.</p></div>
+                <div class="grid-item" style="border-left: 3px solid var(--danger);"><h3>상급 (A~S)</h3><p style="font-size:0.8rem;">심연의 균열.</p></div>
+            </div>
+        </section>
+
+        <section id="tab-rank" class="archive-section">
+            <h2 class="sec-title">승급 규정</h2>
+            <div class="notice-board">
+                <div class="notice-item"><div class="notice-tag">NEWBIE</div><span class="rank-badge">F → E</span><span class="notice-title">기초 평가</span></div>
+                <div class="notice-item highlight"><div class="notice-tag" style="background:var(--text-gold); color:#000;">ELITE</div><span class="rank-badge">C → B</span><span class="notice-title">상급 인원 선발</span></div>
+            </div>
         </section>
 
         <section id="tab-character" class="archive-section">
@@ -92,23 +152,17 @@
             <h3 class="char-category-title">BELLUNA</h3>
             <div class="char-grid" id="grid-belluna"></div>
         </section>
-
-        <section id="tab-academy" class="archive-section"><h2 class="sec-title">ACADEMY INFO</h2><div class="content-card">기숙사 및 학부 정보 구역</div></section>
-        <section id="tab-dungeon" class="archive-section"><h2 class="sec-title">DUNGEON DATA</h2><div class="content-card">던전 보고서 및 위험 등급</div></section>
-        <section id="tab-rank" class="archive-section"><h2 class="sec-title">RANK SYSTEM</h2><div class="content-card">승급 규정 안내</div></section>
     </main>
 
     <div id="charModal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div class="modal-left">
-                <img id="modalImg" src="">
-            </div>
+            <div class="modal-left"><img id="modalImg" src=""></div>
             <div class="modal-right">
                 <h2 id="modalName" style="color:var(--text-gold);"></h2>
-                <p id="modalQuote" style="font-style:italic; margin:10px 0; color:#888;"></p>
+                <p id="modalQuote" style="font-style:italic; margin-bottom:15px; color:#888; font-size:0.9rem;"></p>
                 <table class="info-table" id="infoTable"></table>
-                <div id="modalStory" style="color:#bbb; border-top:1px solid #222; padding-top:15px; font-size:0.9rem;"></div>
+                <div id="modalStory" style="color:#bbb; border-top:1px solid #222; padding-top:15px; font-size:0.85rem;"></div>
                 <div class="thumb-nav" id="thumbNav"></div>
             </div>
         </div>
@@ -118,6 +172,7 @@
         
         const charactersData = {
             '엘리오': {
+                type:'student',
                 name: "엘리오 루멘 ♂️", quote: "음... 아까 한 말, 다시 해줄래? 자느라 못 들었어...",
                 age: "20", height: "175cm", weight: "71kg", year: "1학년",
                 faction: "아카데미", faculty: "마법학부", attr: "다속성",
@@ -129,6 +184,7 @@
                 ]
             },
             '아델': {
+                type:'student',
                 name: "아델 폰 슈타인 ♂️", quote: "불필요한 대화는 생략하지. 결론부터 내놔.",
                 age: "20", height: "182cm", weight: "74kg", year: "1학년",
                 faction: "아카데미", faculty: "마법학부", attr: "바람",
@@ -140,6 +196,7 @@
                 ]
             },
             '리나': {
+                type:'student',
                 name: "리나 ♀️", quote: "기사로서 당연한 일을... 앗, 방금 제 검이 헛나간 건 못 본 걸로 해주세요!",
                 age: "20", height: "169cm", weight: "57kg", year: "1학년",
                 faction: "아카데미", faculty: "기사학부", attr: "물리",
@@ -151,6 +208,7 @@
                 ]
             },
             '라파엘': {
+                type:'student',
                 name: "라파엘 ♂️", quote: "배가 고프면 판단력이 흐려지는 법이야. 자, 이건 내가 아끼는 간식인데.",
                 age: "21", height: "178cm", weight: "70kg", year: "2학년",
                 faction: "아카데미", faculty: "기사학부", attr: "어둠",
@@ -162,6 +220,7 @@
                 ]
             },
             '리히터': {
+                type:'student',
                 name: "리히터 크로우 ♂️", quote: "...(시선을 피하며)... 저기, 혹시 주머니에 츄르 있어?",
                 age: "21", height: "178cm", weight: "70kg", year: "2학년",
                 faction: "아카데미", faculty: "마법학부", attr: "어둠",
@@ -173,6 +232,7 @@
                 ]
             },
             '이벨린': {
+                type:'student',
                 name: "이벨린 드 아르노 ♀️", quote: "있지, 저 구름 마시멜로 맛일 것 같지 않아? 내가 가서 떼어줄까?",
                 age: "21", height: "165cm", weight: "55kg", year: "2학년",
                 faction: "아카데미", faculty: "마법학부", attr: "땅",
@@ -184,6 +244,7 @@
                 ]
             },
             '카이렌': {
+                type:'student',
                 name: "카이렌 알테어 솔라리스 ♂️", quote: "너는 내 손바닥 안에서 가장 빛날 때가 아름다워.",
                 age: "22", height: "186cm", weight: "75kg", year: "3학년",
                 faction: "아카데미", faculty: "기사학부", attr: "화염",
@@ -195,6 +256,7 @@
                 ]
             },
             '카엘': {
+                type:'student',
                 name: "카엘 로젠 ♂️", quote: "하하! 오늘 내 검술이 좀 눈부셨지? 내 실력에 어울리는 화려한 무대였어.",
                 age: "22", height: "185cm", weight: "72kg", year: "3학년",
                 faction: "아카데미", faculty: "기사학부", attr: "속도",
@@ -206,6 +268,7 @@
                 ]
             },
             '요한': { 
+                type:'professor'
                 name: "요한 크라프트 ♂️", quote: "이론 따윈 던전에서 안 통한다. 몸으로 기억해라.",
                 age: "45", height: "190cm", weight: "90kg", year: "전투학 교수",
                 faction: "아카데미", faculty: "전투학", attr: "중력/물리",
@@ -217,6 +280,7 @@
                 ] 
             },
             '헬레나': { 
+                type:'professor'
                 name: "헬레나 바이스 ♀️", quote: "후후... 당신의 마력은 참 정직하게 흔들리네요.",
                 age: "36", height: "172cm", weight: "58kg", year: "마법이론 교수",
                 faction: "아카데미", faculty: "마법이론", attr: "정신",
@@ -227,6 +291,7 @@
                 ] 
             },
             '아리시아': {
+                type:'belluna'
                 name: "아리시아 블랙하트 ♀️", quote: "모든 것이 무너지는 순간의 소리는 참 달콤하죠.",
                 age: "30", height: "168cm", weight: "52kg", year: "벨루나 리더",
                 faction: "벨루나", faculty: "총괄", attr: "어둠",
@@ -237,6 +302,7 @@
                 ]
             },
             '바르칸': {
+                type:'belluna'
                 name: "바르칸 ♂️", quote: "내 칼날이 아프냐? 네 녀석의 허술한 방어 체계가 더 거슬리는군.",
                 age: "23", height: "178cm", weight: "70kg", year: "실행부",
                 faction: "벨루나", faculty: "전투", attr: "어둠",
@@ -267,18 +333,19 @@ function startArchive() {
         }
 
         function renderChars() {
-            const grids = ['student', 'professor', 'belluna'];
-            grids.forEach(g => document.getElementById('grid-' + g).innerHTML = '');
-
+            const grids = { student: 'grid-student', professor: 'grid-professor', belluna: 'grid-belluna' };
+            Object.values(grids).forEach(id => {
+                const el = document.getElementById(id);
+                if(el) el.innerHTML = '';
+            });
             for (let key in charactersData) {
                 const c = charactersData[key];
                 const card = document.createElement('div');
                 card.className = 'char-card';
                 card.onclick = () => openModal(key);
-                card.innerHTML = `<div style="color:var(--text-gold); font-size:0.7rem; margin-bottom:5px;">${c.faculty}</div><h3 style="color:#fff;">${key}</h3>`;
-                
-                const targetGrid = document.getElementById('grid-' + c.type);
-                if (targetGrid) targetGrid.appendChild(card);
+                card.innerHTML = `<div style="color:var(--text-gold); font-size:0.7rem;">${c.faculty}</div><h3 style="color:#fff;">${key}</h3>`;
+                const gridEl = document.getElementById('grid-' + c.type);
+                if(gridEl) gridEl.appendChild(card);
             }
         }
 
@@ -290,10 +357,9 @@ function startArchive() {
             document.getElementById('modalImg').src = c.images[0];
             
             document.getElementById('infoTable').innerHTML = `
-                <tr><td class="info-label">나이</td><td>${c.age}</td><td class="info-label">신장</td><td>${c.height}</td></tr>
-                <tr><td class="info-label">체중</td><td>${c.weight}</td><td class="info-label">학년</td><td>${c.year}</td></tr>
-                <tr><td class="info-label">소속</td><td>${c.faction}</td><td class="info-label">학부</td><td>${c.faculty}</td></tr>
-                <tr><td class="info-label">주속성</td><td colspan="3">${c.attr}</td></tr>
+                <tr><td class="info-label">나이</td><td>${c.age || '-'}</td><td class="info-label">신장</td><td>${c.height || '-'}</td></tr>
+                <tr><td class="info-label">소속</td><td>${c.faction}</td><td class="info-label">학년/직함</td><td>${c.year}</td></tr>
+                <tr><td class="info-label">속성</td><td colspan="3">${c.attr}</td></tr>
             `;
 
             const thumbNav = document.getElementById('thumbNav');
@@ -301,19 +367,34 @@ function startArchive() {
             c.images.forEach((img, idx) => {
                 const thumb = document.createElement('img');
                 thumb.src = img;
-                thumb.className = 'thumb-item' + (idx === 0 ? ' active' : '');
+                thumb.className = 'thumb-img' + (idx === 0 ? ' active' : '');
                 thumb.onclick = () => {
                     document.getElementById('modalImg').src = img;
-                    document.querySelectorAll('.thumb-item').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
                     thumb.classList.add('active');
                 };
                 thumbNav.appendChild(thumb);
             });
-
             document.getElementById('charModal').style.display = 'flex';
         }
 
         function closeModal() { document.getElementById('charModal').style.display = 'none'; }
+
+        // Particle Effect
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function initCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+        class Particle {
+            constructor() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.size = Math.random() * 2; this.speedY = Math.random() * 0.5; this.opacity = Math.random() * 0.5; }
+            update() { this.y -= this.speedY; if (this.y < 0) this.y = canvas.height; }
+            draw() { ctx.fillStyle = `rgba(197, 163, 93, ${this.opacity})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
+        }
+        for(let i=0; i<100; i++) particles.push(new Particle());
+        function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
+        animate();
     </script>
 </body>
 </html>
