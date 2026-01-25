@@ -12,6 +12,7 @@
             --accent-glow: rgba(197, 163, 93, 0.2);
             --card-bg: rgba(20, 22, 28, 0.6);
             --border-style: 1px solid rgba(197, 163, 93, 0.3);
+            --danger: #ff4d4d;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,86 +26,68 @@
 
         #manaCanvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 1000; }
 
+        /* 1. 프롤로그 */
         .prologue-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-color);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 5000; transition: opacity 1.5s ease;
+            z-index: 5000; transition: 1s ease;
         }
-        .prologue-content { max-width: 800px; text-align: center; line-height: 2.2; padding: 40px; }
-        .prologue-text p {
-            font-size: 1.1rem; margin-bottom: 2.5rem; opacity: 0;
-            transform: translateY(20px); filter: blur(5px); animation: fadeInReveal 2s forwards;
+        .prologue-title {
+            font-size: 3.5rem; color: var(--text-gold); letter-spacing: 15px;
+            margin-bottom: 2.5rem; opacity: 0; transform: scale(0.95);
+            animation: titleFadeIn 1.5s forwards;
         }
-        .prologue-text p:nth-child(1) { animation-delay: 1s; }
-        .prologue-text p:nth-child(2) { animation-delay: 3s; }
-        .prologue-text p:nth-child(3) { animation-delay: 5s; }
-        .prologue-text p:nth-child(4) { animation-delay: 7s; }
-        .prologue-text p:nth-child(5) { animation-delay: 9s; }
-        
-        @keyframes fadeInReveal { to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+        @keyframes titleFadeIn { to { opacity: 1; transform: scale(1); } }
 
         .enter-btn {
-            margin-top: 40px; background: transparent; border: 1px solid var(--text-gold);
-            color: var(--text-gold); padding: 15px 50px; cursor: pointer; letter-spacing: 5px;
-            opacity: 0; animation: fadeInReveal 1.5s forwards 11s; transition: 0.5s;
+            background: transparent; border: 1px solid var(--text-gold);
+            color: var(--text-gold); padding: 18px 70px; cursor: pointer;
+            letter-spacing: 8px; font-weight: bold; transition: 0.5s;
         }
-        .enter-btn:hover { background: var(--text-gold); color: black; box-shadow: 0 0 30px var(--accent-glow); }
+        .enter-btn:hover { background: var(--text-gold); color: black; box-shadow: 0 0 50px var(--accent-glow); }
 
-        .main-archive { display: none; opacity: 0; padding: 60px 20px; max-width: 1400px; margin: 0 auto; transition: 2s; }
-        .archive-header { text-align: center; margin-bottom: 60px; }
-        .archive-header h1 { font-size: 3rem; color: var(--text-gold); letter-spacing: 15px; margin-bottom: 10px; }
-
-        .archive-section { margin-bottom: 80px; }
-        .section-title { 
-            color: var(--text-gold); font-size: 1.5rem; letter-spacing: 3px; 
-            border-bottom: 1px solid var(--accent-glow); padding-bottom: 10px; margin-bottom: 30px;
-            display: flex; align-items: center; gap: 15px;
-        }
-        .section-title::before { content: ''; width: 4px; height: 20px; background: var(--text-gold); display: inline-block; }
-
-        .category-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        /* 2. 메인 레이아웃 */
+        .main-archive { display: none; opacity: 0; padding: 40px 20px; max-width: 1200px; margin: 0 auto; transition: 1s; }
         
-        .info-card {
-            background: rgba(30, 32, 40, 0.4); border: 1px solid rgba(197, 163, 93, 0.2);
-            padding: 30px; position: relative; transition: 0.3s; cursor: pointer;
+        .nav-tabs {
+            display: flex; justify-content: center; gap: 50px; margin-bottom: 60px;
+            border-bottom: 1px solid var(--accent-glow); padding-bottom: 25px;
         }
-        .info-card:hover { border-color: var(--text-gold); background: rgba(197, 163, 93, 0.05); }
+        .tab-btn {
+            background: none; border: none; color: var(--text-dim); font-size: 1.2rem;
+            letter-spacing: 4px; cursor: pointer; transition: 0.3s; position: relative;
+        }
+        .tab-btn.active { color: var(--text-gold); font-weight: bold; }
+        .tab-btn.active::after {
+            content: ''; position: absolute; bottom: -26px; left: 0; width: 100%; height: 3px;
+            background: var(--text-gold); box-shadow: 0 0 15px var(--text-gold);
+        }
 
-        .char-card {
-            background: var(--card-bg); border: var(--border-style); padding: 25px;
-            position: relative; cursor: pointer; transition: 0.4s; overflow: hidden;
-        }
-        .char-card:hover { transform: translateY(-5px); border-color: var(--text-gold); background: rgba(30, 32, 40, 0.9); }
-        .char-card h3 { color: #fff; margin: 10px 0 5px 0; letter-spacing: 1px; }
-        .char-card p { font-size: 0.85rem; color: var(--text-gold); opacity: 0.8; }
-        .card-num { font-size: 0.7rem; color: var(--text-gold); opacity: 0.5; position: absolute; top: 15px; right: 15px; }
+        .archive-section { display: none; line-height: 1.8; }
+        .archive-section.active { display: block; animation: fadeIn 0.6s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .modal {
-            display: none; position: fixed; z-index: 6000; left: 0; top: 0;
-            width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px);
-            justify-content: center; align-items: center; opacity: 0; transition: 0.4s;
-        }
+        h2.sec-header { color: var(--text-gold); font-size: 1.8rem; letter-spacing: 5px; margin-bottom: 30px; border-left: 4px solid var(--text-gold); padding-left: 20px; margin-top: 50px; }
+        .info-box { background: rgba(20, 22, 28, 0.8); border: var(--border-style); padding: 30px; margin-bottom: 30px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        
+        .char-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        .char-card { background: var(--card-bg); border: var(--border-style); padding: 20px; cursor: pointer; transition: 0.4s; position: relative; }
+        .char-card:hover { border-color: var(--text-gold); transform: translateY(-5px); background: rgba(30,32,40,0.9); }
+        .char-card .tag { font-size: 0.7rem; color: var(--text-gold); opacity: 0.6; }
+
+        .modal { display: none; position: fixed; z-index: 6000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); justify-content: center; align-items: center; opacity: 0; transition: 0.4s; }
         .modal.show { display: flex; opacity: 1; }
-        .modal-content {
-            background: #0f1118; border: 1px solid var(--text-gold); width: 90%; max-width: 1100px;
-            height: 80vh; position: relative; display: flex; overflow: hidden;
-        }
-        .modal-body { display: flex; width: 100%; }
-        .modal-left { flex: 1; background: #000; display: flex; align-items: center; justify-content: center; border-right: 1px solid rgba(197,163,93,0.2); }
+        .modal-content { background: #0f1118; border: 1px solid var(--text-gold); width: 90%; max-width: 900px; height: 75vh; position: relative; display: flex; overflow: hidden; }
+        .modal-left { flex: 1; background: #000; display: flex; align-items: center; justify-content: center; border-right: 1px solid rgba(197,163,93,0.1); }
         .modal-left img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .modal-right { flex: 1.2; padding: 40px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; }
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px 0; border-top: 1px solid #333; border-bottom: 1px solid #333; }
-        .stat-item { text-align: center; }
-        .stat-label { font-size: 0.65rem; color: var(--text-gold); display: block; }
-        .stat-value { color: #eee; font-size: 0.9rem; font-weight: bold; }
+        .modal-right { flex: 1.2; padding: 40px; overflow-y: auto; }
         .close-btn { position: absolute; top: 20px; right: 25px; font-size: 2rem; color: var(--text-gold); cursor: pointer; z-index: 10; }
-        .quote-box { border-left: 2px solid var(--text-gold); padding-left: 15px; font-style: italic; color: #fff; margin-top: 10px; }
         
-        /* 썸네일 스타일 추가 */
-        #thumbStrip { display: flex; gap: 10px; margin-top: 20px; }
-        .thumb { width: 60px; height: 60px; object-fit: cover; border: 1px solid #333; cursor: pointer; opacity: 0.5; }
-        .thumb.active { border-color: var(--text-gold); opacity: 1; }
+        ul.map-list { list-style: none; }
+        ul.map-list li { margin-bottom: 15px; padding-left: 20px; position: relative; }
+        ul.map-list li::before { content: '◈'; position: absolute; left: 0; color: var(--text-gold); font-size: 0.8rem; }
     </style>
 </head>
 <body>
@@ -112,61 +95,138 @@
     <canvas id="manaCanvas"></canvas>
 
     <div class="prologue-overlay" id="prologue">
-        <div class="prologue-content">
-            <div class="prologue-text">
-                <p>이 세계에는 <span class="highlight">몬스터와 던전</span>이 존재한다.<br>재앙은 언제나 예고 없이 찾아온다.</p>
-                <p>누군가는 검을 들고, 누군가는 주문을 엮으며,<br>기록과 계산으로 재앙의 속도를 늦춘다.</p>
-                <p><span class="highlight">아스트렐 아카데미</span>는<br>던전에 대응할 인력을 양성하는 기관이다.</p>
-                <p>아직은— 아무것도 시작되지 않은 것처럼.</p>
-                <p>그리고 당신 또한, 이 세계의 어딘가에 있다.</p>
-            </div>
-            <button class="enter-btn" onclick="startArchive()">ARCHIVE ACCESS</button>
-        </div>
+        <h1 class="prologue-title">ASTREL ACADEMY</h1>
+        <button class="enter-btn" onclick="startArchive()">ACCESS ARCHIVE</button>
     </div>
 
     <main class="main-archive" id="mainArchive">
-        <header class="archive-header">
-            <h1>ASTREL</h1>
-            <p style="letter-spacing: 5px; font-size: 0.8rem;">ACADEMY ARCHIVE SYSTEM v2.0</p>
-        </header>
+        <nav class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('world')">WORLD</button>
+            <button class="tab-btn" onclick="switchTab('academy')">ACADEMY</button>
+            <button class="tab-btn" onclick="switchTab('character')">CHARACTER</button>
+        </nav>
 
-        <section class="archive-section">
-            <h2 class="section-title">DATABASE: WORLD INFO</h2>
-            <div class="category-grid">
-                <div class="info-card" onclick="alert('세계관 데이터 로딩 중...')"><h3>THE WORLD</h3><p>몬스터와 던전, 그리고 마력의 흐름.</p></div>
-                <div class="info-card" onclick="alert('기숙사 정보 로딩 중...')"><h3>DORMITORIES</h3><p>태양의 루멘, 달의 셀레네 등 기숙사 소개.</p></div>
-                <div class="info-card" onclick="alert('지리 데이터 로딩 중...')"><h3>GEOGRAPHY</h3><p>아카데미 주변 주요 거점 및 위험 지역.</p></div>
+        <section id="tab-world" class="archive-section active">
+            <h2 class="sec-header">WORLD SETTING</h2>
+            <div class="grid-2">
+                <section id="tab-world" class="archive-section active">
+    <h2 class="sec-header">WORLD SETTING</h2>
+    <h2 class="sec-header">ACADEMY MAP</h2>
+    <div class="info-box" style="text-align: center; background: #000;">
+        <img src="https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/579d4411-d771-4529-a0d5-71a4311eae6e.png" alt="Academy Map" style="max-width: 100%; height: auto; border: 1px solid var(--text-gold); box-shadow: 0 0 20px rgba(197, 163, 93, 0.1);">
+        <p style="margin-top: 15px; font-size: 0.85rem; color: var(--text-gold); letter-spacing: 2px;">[ CURRENT LOCATION: CENTRAL PLAZA ]</p>
+    </div>
+
+    <div class="info-box">
+        </div>
+</section>
+                <div class="info-box">
+                    <h3 style="color:var(--text-gold); margin-bottom:10px;">세상과 던전</h3>
+                    <p>몬스터와 던전이 공존하는 세계입니다. 방치된 던전은 현실을 침식하며 주변을 변화시킵니다. 던전은 '핵'을 파괴하여 비활성화할 수 있으나 시간이 지나면 다시 재생성되는 불완전한 굴레를 가집니다.</p>
+                </div>
+                <div class="info-box">
+                    <h3 style="color:var(--text-gold); margin-bottom:10px;">마력과 속성</h3>
+                    <p>사람들은 고유한 마력을 지니며 원소, 개념, 상태 등 다양한 속성을 다룹니다. 특히 빛과 어둠 속성은 극히 희귀하며 불안정한 특성을 띱니다.</p>
+                </div>
+            </div>
+
+            <h2 class="sec-header">ACADEMY MAP & RULES</h2>
+            <div class="info-box">
+                <p style="margin-bottom:20px; border-bottom:1px solid #333; padding-bottom:10px;">지도 전경 열람은 제한됩니다. 현재 위치를 기준으로 이동 가능한 지리 정보만 노출됩니다.</p>
+                <div class="grid-2">
+                    <div>
+                        <h4 style="color:var(--text-gold); margin-bottom:10px;">🏛️ 내부 구역</h4>
+                        <ul class="map-list">
+                            <li><strong>강의/훈련:</strong> 강의동, 실습장, 훈련장</li>
+                            <li><strong>생활/연구:</strong> 기숙사, 도서관, 연구동, 행정동</li>
+                            <li><strong>제한사항:</strong> 수업 시간, 지위, 사건 여부에 따라 출입이 통제됩니다. 일부 구역은 비공식 던전과 연결되어 있습니다.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color:var(--text-gold); margin-bottom:10px;">🌲 외부 구역</h4>
+                        <ul class="map-list">
+                            <li><strong>경계:</strong> 철저한 감시와 검문이 존재합니다. 무단 이탈 시 징계 및 평판 변화가 발생합니다.</li>
+                            <li><strong>마을/도시:</strong> 보급과 정보를 얻는 마을, 정치와 상업의 중심인 도시로 나뉩니다.</li>
+                            <li><strong>위험지:</strong> 폐허, 오염지대 등 비공식적 위험 요소가 존재합니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="sec-header" style="color:var(--danger)">BELLUNA (EXTERNAL)</h2>
+            <div class="info-box" style="border-color:var(--danger)">
+                <p><strong>비밀 테러 조직:</strong> 공식 기록상 범죄 집단으로, 어둠 속성을 이용한 은폐와 침투에 특화되어 있습니다. 아카데미 내부에 간접적으로 개입하여 균열을 유도하며, 정보 왜곡과 변수 삽입을 통해 학생들을 시험합니다.</p>
             </div>
         </section>
 
-        <section class="archive-section"><h2 class="section-title">ACADEMY: STUDENTS</h2><div class="category-grid" id="studentGrid"></div></section>
-        <section class="archive-section"><h2 class="section-title">ACADEMY: FACULTY</h2><div class="category-grid" id="facultyGrid"></div></section>
-        <section class="archive-section"><h2 class="section-title" style="color: #ff4d4d;">EXTERNAL: BELLUNA</h2><div class="category-grid" id="bellunaGrid"></div></section>
+        <section id="tab-academy" class="archive-section">
+            <h2 class="sec-header">DORMITORIES</h2>
+            <div class="info-box">
+                <p style="margin-bottom:15px;">※ 기본 배정은 신분과 전공 기준이나, 학장 승인에 따라 예외가 존재합니다. 귀족과 평민 분리가 원칙입니다.</p>
+                <div class="grid-2">
+                    <div>
+                        <h4 style="color:var(--text-gold)">불카누스 🦁</h4>
+                        <p style="font-size:0.85rem">용기와 열정 상징. 기사 가문 중심. (카엘, 라파엘)</p>
+                    </div>
+                    <div>
+                        <h4 style="color:var(--text-gold)">넵투누스 🐬</h4>
+                        <p style="font-size:0.85rem">지혜와 학문 상징. 학구적 분위기. (엘리오, 리히터)</p>
+                    </div>
+                    <div>
+                        <h4 style="color:var(--text-gold)">아우렐리아 🦚</h4>
+                        <p style="font-size:0.85rem">조화와 품격 상징. 고위 귀족 사교 중심. (아델, 이벨린, 카이렌)</p>
+                    </div>
+                    <div>
+                        <h4 style="color:var(--text-gold)">미네르바 🦉</h4>
+                        <p style="font-size:0.85rem">정의와 전략 상징. 실력 중심 및 개방적. (리나)</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="sec-header">CURRICULUM</h2>
+            <div class="grid-2">
+                <div class="info-box">
+                    <h3 style="margin-bottom:10px;">🛡️ 기사학부</h3>
+                    <ul style="font-size:0.9rem; list-style:none;">
+                        <li>• 전투학: 검술, 무기, 모의전투</li>
+                        <li>• 전술: 기병/보병 전술, 신체 강화</li>
+                        <li>• 실습: 던전 탐사 및 팀워크</li>
+                    </ul>
+                </div>
+                <div class="info-box">
+                    <h3 style="margin-bottom:10px;">🔮 마법학부</h3>
+                    <ul style="font-size:0.9rem; list-style:none;">
+                        <li>• 마법이론: 제어, 봉인, 구조 이해</li>
+                        <li>• 실습: 주문 시전, 연금술</li>
+                        <li>• 실험: 변칙 마법 대응 연구</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-character" class="archive-section">
+            <h2 class="sec-header">STUDENTS</h2>
+            <div class="char-grid" id="studentGrid"></div>
+            <h2 class="sec-header" style="margin-top:50px;">FACULTY</h2>
+            <div class="char-grid" id="facultyGrid"></div>
+            <h2 class="sec-header" style="margin-top:50px; color:var(--danger)">BELLUNA</h2>
+            <div class="char-grid" id="bellunaGrid"></div>
+        </section>
     </main>
 
     <div id="charModal" class="modal" onclick="if(event.target==this) closeModal()">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
             <div class="modal-body">
-                <div class="modal-left">
-                    <div style="display:flex; flex-direction:column; align-items:center;">
-                        <img id="modalImg" src="">
-                        <div id="thumbStrip"></div> </div>
-                </div>
+                <div class="modal-left"><img id="modalImg" src=""></div>
                 <div class="modal-right">
-                    <h2 id="modalName" style="color:var(--text-gold); font-size: 2.5rem;"></h2>
-                    <p id="modalFaction" style="color:var(--text-gold); font-weight:bold;"></p> <p id="infoYear" style="color:var(--text-dim); margin-top:-15px;"></p>
-                    <div class="stats-grid">
-                        <div class="stat-item"><span class="stat-label">학부</span><span id="infoFaculty" class="stat-value"></span></div>
-                        <div class="stat-item"><span class="stat-label">속성</span><span id="infoAttr" class="stat-value"></span></div>
-                        <div class="stat-item"><span class="stat-label">신장</span><span id="infoHeight" class="stat-value"></span></div>
-                        <div class="stat-item"><span class="stat-label">나이</span><span id="infoAge" class="stat-value"></span></div>
-                        <div class="stat-item" style="display:none;"><span id="infoWeight"></span></div> </div>
-                    <div class="story-box">
-                        <h4 style="color:var(--text-gold); margin-bottom:10px;">[ARCHIVE RECORD]</h4>
-                        <p id="modalStory" style="line-height: 1.6; font-size: 0.95rem;"></p>
+                    <h2 id="modalName" style="color:var(--text-gold); margin-bottom:5px;"></h2>
+                    <p id="infoYear" style="font-size:0.9rem; opacity:0.8;"></p>
+                    <div style="margin:20px 0; padding:15px; border-top:1px solid #333; border-bottom:1px solid #333; font-size:0.85rem;">
+                        <span id="infoDetail"></span>
                     </div>
-                    <div id="modalQuote" class="quote-box"></div>
+                    <p id="modalStory" style="margin-top:20px; font-size: 0.95rem;"></p>
+                    <p id="modalQuote" style="margin-top:25px; font-style:italic; color:#fff; border-left:3px solid var(--text-gold); padding-left:15px;"></p>
                 </div>
             </div>
         </div>
@@ -179,86 +239,94 @@
                 age: "20", height: "175cm", weight: "71kg", year: "1학년",
                 faction: "아카데미", faculty: "마법학부", attr: "다속성",
                 story: "고위 마법 공작 가문 출신. 서적과 실험에 파묻혀 성장한 탓에 현실 회피 성향과 만성 졸음을 달고 삽니다. 황태자 카이렌을 나른하게 뒤따르며 축적한 방대한 학술 지식은 결정적인 순간 침착한 조력자의 힘을 발휘합니다.",
-                images: ['https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/6c1516ea-a45c-4159-989f-2ce74090f9a9.png']
+                images: ['https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/d97a5984-2ce8-4c2c-b686-4cbf2985d4ea.png']
             },
             '아델': {
                 name: "아델 폰 슈타인 ♂️", quote: "불필요한 대화는 생략하지. 결론부터 내놔.",
                 age: "20", height: "182cm", weight: "74kg", year: "1학년",
                 faction: "아카데미", faculty: "마법학부", attr: "바람",
                 story: "재상 가문의 후계자로, 어린 시절부터 카이렌과 교류하며 논리와 분석력을 갈고닦았습니다. 모든 상황을 수치로 판단하며 감정 개입을 극도로 꺼립니다.",
-                images: ['https://via.placeholder.com/400x600/1a1a1a/c5a35d?text=ADELE']
+                images: ['https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/d4f2e4e8-675b-4c20-8018-fd143f31b889']
             },
             '리나': {
                 name: "리나 ♀️", quote: "기사로서 당연한 일을... 앗, 방금 제 검이 헛나간 건 못 본 걸로 해주세요!",
                 age: "20", height: "169cm", weight: "57kg", year: "1학년",
                 faction: "아카데미", faculty: "기사학부", attr: "물리",
                 story: "평민 출신의 입지전적인 모범 기사. 어린 시절부터 실전 훈련을 거치며 동료 보호를 최우선으로 여기는 신념을 가졌습니다.",
-                images: ['https://via.placeholder.com/400x600/1a1a1a/c5a35d?text=LINA']
+                images: ['https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/9076568b-edd3-4298-a264-f27d072fd472.png']
             },
             '라파엘': {
                 name: "라파엘 ♂️", quote: "배가 고프면 판단력이 흐려지는 법이야. 자, 이건 내가 아끼는 간식인데.",
                 age: "21", height: "178cm", weight: "70kg", year: "2학년",
                 faction: "아카데미", faculty: "기사학부", attr: "어둠",
                 story: "다정하고 선한 인상으로 학부 내에서 두터운 신뢰를 받는 선배입니다. 식문화에 대해서는 평소의 온화함과 대비되는 엄격한 기준을 고수합니다.",
-                images: ['https://via.placeholder.com/400x600/1a1a1a/c5a35d?text=RAPHAEL']
+                images: ['https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/5c049a56-6851-42de-99fe-21b594813dbe.png']
             },
             '리히터': {
                 name: "리히터 크로우 ♂️", quote: "...(시선을 피하며)... 저기, 혹시 주머니에 츄르 있어?",
                 age: "21", height: "178cm", weight: "70kg", year: "2학년",
                 faction: "아카데미", faculty: "마법학부", attr: "어둠",
                 story: "어둠 속성 공작 가문 출신. 정보 수집과 후방 교란에 특화되어 있으며, 동물 앞에서는 평소의 음침함이 무색할 정도로 열정적으로 변합니다.",
-                images: ['https://via.placeholder.com/400x600/1a1a1a/c5a35d?text=RICHTER']
+                images: ['https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/c38435cc-d9c2-4f32-9fc4-14b5055dfd6c.png']
             },
             '이벨린': {
                 name: "이벨린 드 아르노 ♀️", quote: "있지, 저 구름 마시멜로 맛일 것 같지 않아? 내가 가서 떼어줄까?",
                 age: "21", height: "165cm", weight: "55kg", year: "2학년",
                 faction: "아카데미", faculty: "마법학부", attr: "땅",
                 story: "공작 가문의 영애이나 자유로운 환경에서 자라 규칙에 얽매이지 않습니다. 전장 구조를 변칙적으로 붕괴시키는 데 능합니다.",
-                images: ['https://via.placeholder.com/400x600/1a1a1a/c5a35d?text=EVELYN']
+                images: ['https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/a3fd1845-e387-46b3-9017-25045ca46ad9.png']
             },
             '카이렌': {
                 name: "카이렌 알테어 솔라리스 ♂️", quote: "너는 내 손바닥 안에서 가장 빛날 때가 아름다워.",
                 age: "22", height: "186cm", weight: "75kg", year: "3학년",
                 faction: "아카데미", faculty: "기사학부", attr: "화염",
                 story: "제국 황태자. 화사한 미소 아래 철저한 효율주의를 숨긴 통제관입니다. 분노할수록 오히려 정중하고 나긋한 말투로 상대를 압박합니다.",
-                images: ['https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/b3e71d37-2930-4e46-9b57-19e49c7161b3.png']
+                images: ['https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/d97a5984-2ce8-4c2c-b686-4cbf2985d4ea.png']
             },
             '카엘': {
                 name: "카엘 로젠 ♂️", quote: "하하! 오늘 내 검술이 좀 눈부셨지? 내 실력에 어울리는 화려한 무대였어.",
                 age: "22", height: "185cm", weight: "72kg", year: "3학년",
                 faction: "아카데미", faculty: "기사학부", attr: "속도",
                 story: "후작 가문의 기민한 쌍검사. 실전 감각이 매우 뛰어나며 주변을 즐겁게 만드는 천부적인 쾌남입니다.",
-                images: ['https://via.placeholder.com/400x600/1a1a1a/c5a35d?text=KAEL']
+                images: ['https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/5dc1bd2c-0f4f-44a8-9721-71e0b55dd8e4.png']
             },
             '요한': {
                 name: "요한 크라프트 ♂️", quote: "이론 따윈 던전에서 안 통한다. 몸으로 기억해라.",
                 age: "45", height: "190cm", weight: "90kg", year: "전투학 교수",
                 faction: "아카데미", faculty: "전투학", attr: "중력/물리",
                 story: "수많은 전장을 누빈 베테랑. 감정을 배제한 채 결과와 생존만을 강조하는 무자비한 교육 방식을 고수합니다.",
-                images: ['https://via.placeholder.com/400x600/1a1a1a/c5a35d?text=YOHAN']
+                images: ['https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/21cbcc32-515f-4187-82db-d520f4c5e87b.png']
             },
             '헬레나': {
                 name: "헬레나 바이스 ♀️", quote: "후후... 당신의 마력은 참 정직하게 흔들리네요. 조금 더 괴롭혀보고 싶게.",
                 age: "36", height: "172cm", weight: "58kg", year: "마법이론 교수",
                 faction: "아카데미", faculty: "마법이론", attr: "정신",
                 story: "마법 제어와 봉인의 권위자. 학생들을 관찰 대상으로 여기며 정신적인 압박을 가해 성장을 유도합니다.",
-                images: ['https://via.placeholder.com/400x600/1a1a1a/c5a35d?text=HELENA']
+                images: ['https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/3678834a-e26b-445b-b5d5-1ce293fc85be.png']
             },
             '아리시아': {
                 name: "아리시아 블랙하트 ♀️", quote: "모든 것이 무너지는 순간의 소리는 참 달콤하죠.",
                 age: "30", height: "168cm", weight: "52kg", year: "벨루나 리더",
                 faction: "벨루나", faculty: "총괄", attr: "어둠",
                 story: "벨루나의 수장. 우아한 귀부인의 태도로 완벽한 전략을 구사하며 상대를 파멸로 이끕니다.",
-                images: ['https://via.placeholder.com/400x600/1a1a1a/c5a35d?text=ALICIA']
+                images: ['https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/7c911514-86ff-4c85-bf6e-e02eedffd142.png']
             },
             '바르칸': {
                 name: "바르칸 ♂️", quote: "내 칼날이 아프냐? 네 녀석의 허술한 방어 체계가 더 거슬리는군.",
                 age: "23", height: "178cm", weight: "70kg", year: "실행부",
                 faction: "벨루나", faculty: "전투", attr: "어둠",
                 story: "벨루나의 핵심 공격수. 짧은 은발과 안대가 특징입니다. 전투에는 무자비하지만 정교한 손재주를 가졌습니다.",
-                images: ['https://via.placeholder.com/400x600/1a1a1a/c5a35d?text=BARKAN']
+                images: ['https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/29199464-9246-43e0-9658-380ba82375a1.png']
             }
         };
+
+function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.archive-section').forEach(s => s.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active');
+            window.scrollTo(0,0);
+        }
 
         const canvas = document.getElementById('manaCanvas');
         const ctx = canvas.getContext('2d');
@@ -269,112 +337,71 @@
         class Particle {
             constructor(x, y) {
                 this.x = x; this.y = y;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = Math.random() * 1.5 - 0.75;
-                this.speedY = Math.random() * -1.5 - 0.5;
+                this.size = Math.random() * 2.5 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 1.5;
+                this.speedY = (Math.random() - 0.5) * 1.5;
                 this.life = 1;
             }
-            update() { this.x += this.speedX; this.y += this.speedY; this.life -= 0.01; }
+            update() { this.x += this.speedX; this.y += this.speedY; this.life -= 0.015; }
             draw() {
-                ctx.fillStyle = `rgba(197, 163, 93, ${this.life})`;
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+                ctx.globalAlpha = this.life;
+                ctx.fillStyle = '#c5a35d';
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill();
             }
         }
-
-        window.addEventListener('mousemove', e => { for(let i=0; i<3; i++) particles.push(new Particle(e.clientX, e.clientY)); });
-
+        window.addEventListener('mousemove', e => { for(let i=0; i<2; i++) particles.push(new Particle(e.clientX, e.clientY)); });
         function animate() {
             ctx.clearRect(0,0,canvas.width,canvas.height);
-            for(let i = particles.length - 1; i >= 0; i--) {
+            for(let i=particles.length-1; i>=0; i--) {
                 particles[i].update(); particles[i].draw();
-                if(particles[i].life <= 0) particles.splice(i, 1);
+                if(particles[i].life <= 0) particles.splice(i,1);
             }
             requestAnimationFrame(animate);
         }
         animate();
 
         function startArchive() {
-            const prologue = document.getElementById('prologue');
-            prologue.style.opacity = '0';
+            document.getElementById('prologue').style.opacity = '0';
             setTimeout(() => {
-                prologue.style.display = 'none';
-                const main = document.getElementById('mainArchive');
-                main.style.display = 'block';
-                setTimeout(() => main.style.opacity = '1', 50);
-            }, 1500);
+                document.getElementById('prologue').style.display = 'none';
+                document.getElementById('mainArchive').style.display = 'block';
+                setTimeout(() => document.getElementById('mainArchive').style.opacity = '1', 50);
+            }, 1000);
         }
 
         function openModal(id) {
-            const data = charactersData[id];
-            if(!data) return;
-            
-            document.getElementById('modalName').innerText = data.name;
-            document.getElementById('modalFaction').innerText = `[${data.faction}]`;
-            document.getElementById('infoFaculty').innerText = data.faculty;
-            document.getElementById('infoAttr').innerText = data.attr;
-            document.getElementById('infoAge').innerText = data.age;
-            document.getElementById('infoHeight').innerText = data.height;
-            document.getElementById('infoWeight').innerText = data.weight;
-            document.getElementById('infoYear').innerText = data.year;
-            document.getElementById('modalStory').innerText = data.story;
-            document.getElementById('modalQuote').innerText = `"${data.quote}"`;
-            
-            const imgEl = document.getElementById('modalImg');
-            imgEl.src = data.images[0];
-            
-            const thumbStrip = document.getElementById('thumbStrip');
-            thumbStrip.innerHTML = '';
-            data.images.forEach((src, idx) => {
-                const t = document.createElement('img');
-                t.src = src; t.className = 'thumb' + (idx === 0 ? ' active' : '');
-                t.onclick = () => { 
-                    imgEl.src = src; 
-                    document.querySelectorAll('.thumb').forEach(el => el.classList.remove('active'));
-                    t.classList.add('active');
-                };
-                thumbStrip.appendChild(t);
-            });
-
-            const modal = document.getElementById('charModal');
-            modal.style.display = 'flex';
-            setTimeout(() => modal.classList.add('show'), 10);
+            const d = charactersData[id];
+            document.getElementById('modalName').innerText = d.name;
+            document.getElementById('infoYear').innerText = d.year;
+            document.getElementById('modalStory').innerText = d.story;
+            document.getElementById('modalQuote').innerText = `"${d.quote}"`;
+            document.getElementById('modalImg').src = d.images[0];
+            document.getElementById('charModal').style.display = 'flex';
+            setTimeout(() => document.getElementById('charModal').classList.add('show'), 10);
         }
 
         function closeModal() {
-            const modal = document.getElementById('charModal');
-            modal.classList.remove('show');
-            setTimeout(() => modal.style.display = 'none', 400);
+            document.getElementById('charModal').classList.remove('show');
+            setTimeout(() => document.getElementById('charModal').style.display = 'none', 400);
         }
 
-        function initCards() {
-            const grids = {
-                student: document.getElementById('studentGrid'),
-                faculty: document.getElementById('facultyGrid'),
-                belluna: document.getElementById('bellunaGrid')
-            };
-
-            for (let key in charactersData) {
-                const c = charactersData[key];
+        function init() {
+            const sG = document.getElementById('studentGrid');
+            const fG = document.getElementById('facultyGrid');
+            const bG = document.getElementById('bellunaGrid');
+            for(let k in charactersData) {
+                const c = charactersData[k];
                 const card = document.createElement('div');
                 card.className = 'char-card';
-                card.onclick = () => openModal(key);
-                card.innerHTML = `
-                    <div class="corner tl"></div>
-                    <span class="card-num">${c.year}</span>
-                    <h3>${c.name}</h3>
-                    <p>${c.faculty}</p>
-                    <div class="corner br"></div>
-                `;
-
-                if (c.faction === "아카데미") {
-                    if (c.year.includes("교수")) grids.faculty.appendChild(card);
-                    else grids.student.appendChild(card);
-                } else {
-                    grids.belluna.appendChild(card);
-                }
+                card.onclick = () => openModal(k);
+                card.innerHTML = `<span class="tag">${c.year}</span><h3>${c.name}</h3><p style="font-size:0.8rem">${c.faculty}</p>`;
+                if(c.faction === "아카데미") {
+                    if(c.year.includes("교수")) fG.appendChild(card);
+                    else sG.appendChild(card);
+                } else bG.appendChild(card);
             }
         }
-        window.onload = initCards;
+        window.onload = init;
     </script>
 </body>
 </html>
