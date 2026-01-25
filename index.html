@@ -9,40 +9,57 @@
         * { margin:0; padding:0; box-sizing:border-box; }
         body { background:var(--bg-color); color:var(--text-dim); font-family:'Nanum Myeongjo',serif; line-height:1.6; overflow-x:hidden; }
         body::before { content:""; position:fixed; inset:0; background-image:radial-gradient(rgba(197,163,93,0.05) 1px,transparent 0); background-size:40px 40px; z-index:-1; }
-        #particle-canvas { position:fixed; top:0; left:0; pointer-events:none; z-index:10000; }
+        
         .prologue-overlay { position:fixed; inset:0; background:#050507; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:99999; transition:1s; }
         .enter-btn { background:none; border:1px solid var(--text-gold); color:var(--text-gold); padding:15px 50px; cursor:pointer; letter-spacing:5px; transition:0.4s; }
         .enter-btn:hover { background:var(--text-gold); color:#000; box-shadow:0 0 20px var(--text-gold); }
+        
         .main-archive { display:none; opacity:0; padding:20px; max-width:1100px; margin:0 auto; transition:1s; }
         .nav-tabs { display:flex; justify-content:center; gap:10px; margin-bottom:30px; position:sticky; top:0; background:var(--bg-color); padding:15px; z-index:100; border-bottom:var(--border-style); }
-        .tab-btn { background:none; border:none; color:var(--text-dim); cursor:pointer; padding:5px 15px; }
+        .tab-btn { background:none; border:none; color:var(--text-dim); cursor:pointer; padding:5px 15px; font-weight: bold; }
         .tab-btn.active { color:var(--text-gold); border-bottom:2px solid var(--text-gold); }
+        
         .archive-section { display:none; animation:fadeIn 0.6s forwards; }
         .archive-section.active { display:block; }
         @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+        
         .section-img-placeholder { width:100%; height:250px; background:#111; border:var(--border-style); margin-bottom:25px; position:relative; overflow:hidden; }
         .section-img-placeholder img { width:100%; height:100%; object-fit:cover; opacity:0.5; }
         .sec-title { color:var(--text-gold); border-left:3px solid var(--text-gold); padding-left:15px; margin:30px 0 20px; font-size:1.4rem; }
         .content-card { background:rgba(255,255,255,0.03); padding:25px; border:1px solid rgba(197,163,93,0.1); margin-bottom:20px; }
+        
         .dorm-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:15px; margin:20px 0; }
         .dorm-item { padding:20px; background:rgba(255,255,255,0.02); border:1px solid rgba(197,163,93,0.1); transition:0.4s; }
-        .dorm-item:hover { background:rgba(197,163,93,0.1); border-color:var(--text-gold); }
-        .char-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:15px; }
+        
+        .char-category-title { color: var(--text-gold); margin: 40px 0 20px; font-size: 1.2rem; letter-spacing: 2px; border-bottom: 1px solid rgba(197,163,93,0.2); padding-bottom: 5px; }
+        .char-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:15px; margin-bottom: 30px; }
         .char-card { background:var(--card-bg); border:1px solid rgba(197,163,93,0.1); padding:20px; cursor:pointer; text-align:center; transition:0.3s; }
+        .char-card:hover { border-color: var(--text-gold); transform: translateY(-5px); }
+
         .notice-board { display:flex; flex-direction:column; gap:15px; }
-        .notice-item { background:rgba(255,255,255,0.03); border:1px solid rgba(197,163,93,0.1); padding:15px; position:relative; }
+        .notice-item { background:rgba(255,255,255,0.03); border:1px solid rgba(197,163,93,0.1); padding:15px; }
         .rank-badge { font-weight:bold; color:var(--text-gold); border:1px solid var(--text-gold); padding:2px 8px; font-size:0.8rem; margin-right:10px; }
-        .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:10000; justify-content:center; align-items:center; padding:10px; }
-        .modal-content { background:#0d0e12; border:1px solid var(--text-gold); width:100%; max-width:900px; display:flex; position:relative; }
-        .modal-left, .modal-right { flex:1; padding:25px; }
-        .info-table { width:100%; font-size:0.85rem; border-collapse:collapse; }
-        .info-table td { padding:5px; border-bottom:1px solid #222; }
-        @media (max-width:768px) { .modal-content { flex-direction:column; overflow-y:auto; } .nav-tabs { flex-wrap:wrap; } }
+
+        /* Modal Styles */
+        .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:10000; justify-content:center; align-items:center; padding:20px; }
+        .modal-content { background:#0d0e12; border:1px solid var(--text-gold); width:100%; max-width:900px; display:flex; position:relative; max-height: 90vh; overflow: hidden; }
+        .modal-left { flex: 1; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .modal-left img { width: 100%; height: 100%; object-fit: contain; }
+        .modal-right { flex: 1.2; padding: 30px; overflow-y: auto; }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 2rem; color: var(--text-gold); cursor: pointer; z-index: 10; }
+        
+        .info-table { width:100%; font-size:0.85rem; border-collapse:collapse; margin: 20px 0; }
+        .info-table td { padding:8px; border-bottom:1px solid #222; }
+        .info-label { color: var(--text-gold); width: 60px; font-weight: bold; }
+
+        .thumb-nav { display: flex; gap: 10px; margin-top: 15px; }
+        .thumb-item { width: 50px; height: 50px; object-fit: cover; border: 1px solid #444; cursor: pointer; opacity: 0.6; }
+        .thumb-item.active { border-color: var(--text-gold); opacity: 1; }
+
+        @media (max-width:768px) { .modal-content { flex-direction:column; overflow-y:auto; } .modal-left { height: 300px; } }
     </style>
 </head>
 <body>
-
-    <canvas id="particle-canvas"></canvas>
 
     <div class="prologue-overlay" id="prologue">
         <h1 style="font-size:2.5rem; color:var(--text-gold); letter-spacing:10px; margin-bottom:2rem; text-align:center;">ASTREL<br>ARCHIVE</h1>
@@ -62,94 +79,9 @@
             <div class="section-img-placeholder">
                 <img src="https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/579d4411-d771-4529-a0d5-71a4311eae6e.png" alt="World Map">
                 <div style="position:absolute; inset:0; background:radial-gradient(circle, transparent 40%, rgba(0,0,0,0.8));"></div>
-                <div style="position:absolute; top:20px; right:20px; font-size:0.7rem; color:var(--text-gold); border:1px solid var(--text-gold); padding:2px 8px; letter-spacing:2px; background:rgba(0,0,0,0.5);">TOPOGRAPHIC DATA</div>
             </div>
-
-            <h2 class="sec-title">MAP NAVIGATION — 지리 노출 수칙</h2>
-            <div class="content-card" style="border-style: dashed; background: rgba(197, 163, 93, 0.02);">
-                <p style="font-size: 0.8rem; margin-bottom: 10px; color: var(--text-gold); font-weight: bold;">[ 인지 지침 ]</p>
-                <ul style="list-style: '◈ '; padding-left: 15px; font-size: 0.85rem;">
-                    <li>공간은 실제 <span style="color:#fff;">발을 딛는 지리</span>만 노출하며, 내부와 외부를 엄격히 분리한다.</li>
-                    <li>정교한 전경 묘사보다는 <span style="color:#fff;">이동 가능 여부와 시야</span>를 우선하여 감각한다.</li>
-                    <li>현재 위치에서 도달할 수 없는 원거리 데이터는 노출하지 않는다.</li>
-                </ul>
-            </div>
-
-            <div class="location-box">
-                <h3 style="color:var(--text-gold); font-size:1rem; margin-bottom:10px; display:flex; align-items:center; gap:8px;">
-                    <span style="width:8px; height:8px; background:var(--text-gold); border-radius:50%;"></span> ACADEMY INTERNAL
-                </h3>
-                <div class="dorm-grid">
-                    <div class="dorm-item">
-                        <h4>교육 및 생활 구역</h4>
-                        <p style="font-size:0.8rem; opacity:0.8;">강의동, 실습장, 기숙사, 도서관. 등급에 따른 출입 제한 존재.</p>
-                    </div>
-                    <div class="dorm-item">
-                        <h4>제한 구역</h4>
-                        <p style="font-size:0.8rem; opacity:0.8;">지하 연구실, 행정동. 미궁(Dungeon) 포탈과 연결됨.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="location-box" style="margin-top:20px;">
-                <h3 style="color:#ff4d4d; font-size:1rem; margin-bottom:10px; display:flex; align-items:center; gap:8px;">
-                    <span style="width:8px; height:8px; background:#ff4d4d; border-radius:50%;"></span> OUTSIDE BOUNDARY
-                </h3>
-                <div class="content-card" style="background:rgba(255, 255, 255, 0.01);">
-                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:15px;">
-                        <div><p style="color:#fff; font-size:0.85rem;"><b>📍 주변 마을</b></p><p style="font-size:0.8rem; opacity:0.7;">주요 보급로 및 정보 수집처.</p></div>
-                        <div><p style="color:#fff; font-size:0.85rem;"><b>📍 중앙 도시</b></p><p style="font-size:0.8rem; opacity:0.7;">귀족 가문과 정치적 격전지.</p></div>
-                        <div style="grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,0.05); padding-top:10px;">
-                            <p style="color:#ff4d4d; font-size:0.85rem;"><b>📍 위험지 및 폐허</b></p><p style="font-size:0.8rem; opacity:0.7;">비공식 던전 및 오염지. 무단 방문 시 징계.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="tab-academy" class="archive-section">
-            <h2 class="sec-title">기숙사 분류 (HOUSES)</h2>
-            <div class="dorm-grid">
-                <div class="dorm-item"><h3>🦁 Vulcanus</h3><p>용기와 투지. 기사학부 중심.</p></div>
-                <div class="dorm-item"><h3>🐬 Neptunus</h3><p>지혜와 마법. 연구자들의 집합소.</p></div>
-                <div class="dorm-item"><h3>🦚 Aurelia</h3><p>고결과 사교. 황실/귀족 파벌.</p></div>
-                <div class="dorm-item"><h3>🦉 Minerva</h3><p>이성과 진리. 실무 위주 탐험가.</p></div>
-            </div>
-            <h2 class="sec-title">학부별 수업 과정</h2>
-            <div class="dorm-grid">
-                <div class="dorm-item"><h3>기사학부</h3><p>전투학, 전술 연습, 신체 강화, 던전 탐사 실습</p></div>
-                <div class="dorm-item"><h3>마법학부</h3><p>마력 제어, 연금술, 테이밍, 마법 실습</p></div>
-            </div>
-        </section>
-
-        <section id="tab-dungeon" class="archive-section">
-            <div class="section-img-placeholder" style="border-color: var(--danger);">
-                <img src="https://i.pinimg.com/originals/91/9d/b1/919db10705f11e9389f417f735d45e43.jpg">
-                <div style="position:absolute; top:10px; left:10px; background:rgba(255,0,0,0.3); padding:5px 12px; font-size:0.75rem; color:var(--danger); border:1px solid var(--danger);">RESTRICTED ACCESS</div>
-            </div>
-            <h2 class="sec-title" style="color:var(--danger); border-color:var(--danger);">포탈 게이트 및 조사 보고서</h2>
-            <div class="content-card">
-                <p>던전 공략은 전술실의 <b>[던전 조사 보고서]</b> 열람에서 시작됩니다.</p>
-                <ul style="margin-top:10px; font-size:0.9rem;">
-                    <li><b>보고서 랭크:</b> 기재된 등급(F~S)이 포탈 목적지와 마물 난이도를 결정합니다.</li>
-                    <li><b>포탈 이동:</b> 승인된 보고서 지참 후 중앙 게이트를 통해 해당 좌표로 전송됩니다.</li>
-                </ul>
-            </div>
-            <div class="grid-layout">
-                <div class="grid-item" style="border-left: 3px solid #555;"><h3>하급 (F~D)</h3><p>시뮬레이션 및 아카데미 인근 안전 지대.</p></div>
-                <div class="grid-item" style="border-left: 3px solid var(--text-gold);"><h3>중급 (C~B)</h3><p>제국 외곽 및 위험지. 변칙 마력 감지 구역.</p></div>
-                <div class="grid-item" style="border-left: 3px solid var(--danger);"><h3>상급 (A~S)</h3><p>심연의 균열 및 국가 금지 구역.</p></div>
-            </div>
-        </section>
-
-        <section id="tab-rank" class="archive-section">
-            <h2 class="sec-title">승급 규정 및 필수 조건</h2>
-            <div class="notice-board">
-                <div class="notice-item"><div class="notice-tag">NEWBIE</div><span class="rank-badge">F → E</span><span class="notice-title">기초 전술 역량 평가</span><div class="notice-body">- 시뮬레이션 던전 보고서 2회 제출 필수</div></div>
-                <div class="notice-item"><div class="notice-tag">JUNIOR</div><span class="rank-badge">E → D</span><span class="notice-title">실전 지역 포탈 탑승 권한</span><div class="notice-body">- 하급 던전 보고서 2회 + 특정 학내 사건 1회 개입</div></div>
-                <div class="notice-item highlight"><div class="notice-tag" style="background:var(--text-gold); color:#000;">ELITE</div><span class="rank-badge">C → B</span><span class="notice-title">상급 전술 인원 선발</span><div class="notice-body">- 중급 던전 보고서 3회 + 정치/평가 개입 필수</div></div>
-                <div class="notice-item master"><div class="notice-tag" style="background:#7d49ff;">TOP CLASS</div><span class="rank-badge">A → S</span><span class="notice-title">국가 전력급 인증</span><div class="notice-body">- 최상급 던전 보고서 1회 + 국가적 개입 사건 종결</div></div>
-            </div>
+            <h2 class="sec-title">MAP NAVIGATION</h2>
+            <div class="content-card">아카데미 내부 및 외부 지리 정보가 표시됩니다.</div>
         </section>
 
         <section id="tab-character" class="archive-section">
@@ -157,38 +89,32 @@
             <div class="char-grid" id="grid-student"></div>
             <h3 class="char-category-title">PROFESSORS</h3>
             <div class="char-grid" id="grid-professor"></div>
+            <h3 class="char-category-title">BELLUNA</h3>
+            <div class="char-grid" id="grid-belluna"></div>
         </section>
+
+        <section id="tab-academy" class="archive-section"><h2 class="sec-title">ACADEMY INFO</h2><div class="content-card">기숙사 및 학부 정보 구역</div></section>
+        <section id="tab-dungeon" class="archive-section"><h2 class="sec-title">DUNGEON DATA</h2><div class="content-card">던전 보고서 및 위험 등급</div></section>
+        <section id="tab-rank" class="archive-section"><h2 class="sec-title">RANK SYSTEM</h2><div class="content-card">승급 규정 안내</div></section>
     </main>
 
     <div id="charModal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div class="modal-left"><img id="modalImg" src=""></div>
+            <div class="modal-left">
+                <img id="modalImg" src="">
+            </div>
             <div class="modal-right">
                 <h2 id="modalName" style="color:var(--text-gold);"></h2>
-                <p id="modalQuote" style="font-style:italic; margin-bottom:15px; color:#888;"></p>
-                <div id="modalStory" style="color:#bbb; border-top:1px solid #222; padding-top:15px;"></div>
+                <p id="modalQuote" style="font-style:italic; margin:10px 0; color:#888;"></p>
+                <table class="info-table" id="infoTable"></table>
+                <div id="modalStory" style="color:#bbb; border-top:1px solid #222; padding-top:15px; font-size:0.9rem;"></div>
+                <div class="thumb-nav" id="thumbNav"></div>
             </div>
         </div>
     </div>
 
     <script>
-        function startArchive() {
-            document.getElementById('prologue').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('prologue').style.display = 'none';
-                document.getElementById('mainArchive').style.display = 'block';
-                setTimeout(() => document.getElementById('mainArchive').style.opacity = '1', 50);
-                renderChars();
-            }, 800);
-        }
-
-        function switchTab(e, id) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.archive-section').forEach(s => s.classList.remove('active'));
-            e.target.classList.add('active');
-            document.getElementById('tab-' + id).classList.add('active');
-        }
         
         const charactersData = {
             '엘리오': {
@@ -337,21 +263,19 @@ function startArchive() {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.archive-section').forEach(s => s.classList.remove('active'));
             e.target.classList.add('active');
-            document.getElementById('tab-'+id).classList.add('active');
+            document.getElementById('tab-' + id).classList.add('active');
         }
 
         function renderChars() {
-            // 초기화
-            document.getElementById('grid-student').innerHTML = '';
-            document.getElementById('grid-professor').innerHTML = '';
-            document.getElementById('grid-belluna').innerHTML = '';
+            const grids = ['student', 'professor', 'belluna'];
+            grids.forEach(g => document.getElementById('grid-' + g).innerHTML = '');
 
             for (let key in charactersData) {
                 const c = charactersData[key];
                 const card = document.createElement('div');
                 card.className = 'char-card';
                 card.onclick = () => openModal(key);
-                card.innerHTML = `<div style="color:var(--text-gold); font-size:0.7rem;">${c.faculty}</div><h3>${key}</h3>`;
+                card.innerHTML = `<div style="color:var(--text-gold); font-size:0.7rem; margin-bottom:5px;">${c.faculty}</div><h3 style="color:#fff;">${key}</h3>`;
                 
                 const targetGrid = document.getElementById('grid-' + c.type);
                 if (targetGrid) targetGrid.appendChild(card);
@@ -365,8 +289,7 @@ function startArchive() {
             document.getElementById('modalStory').innerText = c.story;
             document.getElementById('modalImg').src = c.images[0];
             
-            const table = document.getElementById('infoTable');
-            table.innerHTML = `
+            document.getElementById('infoTable').innerHTML = `
                 <tr><td class="info-label">나이</td><td>${c.age}</td><td class="info-label">신장</td><td>${c.height}</td></tr>
                 <tr><td class="info-label">체중</td><td>${c.weight}</td><td class="info-label">학년</td><td>${c.year}</td></tr>
                 <tr><td class="info-label">소속</td><td>${c.faction}</td><td class="info-label">학부</td><td>${c.faculty}</td></tr>
@@ -375,19 +298,18 @@ function startArchive() {
 
             const thumbNav = document.getElementById('thumbNav');
             thumbNav.innerHTML = '';
-            if(c.images.length > 1) {
-                c.images.forEach((img, idx) => {
-                    const thumb = document.createElement('img');
-                    thumb.src = img;
-                    thumb.className = 'thumb-item' + (idx === 0 ? ' active' : '');
-                    thumb.onclick = () => {
-                        document.getElementById('modalImg').src = img;
-                        document.querySelectorAll('.thumb-item').forEach(t => t.classList.remove('active'));
-                        thumb.classList.add('active');
-                    };
-                    thumbNav.appendChild(thumb);
-                });
-            }
+            c.images.forEach((img, idx) => {
+                const thumb = document.createElement('img');
+                thumb.src = img;
+                thumb.className = 'thumb-item' + (idx === 0 ? ' active' : '');
+                thumb.onclick = () => {
+                    document.getElementById('modalImg').src = img;
+                    document.querySelectorAll('.thumb-item').forEach(t => t.classList.remove('active'));
+                    thumb.classList.add('active');
+                };
+                thumbNav.appendChild(thumb);
+            });
+
             document.getElementById('charModal').style.display = 'flex';
         }
 
