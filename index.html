@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASTREL ACADEMY - Archive</title>
     <style>
-        /* [스타일 시트는 기존과 동일하므로 유지합니다] */
         :root {
             --bg-color: #08080a;
             --text-gold: #c5a35d;
             --text-dim: #8e8e93;
             --accent-glow: rgba(197, 163, 93, 0.2);
-            --card-bg: rgba(20, 22, 28, 0.8);
+            --card-bg: rgba(20, 22, 28, 0.6);
             --border-style: 1px solid rgba(197, 163, 93, 0.3);
         }
 
@@ -30,7 +29,7 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-color);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 3000; transition: opacity 1.5s ease;
+            z-index: 5000; transition: opacity 1.5s ease;
         }
         .prologue-content { max-width: 800px; text-align: center; line-height: 2.2; padding: 40px; }
         .prologue-text p {
@@ -43,7 +42,6 @@
         .prologue-text p:nth-child(4) { animation-delay: 7s; }
         .prologue-text p:nth-child(5) { animation-delay: 9s; }
         
-        .highlight { color: var(--text-gold); font-weight: bold; }
         @keyframes fadeInReveal { to { opacity: 1; transform: translateY(0); filter: blur(0); } }
 
         .enter-btn {
@@ -53,53 +51,60 @@
         }
         .enter-btn:hover { background: var(--text-gold); color: black; box-shadow: 0 0 30px var(--accent-glow); }
 
-        .main-archive { opacity: 0; display: none; padding: 100px 20px; max-width: 1400px; margin: 0 auto; transition: opacity 2s ease; }
-        .archive-header { text-align: center; margin-bottom: 80px; }
-        .archive-header h1 { font-size: 3.5rem; color: var(--text-gold); letter-spacing: 12px; }
-        .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
-        .category-card {
-            background: var(--card-bg); border: var(--border-style); padding: 50px;
-            position: relative; cursor: pointer; transition: 0.4s;
+        .main-archive { display: none; opacity: 0; padding: 60px 20px; max-width: 1400px; margin: 0 auto; transition: 2s; }
+        .archive-header { text-align: center; margin-bottom: 60px; }
+        .archive-header h1 { font-size: 3rem; color: var(--text-gold); letter-spacing: 15px; margin-bottom: 10px; }
+
+        .archive-section { margin-bottom: 80px; }
+        .section-title { 
+            color: var(--text-gold); font-size: 1.5rem; letter-spacing: 3px; 
+            border-bottom: 1px solid var(--accent-glow); padding-bottom: 10px; margin-bottom: 30px;
+            display: flex; align-items: center; gap: 15px;
         }
-        .category-card:hover { transform: translateY(-10px); background: rgba(30, 32, 40, 0.9); border-color: var(--text-gold); }
-        .card-num { color: var(--text-gold); font-size: 0.9rem; margin-bottom: 10px; display: block; }
-        .corner { position: absolute; width: 20px; height: 20px; border: 1px solid var(--text-gold); }
-        .tl { top: 15px; left: 15px; border-right: 0; border-bottom: 0; }
-        .br { bottom: 15px; right: 15px; border-left: 0; border-top: 0; }
+        .section-title::before { content: ''; width: 4px; height: 20px; background: var(--text-gold); display: inline-block; }
+
+        .category-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        
+        .info-card {
+            background: rgba(30, 32, 40, 0.4); border: 1px solid rgba(197, 163, 93, 0.2);
+            padding: 30px; position: relative; transition: 0.3s; cursor: pointer;
+        }
+        .info-card:hover { border-color: var(--text-gold); background: rgba(197, 163, 93, 0.05); }
+
+        .char-card {
+            background: var(--card-bg); border: var(--border-style); padding: 25px;
+            position: relative; cursor: pointer; transition: 0.4s; overflow: hidden;
+        }
+        .char-card:hover { transform: translateY(-5px); border-color: var(--text-gold); background: rgba(30, 32, 40, 0.9); }
+        .char-card h3 { color: #fff; margin: 10px 0 5px 0; letter-spacing: 1px; }
+        .char-card p { font-size: 0.85rem; color: var(--text-gold); opacity: 0.8; }
+        .card-num { font-size: 0.7rem; color: var(--text-gold); opacity: 0.5; position: absolute; top: 15px; right: 15px; }
 
         .modal {
-            display: none; position: fixed; z-index: 4000; left: 0; top: 0;
-            width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(20px);
-            justify-content: center; align-items: center; opacity: 0; transition: opacity 0.4s;
+            display: none; position: fixed; z-index: 6000; left: 0; top: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px);
+            justify-content: center; align-items: center; opacity: 0; transition: 0.4s;
         }
         .modal.show { display: flex; opacity: 1; }
         .modal-content {
-            background: #0f1118; border: 1px solid var(--text-gold); width: 95%; max-width: 1200px;
-            height: 85vh; position: relative; display: flex; overflow: hidden;
+            background: #0f1118; border: 1px solid var(--text-gold); width: 90%; max-width: 1100px;
+            height: 80vh; position: relative; display: flex; overflow: hidden;
         }
-        .modal-body { display: flex; width: 100%; height: 100%; }
-
-        .modal-left {
-            flex: 1.2; background: rgba(0, 0, 0, 0.5); display: flex; flex-direction: column;
-            padding: 30px; border-right: 1px solid rgba(197, 163, 93, 0.2);
-        }
-        .main-img-container { flex: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; border: 1px solid rgba(197, 163, 93, 0.1); }
-        .main-img-container img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .thumb-strip { display: flex; gap: 10px; margin-top: 20px; height: 70px; justify-content: center; }
-        .thumb { width: 60px; height: 60px; border: 1px solid #333; cursor: pointer; object-fit: cover; opacity: 0.5; }
-        .thumb.active { border-color: var(--text-gold); opacity: 1; }
-
-        .modal-right { flex: 1.5; padding: 50px; overflow-y: auto; display: flex; flex-direction: column; gap: 25px; }
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; border-top: 1px solid rgba(197, 163, 93, 0.2); border-bottom: 1px solid rgba(197, 163, 93, 0.2); padding: 20px 0; }
-        .stat-item { display: flex; flex-direction: column; align-items: center; }
-        .stat-label { font-size: 0.7rem; color: var(--text-gold); margin-bottom: 5px; }
-        .stat-value { color: #fff; font-weight: bold; }
+        .modal-body { display: flex; width: 100%; }
+        .modal-left { flex: 1; background: #000; display: flex; align-items: center; justify-content: center; border-right: 1px solid rgba(197,163,93,0.2); }
+        .modal-left img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .modal-right { flex: 1.2; padding: 40px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px 0; border-top: 1px solid #333; border-bottom: 1px solid #333; }
+        .stat-item { text-align: center; }
+        .stat-label { font-size: 0.65rem; color: var(--text-gold); display: block; }
+        .stat-value { color: #eee; font-size: 0.9rem; font-weight: bold; }
+        .close-btn { position: absolute; top: 20px; right: 25px; font-size: 2rem; color: var(--text-gold); cursor: pointer; z-index: 10; }
+        .quote-box { border-left: 2px solid var(--text-gold); padding-left: 15px; font-style: italic; color: #fff; margin-top: 10px; }
         
-        .icon-row { display: flex; gap: 10px; }
-        .icon-tag { padding: 5px 15px; border: 1px solid var(--text-gold); font-size: 0.8rem; color: var(--text-gold); background: rgba(197,163,93,0.1); }
-        .story-box { line-height: 1.8; color: #ccc; }
-        .quote-box { border-left: 3px solid var(--text-gold); padding-left: 20px; font-style: italic; color: #fff; font-size: 1.1rem; margin-top: 10px; }
-        .close-btn { position: absolute; top: 20px; right: 30px; font-size: 2.5rem; color: var(--text-gold); cursor: pointer; z-index: 10; }
+        /* 썸네일 스타일 추가 */
+        #thumbStrip { display: flex; gap: 10px; margin-top: 20px; }
+        .thumb { width: 60px; height: 60px; object-fit: cover; border: 1px solid #333; cursor: pointer; opacity: 0.5; }
+        .thumb.active { border-color: var(--text-gold); opacity: 1; }
     </style>
 </head>
 <body>
@@ -122,22 +127,21 @@
     <main class="main-archive" id="mainArchive">
         <header class="archive-header">
             <h1>ASTREL</h1>
-            <p>RECORDS OF THE MAGICAL ACADEMY</p>
+            <p style="letter-spacing: 5px; font-size: 0.8rem;">ACADEMY ARCHIVE SYSTEM v2.0</p>
         </header>
-        <div class="category-grid">
-            <div class="category-card" onclick="openModal('엘리오')">
-                <div class="corner tl"></div><span class="card-num">01.</span><h2>엘리오 루멘</h2><p>마법학부 1학년</p><div class="corner br"></div>
+
+        <section class="archive-section">
+            <h2 class="section-title">DATABASE: WORLD INFO</h2>
+            <div class="category-grid">
+                <div class="info-card" onclick="alert('세계관 데이터 로딩 중...')"><h3>THE WORLD</h3><p>몬스터와 던전, 그리고 마력의 흐름.</p></div>
+                <div class="info-card" onclick="alert('기숙사 정보 로딩 중...')"><h3>DORMITORIES</h3><p>태양의 루멘, 달의 셀레네 등 기숙사 소개.</p></div>
+                <div class="info-card" onclick="alert('지리 데이터 로딩 중...')"><h3>GEOGRAPHY</h3><p>아카데미 주변 주요 거점 및 위험 지역.</p></div>
             </div>
-            <div class="category-card" onclick="openModal('카이렌')">
-                <div class="corner tl"></div><span class="card-num">02.</span><h2>카이렌 알테어</h2><p>기사학부 3학년</p><div class="corner br"></div>
-            </div>
-            <div class="category-card" onclick="openModal('라파엘')">
-                <div class="corner tl"></div><span class="card-num">03.</span><h2>라파엘</h2><p>기사학부 2학년</p><div class="corner br"></div>
-            </div>
-            <div class="category-card" onclick="openModal('아리시아')">
-                <div class="corner tl"></div><span class="card-num">04.</span><h2>아리시아</h2><p>벨루나 리더</p><div class="corner br"></div>
-            </div>
-        </div>
+        </section>
+
+        <section class="archive-section"><h2 class="section-title">ACADEMY: STUDENTS</h2><div class="category-grid" id="studentGrid"></div></section>
+        <section class="archive-section"><h2 class="section-title">ACADEMY: FACULTY</h2><div class="category-grid" id="facultyGrid"></div></section>
+        <section class="archive-section"><h2 class="section-title" style="color: #ff4d4d;">EXTERNAL: BELLUNA</h2><div class="category-grid" id="bellunaGrid"></div></section>
     </main>
 
     <div id="charModal" class="modal" onclick="if(event.target==this) closeModal()">
@@ -145,29 +149,22 @@
             <span class="close-btn" onclick="closeModal()">&times;</span>
             <div class="modal-body">
                 <div class="modal-left">
-                    <div class="main-img-container">
-                        <img id="modalImg" src="" alt="캐릭터 이미지">
-                    </div>
-                    <div id="thumbStrip" class="thumb-strip"></div>
+                    <div style="display:flex; flex-direction:column; align-items:center;">
+                        <img id="modalImg" src="">
+                        <div id="thumbStrip"></div> </div>
                 </div>
                 <div class="modal-right">
-                    <div>
-                        <h2 id="modalName" style="color:var(--text-gold); font-size: 3rem; letter-spacing: 2px;"></h2>
-                        <p id="modalFaction" style="color:var(--text-dim); margin-top:5px; letter-spacing: 1px;"></p>
-                    </div>
-                    <div class="icon-row">
-                        <div id="iconFaculty" class="icon-tag"></div>
-                        <div id="iconAttr" class="icon-tag"></div>
-                    </div>
+                    <h2 id="modalName" style="color:var(--text-gold); font-size: 2.5rem;"></h2>
+                    <p id="modalFaction" style="color:var(--text-gold); font-weight:bold;"></p> <p id="infoYear" style="color:var(--text-dim); margin-top:-15px;"></p>
                     <div class="stats-grid">
-                        <div class="stat-item"><span class="stat-label">나이</span><span id="infoAge" class="stat-value"></span></div>
+                        <div class="stat-item"><span class="stat-label">학부</span><span id="infoFaculty" class="stat-value"></span></div>
+                        <div class="stat-item"><span class="stat-label">속성</span><span id="infoAttr" class="stat-value"></span></div>
                         <div class="stat-item"><span class="stat-label">신장</span><span id="infoHeight" class="stat-value"></span></div>
-                        <div class="stat-item"><span class="stat-label">체중</span><span id="infoWeight" class="stat-value"></span></div>
-                        <div class="stat-item"><span class="stat-label">학년</span><span id="infoYear" class="stat-value"></span></div>
-                    </div>
+                        <div class="stat-item"><span class="stat-label">나이</span><span id="infoAge" class="stat-value"></span></div>
+                        <div class="stat-item" style="display:none;"><span id="infoWeight"></span></div> </div>
                     <div class="story-box">
                         <h4 style="color:var(--text-gold); margin-bottom:10px;">[ARCHIVE RECORD]</h4>
-                        <p id="modalStory"></p>
+                        <p id="modalStory" style="line-height: 1.6; font-size: 0.95rem;"></p>
                     </div>
                     <div id="modalQuote" class="quote-box"></div>
                 </div>
@@ -176,116 +173,93 @@
     </div>
 
     <script>
-        // 1. 데이터 정의 (가장 먼저 선언)
-const charactersData = {
-    // --- 1학년 ---
-    '엘리오': {
-        name: "엘리오 루멘 ♂️",
-        quote: "음... 아까 한 말, 다시 해줄래? 자느라 못 들었어...",
-        age: "20", height: "175cm", weight: "71kg", year: "1학년",
-        faction: "아카데미", faculty: "마법학부", attr: "다속성",
-        story: "고위 마법 공작 가문 출신. 서적과 실험에 파묻혀 성장한 탓에 현실 회피 성향과 만성 졸음을 달고 삽니다. 황태자 카이렌을 나른하게 뒤따르며 축적한 방대한 학술 지식은 결정적인 순간 침착한 조력자의 힘을 발휘합니다. 장소를 가리지 않고 깊은 잠에 빠져드는 모습은 그의 일상적인 풍경입니다.",
-        images: ['https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/6c1516ea-a45c-4159-989f-2ce74090f9a9.png']
-    },
-    '아델': {
-        name: "아델 폰 슈타인 ♂️",
-        quote: "불필요한 대화는 생략하지. 결론부터 내놔.",
-        age: "20", height: "182cm", weight: "74kg", year: "1학년",
-        faction: "아카데미", faculty: "마법학부", attr: "바람",
-        story: "재상 가문의 후계자로, 어린 시절부터 카이렌과 교류하며 논리와 분석력을 갈고닦았습니다. 모든 상황을 수치로 판단하며 감정 개입을 극도로 꺼립니다. 황태자의 최측근으로서 전략을 담당하지만, 한 번 고정된 관심 대상에게는 분석을 넘어선 지독한 몰입을 보이기도 합니다.",
-        images: ['https://example.com/adel_main.png']
-    },
-    '리나': {
-        name: "리나 ♀️",
-        quote: "기사로서 당연한 일을... 앗, 방금 제 검이 헛나간 건 못 본 걸로 해주세요!",
-        age: "20", height: "169cm", weight: "57kg", year: "1학년",
-        faction: "아카데미", faculty: "기사학부", attr: "물리",
-        story: "평민 출신의 입지전적인 모범 기사. 어린 시절부터 실전 훈련을 거치며 동료 보호를 최우선으로 여기는 신념을 가졌습니다. 원칙을 중시하며 언제나 침착함을 유지하려 노력하지만, 예상치 못한 호의나 칭찬 앞에서는 철저했던 평정심이 단숨에 무너지는 인간적인 면이 있습니다.",
-        images: ['https://example.com/lina_main.png']
-    },
+        const charactersData = {
+            '엘리오': {
+                name: "엘리오 루멘 ♂️", quote: "음... 아까 한 말, 다시 해줄래? 자느라 못 들었어...",
+                age: "20", height: "175cm", weight: "71kg", year: "1학년",
+                faction: "아카데미", faculty: "마법학부", attr: "다속성",
+                story: "고위 마법 공작 가문 출신. 서적과 실험에 파묻혀 성장한 탓에 현실 회피 성향과 만성 졸음을 달고 삽니다. 황태자 카이렌을 나른하게 뒤따르며 축적한 방대한 학술 지식은 결정적인 순간 침착한 조력자의 힘을 발휘합니다.",
+                images: ['https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/6c1516ea-a45c-4159-989f-2ce74090f9a9.png']
+            },
+            '아델': {
+                name: "아델 폰 슈타인 ♂️", quote: "불필요한 대화는 생략하지. 결론부터 내놔.",
+                age: "20", height: "182cm", weight: "74kg", year: "1학년",
+                faction: "아카데미", faculty: "마법학부", attr: "바람",
+                story: "재상 가문의 후계자로, 어린 시절부터 카이렌과 교류하며 논리와 분석력을 갈고닦았습니다. 모든 상황을 수치로 판단하며 감정 개입을 극도로 꺼립니다.",
+                images: ['https://via.placeholder.com/400x600/1a1a1a/c5a35d?text=ADELE']
+            },
+            '리나': {
+                name: "리나 ♀️", quote: "기사로서 당연한 일을... 앗, 방금 제 검이 헛나간 건 못 본 걸로 해주세요!",
+                age: "20", height: "169cm", weight: "57kg", year: "1학년",
+                faction: "아카데미", faculty: "기사학부", attr: "물리",
+                story: "평민 출신의 입지전적인 모범 기사. 어린 시절부터 실전 훈련을 거치며 동료 보호를 최우선으로 여기는 신념을 가졌습니다.",
+                images: ['https://via.placeholder.com/400x600/1a1a1a/c5a35d?text=LINA']
+            },
+            '라파엘': {
+                name: "라파엘 ♂️", quote: "배가 고프면 판단력이 흐려지는 법이야. 자, 이건 내가 아끼는 간식인데.",
+                age: "21", height: "178cm", weight: "70kg", year: "2학년",
+                faction: "아카데미", faculty: "기사학부", attr: "어둠",
+                story: "다정하고 선한 인상으로 학부 내에서 두터운 신뢰를 받는 선배입니다. 식문화에 대해서는 평소의 온화함과 대비되는 엄격한 기준을 고수합니다.",
+                images: ['https://via.placeholder.com/400x600/1a1a1a/c5a35d?text=RAPHAEL']
+            },
+            '리히터': {
+                name: "리히터 크로우 ♂️", quote: "...(시선을 피하며)... 저기, 혹시 주머니에 츄르 있어?",
+                age: "21", height: "178cm", weight: "70kg", year: "2학년",
+                faction: "아카데미", faculty: "마법학부", attr: "어둠",
+                story: "어둠 속성 공작 가문 출신. 정보 수집과 후방 교란에 특화되어 있으며, 동물 앞에서는 평소의 음침함이 무색할 정도로 열정적으로 변합니다.",
+                images: ['https://via.placeholder.com/400x600/1a1a1a/c5a35d?text=RICHTER']
+            },
+            '이벨린': {
+                name: "이벨린 드 아르노 ♀️", quote: "있지, 저 구름 마시멜로 맛일 것 같지 않아? 내가 가서 떼어줄까?",
+                age: "21", height: "165cm", weight: "55kg", year: "2학년",
+                faction: "아카데미", faculty: "마법학부", attr: "땅",
+                story: "공작 가문의 영애이나 자유로운 환경에서 자라 규칙에 얽매이지 않습니다. 전장 구조를 변칙적으로 붕괴시키는 데 능합니다.",
+                images: ['https://via.placeholder.com/400x600/1a1a1a/c5a35d?text=EVELYN']
+            },
+            '카이렌': {
+                name: "카이렌 알테어 솔라리스 ♂️", quote: "너는 내 손바닥 안에서 가장 빛날 때가 아름다워.",
+                age: "22", height: "186cm", weight: "75kg", year: "3학년",
+                faction: "아카데미", faculty: "기사학부", attr: "화염",
+                story: "제국 황태자. 화사한 미소 아래 철저한 효율주의를 숨긴 통제관입니다. 분노할수록 오히려 정중하고 나긋한 말투로 상대를 압박합니다.",
+                images: ['https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/b3e71d37-2930-4e46-9b57-19e49c7161b3.png']
+            },
+            '카엘': {
+                name: "카엘 로젠 ♂️", quote: "하하! 오늘 내 검술이 좀 눈부셨지? 내 실력에 어울리는 화려한 무대였어.",
+                age: "22", height: "185cm", weight: "72kg", year: "3학년",
+                faction: "아카데미", faculty: "기사학부", attr: "속도",
+                story: "후작 가문의 기민한 쌍검사. 실전 감각이 매우 뛰어나며 주변을 즐겁게 만드는 천부적인 쾌남입니다.",
+                images: ['https://via.placeholder.com/400x600/1a1a1a/c5a35d?text=KAEL']
+            },
+            '요한': {
+                name: "요한 크라프트 ♂️", quote: "이론 따윈 던전에서 안 통한다. 몸으로 기억해라.",
+                age: "45", height: "190cm", weight: "90kg", year: "전투학 교수",
+                faction: "아카데미", faculty: "전투학", attr: "중력/물리",
+                story: "수많은 전장을 누빈 베테랑. 감정을 배제한 채 결과와 생존만을 강조하는 무자비한 교육 방식을 고수합니다.",
+                images: ['https://via.placeholder.com/400x600/1a1a1a/c5a35d?text=YOHAN']
+            },
+            '헬레나': {
+                name: "헬레나 바이스 ♀️", quote: "후후... 당신의 마력은 참 정직하게 흔들리네요. 조금 더 괴롭혀보고 싶게.",
+                age: "36", height: "172cm", weight: "58kg", year: "마법이론 교수",
+                faction: "아카데미", faculty: "마법이론", attr: "정신",
+                story: "마법 제어와 봉인의 권위자. 학생들을 관찰 대상으로 여기며 정신적인 압박을 가해 성장을 유도합니다.",
+                images: ['https://via.placeholder.com/400x600/1a1a1a/c5a35d?text=HELENA']
+            },
+            '아리시아': {
+                name: "아리시아 블랙하트 ♀️", quote: "모든 것이 무너지는 순간의 소리는 참 달콤하죠.",
+                age: "30", height: "168cm", weight: "52kg", year: "벨루나 리더",
+                faction: "벨루나", faculty: "총괄", attr: "어둠",
+                story: "벨루나의 수장. 우아한 귀부인의 태도로 완벽한 전략을 구사하며 상대를 파멸로 이끕니다.",
+                images: ['https://via.placeholder.com/400x600/1a1a1a/c5a35d?text=ALICIA']
+            },
+            '바르칸': {
+                name: "바르칸 ♂️", quote: "내 칼날이 아프냐? 네 녀석의 허술한 방어 체계가 더 거슬리는군.",
+                age: "23", height: "178cm", weight: "70kg", year: "실행부",
+                faction: "벨루나", faculty: "전투", attr: "어둠",
+                story: "벨루나의 핵심 공격수. 짧은 은발과 안대가 특징입니다. 전투에는 무자비하지만 정교한 손재주를 가졌습니다.",
+                images: ['https://via.placeholder.com/400x600/1a1a1a/c5a35d?text=BARKAN']
+            }
+        };
 
-    // --- 2학년 ---
-    '라파엘': {
-        name: "라파엘 ♂️",
-        quote: "배가 고프면 판단력이 흐려지는 법이야. 자, 이건 내가 아끼는 간식인데.",
-        age: "21", height: "178cm", weight: "70kg", year: "2학년",
-        faction: "아카데미", faculty: "기사학부", attr: "어둠",
-        story: "다정하고 선한 인상으로 학부 내에서 두터운 신뢰를 받는 선배입니다. 어떤 위기 상황에서도 침착함을 유지하며 동료들을 다독입니다. 다만, 식문화에 대해서는 평소의 온화함과 대비되는 엄격하고 깐깐한 기준을 고수하며, 유독 음식 앞에서 집요해지는 경향이 있습니다.",
-        images: ['https://example.com/raphael_main.png']
-    },
-    '리히터': {
-        name: "리히터 크로우 ♂️",
-        quote: "...(시선을 피하며)... 저기, 혹시 주머니에 츄르 있어?",
-        age: "21", height: "178cm", weight: "70kg", year: "2학년",
-        faction: "아카데미", faculty: "마법학부", attr: "어둠",
-        story: "어둠 속성 공작 가문의 폐쇄적인 교육 속에서 성장했습니다. 정보 수집과 후방 교란에 특화되어 있으며, 타인과의 접촉을 최소화한 채 관찰하는 것에 익숙합니다. 평소에는 무미건조한 태도를 유지하지만, 동물을 마주할 때만큼은 평소의 음침함이 무색할 정도로 열정적인 설명을 쏟아내곤 합니다.",
-        images: ['https://example.com/richter_main.png']
-    },
-    '이벨린': {
-        name: "이벨린 드 아르노 ♀️",
-        quote: "있지, 저 구름 마시멜로 맛일 것 같지 않아? 내가 가서 떼어줄까?",
-        age: "21", height: "165cm", weight: "55kg", year: "2학년",
-        faction: "아카데미", faculty: "마법학부", attr: "땅",
-        story: "공작 가문의 영애이나 자유로운 환경에서 자라 규칙에 얽매이지 않습니다. 전장 구조를 변칙적으로 붕괴시키거나 이동을 제어하는 등 변수를 창출하는 데 능합니다. 평소에는 맥락 없는 언행으로 주변을 당황시키지만, 상황이 뜻대로 풀리지 않을 때는 순식간에 서늘하고 진지한 기색을 드러냅니다.",
-        images: ['https://example.com/evelyn_main.png']
-    },
-
-    // --- 3학년 ---
-    '카이렌': {
-        name: "카이렌 알테어 솔라리스 ♂️",
-        quote: "너는 내 손바닥 안에서 가장 빛날 때가 아름다워.",
-        age: "22", height: "186cm", weight: "75kg", year: "3학년",
-        faction: "아카데미", faculty: "기사학부", attr: "화염",
-        story: "제국 황태자. 화사한 미소 아래 철저한 효율주의를 숨긴 통제관입니다. 분노할수록 오히려 정중하고 나긋한 말투로 상대를 압박하는 기이한 위압감을 가졌습니다. 주변을 체스판의 장기말로 여기지만, 자신이 허용한 경계 안으로 들어온 상대에게는 의외의 서툰 태도를 보이기도 합니다.",
-        images: ['https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/b3e71d37-2930-4e46-9b57-19e49c7161b3.png']
-    },
-    '카엘': {
-        name: "카엘 로젠 ♂️",
-        quote: "하하! 오늘 내 검술이 좀 눈부셨지? 내 실력에 어울리는 화려한 무대였어.",
-        age: "22", height: "185cm", weight: "72kg", year: "3학년",
-        faction: "아카데미", faculty: "기사학부", attr: "속도",
-        story: "후작 가문의 기민한 쌍검사. 경쟁 속에서 자라난 덕에 실전 감각이 매우 뛰어나며 주변을 즐겁게 만드는 천부적인 쾌남입니다. 가벼운 언행으로 실력을 가리지만, 전장에서는 누구보다 날카롭습니다. 기사로서의 위엄 못지않게 자신의 흐트러짐 없는 외양을 가꾸는 데 지대한 공을 들입니다.",
-        images: ['https://example.com/kael_main.png']
-    },
-
-    // --- 교수진 ---
-    '요한': {
-        name: "요한 크라프트 ♂️",
-        quote: "이론 따윈 던전에서 안 통한다. 몸으로 기억해라.",
-        age: "45", height: "190cm", weight: "90kg", year: "교수",
-        faction: "아카데미", faculty: "전투학", attr: "중력/물리",
-        story: "수많은 전장을 누빈 베테랑. 감정을 배제한 채 결과와 생존만을 강조하는 무자비한 교육 방식을 고수합니다. 타인과의 신체 접촉을 극도로 어색해하며 냉정한 태도를 유지하지만, 제자들이 보여주는 미숙하고도 순수한 열정 앞에서는 아주 드물게 찰나의 미소를 보이기도 합니다.",
-        images: ['https://example.com/yohan_main.png']
-    },
-    '헬레나': {
-        name: "헬레나 바이스 ♀️",
-        quote: "후후... 당신의 마력은 참 정직하게 흔들리네요. 조금 더 괴롭혀보고 싶게.",
-        age: "36", height: "172cm", weight: "58kg", year: "교수",
-        faction: "아카데미", faculty: "마법이론", attr: "정신",
-        story: "마법 제어와 봉인의 권위자. 학생들을 관찰 대상으로 여기며 정신적인 압박을 가해 성장을 유도합니다. 차갑고 계산적인 연구자의 면모가 강하지만, 교수의 본분인 제자들에 대한 책임감만큼은 결코 가볍지 않은 인간적인 깊이를 지닌 인물입니다.",
-        images: ['https://example.com/helena_main.png']
-    },
-
-    // --- 벨루나 ---
-    '아리시아': {
-        name: "아리시아 블랙하트 ♀️",
-        quote: "모든 것이 무너지는 순간의 소리는 참 달콤하죠. 당신의 마음도 포함해서요.",
-        age: "30", height: "168cm", weight: "52kg", year: "리더",
-        faction: "벨루나", faculty: "총괄", attr: "어둠",
-        story: "벨루나의 수장. 우아한 귀부인의 태도로 완벽한 전략을 구사하며 상대를 파멸로 이끕니다. 냉혹한 리더의 자질을 갖추었으나, 본인의 통제를 벗어난 사소한 실수나 예상치 못한 돌발 상황에 직면하면 평소의 여유를 잃고 묘하게 당황하는 기색을 숨기지 못하곤 합니다.",
-        images: ['https://example.com/alicia_main.png']
-    },
-    '바르칸': {
-        name: "바르칸 ♂️",
-        quote: "내 칼날이 아프냐? 네 녀석의 허술한 방어 체계가 내 눈에는 더 거슬리는군.",
-        age: "23", height: "178cm", weight: "70kg", year: "실행부",
-        faction: "벨루나", faculty: "전투", attr: "어둠",
-        story: "벨루나의 핵심 공격수. 짧은 은발과 안대가 특징인 날카로운 인상의 사내입니다. 전투와 임무 수행에는 집요하고 무자비하며 도발적인 비아냥을 즐기지만, 전장 밖에서 그가 보여주는 정교한 손재주와 특정 취미에 대한 몰두는 그의 거친 성정과는 묘한 거리감이 느껴집니다.",
-        images: ['https://example.com/barkan_main.png']
-    }
-};
-
-        // 2. 캔버스 마력 입자 시스템
         const canvas = document.getElementById('manaCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -303,28 +277,22 @@ const charactersData = {
             update() { this.x += this.speedX; this.y += this.speedY; this.life -= 0.01; }
             draw() {
                 ctx.fillStyle = `rgba(197, 163, 93, ${this.life})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
             }
         }
 
-        window.addEventListener('mousemove', e => {
-            for(let i=0; i<3; i++) particles.push(new Particle(e.clientX, e.clientY));
-        });
+        window.addEventListener('mousemove', e => { for(let i=0; i<3; i++) particles.push(new Particle(e.clientX, e.clientY)); });
 
         function animate() {
             ctx.clearRect(0,0,canvas.width,canvas.height);
             for(let i = particles.length - 1; i >= 0; i--) {
-                particles[i].update();
-                particles[i].draw();
+                particles[i].update(); particles[i].draw();
                 if(particles[i].life <= 0) particles.splice(i, 1);
             }
             requestAnimationFrame(animate);
         }
         animate();
 
-        // 3. 기능 함수
         function startArchive() {
             const prologue = document.getElementById('prologue');
             prologue.style.opacity = '0';
@@ -338,16 +306,12 @@ const charactersData = {
 
         function openModal(id) {
             const data = charactersData[id];
-            if(!data) {
-                console.error("Character data not found for ID:", id);
-                return;
-            }
+            if(!data) return;
             
-            // 데이터 매핑
             document.getElementById('modalName').innerText = data.name;
-            document.getElementById('modalFaction').innerText = data.faction;
-            document.getElementById('iconFaculty').innerText = data.faculty;
-            document.getElementById('iconAttr').innerText = data.attr;
+            document.getElementById('modalFaction').innerText = `[${data.faction}]`;
+            document.getElementById('infoFaculty').innerText = data.faculty;
+            document.getElementById('infoAttr').innerText = data.attr;
             document.getElementById('infoAge').innerText = data.age;
             document.getElementById('infoHeight').innerText = data.height;
             document.getElementById('infoWeight').innerText = data.weight;
@@ -355,17 +319,14 @@ const charactersData = {
             document.getElementById('modalStory').innerText = data.story;
             document.getElementById('modalQuote').innerText = `"${data.quote}"`;
             
-            // 이미지 로드
             const imgEl = document.getElementById('modalImg');
             imgEl.src = data.images[0];
             
-            // 썸네일 생성
             const thumbStrip = document.getElementById('thumbStrip');
             thumbStrip.innerHTML = '';
             data.images.forEach((src, idx) => {
                 const t = document.createElement('img');
-                t.src = src;
-                t.className = 'thumb' + (idx === 0 ? ' active' : '');
+                t.src = src; t.className = 'thumb' + (idx === 0 ? ' active' : '');
                 t.onclick = () => { 
                     imgEl.src = src; 
                     document.querySelectorAll('.thumb').forEach(el => el.classList.remove('active'));
@@ -384,6 +345,36 @@ const charactersData = {
             modal.classList.remove('show');
             setTimeout(() => modal.style.display = 'none', 400);
         }
+
+        function initCards() {
+            const grids = {
+                student: document.getElementById('studentGrid'),
+                faculty: document.getElementById('facultyGrid'),
+                belluna: document.getElementById('bellunaGrid')
+            };
+
+            for (let key in charactersData) {
+                const c = charactersData[key];
+                const card = document.createElement('div');
+                card.className = 'char-card';
+                card.onclick = () => openModal(key);
+                card.innerHTML = `
+                    <div class="corner tl"></div>
+                    <span class="card-num">${c.year}</span>
+                    <h3>${c.name}</h3>
+                    <p>${c.faculty}</p>
+                    <div class="corner br"></div>
+                `;
+
+                if (c.faction === "아카데미") {
+                    if (c.year.includes("교수")) grids.faculty.appendChild(card);
+                    else grids.student.appendChild(card);
+                } else {
+                    grids.belluna.appendChild(card);
+                }
+            }
+        }
+        window.onload = initCards;
     </script>
 </body>
 </html>
