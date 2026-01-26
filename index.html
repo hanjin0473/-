@@ -702,6 +702,97 @@ function startArchive() {
     for(let i=0; i<60; i++) particles.push(new Particle());
     function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
     animate();
+
+    // 1. 입구 화면 시작 함수
+    function startArchive() {
+        const prologue = document.getElementById('prologue');
+        const main = document.getElementById('mainArchive');
+        
+        prologue.style.opacity = '0';
+        setTimeout(() => {
+            prologue.style.display = 'none';
+            main.style.display = 'block';
+            setTimeout(() => { main.style.opacity = '1'; }, 50);
+        }, 1000);
+    }
+
+    // 2. 탭 전환 로직
+    function switchTab(event, tabName) {
+        // 모든 섹션 숨기기
+        const sections = document.querySelectorAll('.archive-section');
+        sections.forEach(sec => sec.classList.remove('active'));
+        
+        // 모든 버튼 비활성화
+        const tabs = document.querySelectorAll('.tab-btn');
+        tabs.forEach(tab => tab.classList.remove('active'));
+        
+        // 선택한 탭 활성화
+        document.getElementById('tab-' + tabName).classList.add('active');
+        event.currentTarget.classList.add('active');
+
+        // 탭 전환 시 상단으로 스크롤
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 3. 파티클 배경 효과 (심플 버전)
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function initCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 1.5;
+            this.speedX = Math.random() * 0.5 - 0.25;
+            this.speedY = Math.random() * 0.5 - 0.25;
+            this.opacity = Math.random() * 0.5;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.x > canvas.width) this.x = 0;
+            if (this.x < 0) this.x = canvas.width;
+            if (this.y > canvas.height) this.y = 0;
+            if (this.y < 0) this.y = canvas.height;
+        }
+        draw() {
+            ctx.fillStyle = `rgba(197, 163, 147, ${this.opacity})`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function createParticles() {
+        for (let i = 0; i < 100; i++) particles.push(new Particle());
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', initCanvas);
+    initCanvas();
+    createParticles();
+    animate();
+
+    // 4. 모달 제어 함수
+    function openModal(data) {
+        document.getElementById('charModal').style.display = 'flex';
+        // 여기에 데이터 바인딩 로직 추가 가능
+    }
+
+    function closeModal() {
+        document.getElementById('charModal').style.display = 'none';
+    }
 </script>
 </body>
 </html>
