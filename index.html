@@ -81,6 +81,55 @@
             70% { box-shadow: 0 0 0 10px rgba(255, 77, 77, 0); }
             100% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); }
         }
+
+        /* 새로운 캐릭터 카드 스타일 */
+    .char-card-new {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(197, 163, 93, 0.2);
+        padding: 15px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .char-card-new:hover {
+        background: rgba(197, 163, 93, 0.1);
+        border-color: var(--text-gold);
+        transform: translateY(-5px);
+    }
+
+    .char-card-new .dept-tag {
+        font-size: 0.75rem;
+        color: var(--text-gold);
+        letter-spacing: 1px;
+    }
+
+    .char-card-new .char-name {
+        font-size: 1.15rem;
+        font-weight: bold;
+        color: #fff;
+        margin: 2px 0;
+    }
+
+    .char-card-new .char-info {
+        font-size: 0.8rem;
+        color: #aaa;
+    }
+
+    /* 배경에 은은하게 깔리는 학부 아이콘 */
+    .char-card-new::after {
+        content: '◈';
+        position: absolute;
+        right: -10px;
+        bottom: -10px;
+        font-size: 4rem;
+        opacity: 0.05;
+        color: #fff;
+    }
     </style>
 </head>
 <body>
@@ -684,6 +733,31 @@ function renderChars() {
             requestAnimationFrame(animate);
         }
         animate();
+    function renderChars() {
+        const grids = {
+            'student': document.getElementById('grid-student'),
+            'professor': document.getElementById('grid-professor'),
+            'belluna': document.getElementById('grid-belluna')
+        };
+        Object.values(grids).forEach(g => { if(g) g.innerHTML = ''; });
+
+        for (let key in charactersData) {
+            const c = charactersData[key];
+            const grid = grids[c.type];
+            if(grid) {
+                const card = document.createElement('div');
+                card.className = 'char-card-new'; // 새 스타일 적용
+                card.onclick = () => openModal(key);
+                
+                card.innerHTML = `
+                    <div class="dept-tag">${c.faculty}</div>
+                    <div class="char-name">${c.name}</div>
+                    <div class="char-info">${c.year} · ${c.attr} 속성</div>
+                `;
+                grid.appendChild(card);
+            }
+        }
+    }
     </script>
 </body>
 </html>
