@@ -602,26 +602,32 @@
             document.getElementById('tab-' + id).classList.add('active');
         }
 
-        function renderChars() {
-            const grids = {
-                'student': document.getElementById('grid-student'),
-                'professor': document.getElementById('grid-professor'),
-                'belluna': document.getElementById('grid-belluna')
-            };
-            Object.values(grids).forEach(g => { if(g) g.innerHTML = ''; });
+function renderChars() {
+        const grids = {
+            'student': document.getElementById('grid-student'),
+            'professor': document.getElementById('grid-professor'),
+            'belluna': document.getElementById('grid-belluna')
+        };
+        Object.values(grids).forEach(g => { if(g) g.innerHTML = ''; });
 
-            for (let key in charactersData) {
-                const c = charactersData[key];
-                const grid = grids[c.type];
-                if(grid) {
-                    const card = document.createElement('div');
-                    card.className = 'char-card';
-                    card.onclick = () => openModal(key);
-                    card.innerHTML = `<div style="color:var(--text-gold); font-size:0.85rem;">${c.faculty}</div><h3>${c.name}</h3><div style="font-size:0.8rem; opacity:0.6;">${c.year}</div>`;
-                    grid.appendChild(card);
-                }
+        for (let key in charactersData) {
+            const c = charactersData[key];
+            const grid = grids[c.type];
+            if(grid) {
+                const card = document.createElement('div');
+                card.className = 'char-card';
+                card.onclick = () => openModal(key);
+                
+                // 여기 InnerHTML에서 성별 이모지 관련 변수를 빼고 c.name만 넣었습니다.
+                card.innerHTML = `
+                    <div style="color:var(--text-gold); font-size:0.85rem; margin-bottom:5px;">${c.faculty}</div>
+                    <h3 style="margin-bottom:5px;">${c.name}</h3>
+                    <div style="font-size:0.8rem; opacity:0.6;">${c.year}</div>
+                `;
+                grid.appendChild(card);
             }
         }
+    }
 
         function openModal(key) {
             const c = charactersData[key];
