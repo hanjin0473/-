@@ -87,101 +87,108 @@
         <button class="enter-btn" onclick="startArchive()">ACCESS DATA</button>
     </div>
 
-    <main class="main-archive" id="mainArchive">
-        <nav class="nav-tabs">
-            <button class="tab-btn active" onclick="switchTab(event, 'world')">WORLD</button>
-            <button class="tab-btn" onclick="switchTab(event, 'academy')">ACADEMY</button>
-            <button class="tab-btn" onclick="switchTab(event, 'dungeon')">DUNGEON</button>
-            <button class="tab-btn" onclick="switchTab(event, 'rank')">RANK</button>
-            <button class="tab-btn" onclick="switchTab(event, 'character')">CHARACTERS</button>
-        </nav>
+<main class="main-archive" id="mainArchive">
+    <nav class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab(event, 'world')">WORLD</button>
+        <button class="tab-btn" onclick="switchTab(event, 'academy')">ACADEMY</button>
+        <button class="tab-btn" onclick="switchTab(event, 'dungeon')">DUNGEON</button>
+        <button class="tab-btn" onclick="switchTab(event, 'character')">CHARACTERS</button>
+    </nav>
 
-        <section id="tab-world" class="archive-section active">
-            <div class="section-header-img">
-                <img src="https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/579d4411-d771-4529-a0d5-71a4311eae6e.png" alt="World Map" style="width:100%; height:100%; object-fit:cover; opacity:0.6; position:absolute;">
-            </div>
-            
-            <h2 class="sec-title">지리·공간 노출 규칙</h2>
-            <div class="rule-box">
-                <ul style="list-style: '◈ '; padding-left: 20px; font-size: 0.9rem; color: var(--text-gold);">
-                    <li>공간은 실제 이동 가능한 지리만 사용하며, 내부와 외부를 엄격히 구분한다.</li>
-                    <li>현재 위치 기준으로 인접한 공간 데이터만 활성화된다.</li>
-                    <li>전경에 대한 서술보다는 <strong>이동·시야·접근성</strong> 위주로 정보를 제공한다.</li>
+    <section id="tab-world" class="archive-section active">
+        <div class="section-header-img">
+            <img src="https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/579d4411-d771-4529-a0d5-71a4311eae6e.png" alt="World Map" style="width:100%; height:100%; object-fit:cover; opacity:0.6; position:absolute;">
+        </div>
+        
+        <h2 class="sec-title">아카데미의 구조</h2>
+        <div class="rule-box">
+            <ul style="list-style: '◈ '; padding-left: 20px; font-size: 0.9rem; color: var(--text-gold);">
+                <li>아카데미는 단계적으로 공간이 열리도록 설계되어 있습니다.</li>
+                <li>가까운 장소부터 파악되며, 이동에 따라 시야가 넓어집니다.</li>
+                <li>경험과 허가에 따라 접근 가능한 구역이 달라집니다.</li>
+            </ul>
+        </div>
+
+        <div class="rule-grid">
+            <div class="rule-item">
+                <h4>아카데미 내부</h4>
+                <ul>
+                    <li>교육: 강의동, 실습장, 훈련장, 도서관</li>
+                    <li>생활: 기숙사, 행정동, 포탈 대기실</li>
+                    <li>출입 기록은 안전 확인을 위해 관리됩니다.</li>
+                    <li>일부 지하 구역은 던전과 연결되어 있으며, 기준 충족 시 접근 가능합니다.</li>
                 </ul>
             </div>
-
-            <div class="rule-grid">
-                <div class="rule-item">
-                    <h4>INTERNAL (내부 구역)</h4>
-                    <ul>
-                        <li>교육: 강의동, 실습장, 훈련장, 도서관</li>
-                        <li>생활: 기숙사, 행정동, 포탈 대기실</li>
-                        <li>제한: 출입 기록은 감시 및 정치 변수로 작용함</li>
-                        <li>연결: 일부 지하 구역은 던전과 직접 연결 (등급 필요)</li>
-                    </ul>
-                </div>
-                <div class="rule-item">
-                    <h4>EXTERNAL (외부 경계)</h4>
-                    <ul>
-                        <li>검문: 무단 이탈 시 징계 및 평판 하락</li>
-                        <li>노출: 외부 세력은 소문이나 흔적 형태로만 감지</li>
-                    </ul>
-                </div>
-                <div class="rule-item">
-                    <h4>SETTLEMENT (마을/도시)</h4>
-                    <ul>
-                        <li>마을: 보급, 숙박, 비공식 정보 취득</li>
-                        <li>도시: 귀족 접견, 상단 거래, 정치적 접촉</li>
-                        <li>위험지: 폐허, 오염 구역, 비공식 던전 입구</li>
-                        <li>연동: 방문 결과는 아카데미 내 감시망과 공유됨</li>
-                    </ul>
-                </div>
+            <div class="rule-item">
+                <h4>외부 구역</h4>
+                <ul>
+                    <li>아카데미 밖으로 나가는 일은 학생의 안전을 위해 관리되고 있습니다.</li>
+                    <li>출처가 불분명한 소문과 반복적으로 언급되는 세력에는 신중한 태도가 요구됩니다.</li>
+                </ul>
             </div>
-        </section>
-
-        <section id="tab-academy" class="archive-section">
-            <div class="section-header-img"></div>
-            <h2 class="sec-title">기숙사 분류 (HOUSES)</h2>
-            <div class="char-grid">
-                <div class="char-card"><h3>🦁 Vulcanus</h3><p>용기와 투지. 기사학부 중심.</p></div>
-                <div class="char-card"><h3>🐬 Neptunus</h3><p>지혜와 마법. 연구자들의 집합소.</p></div>
-                <div class="char-card"><h3>🦚 Aurelia</h3><p>고결과 사교. 황실/귀족 파벌.</p></div>
-                <div class="char-card"><h3>🦉 Minerva</h3><p>이성과 진리. 실무 위주 탐험가.</p></div>
+            <div class="rule-item">
+                <h4>마을 · 도시</h4>
+                <ul>
+                    <li>마을: 보급, 숙박, 비공식 정보 취득</li>
+                    <li>도시: 귀족 접견, 상단 거래, 정치적 접촉</li>
+                    <li>위험지: 폐허, 오염 구역, 비공식 던전 입구</li>
+                    <li>※위험 지역: 주의 요망</li>
+                </ul>
             </div>
-        </section>
+        </div>
 
-        <section id="tab-dungeon" class="archive-section">
-             <div class="section-header-img" style="border-color: var(--danger);"></div>
-             <h2 class="sec-title" style="color:var(--danger); border-color:var(--danger);">포탈 게이트 조사 보고서</h2>
-             <div class="char-grid">
-                <div class="char-card" style="border-left-color: #555;"><h3>하급 (F~D)</h3><p>시뮬레이션 구역.</p></div>
-                <div class="char-card" style="border-left-color: var(--text-gold);"><h3>중급 (C~B)</h3><p>위험지 노출 구역.</p></div>
-                <div class="char-card" style="border-left-color: var(--danger);"><h3>상급 (A~S)</h3><p>심연의 균열.</p></div>
+        <div class="warning-box" style="margin-top:20px; border:1px solid rgba(255,77,77,0.3); background:rgba(255,77,77,0.05); padding:15px; border-radius:4px;">
+            <h4 style="color:var(--danger); margin-bottom:10px;">〈벨루나 안내〉</h4>
+            <p style="font-size:0.85rem; line-height:1.6; color:#ddd;">
+                벨루나는 기록상 범죄·테러 조직으로 분류되어 있습니다. 직접 모습을 드러내기보다 소문·정보 왜곡·이상한 흐름으로 흔적을 남기는 경우가 많습니다. 관련 상황에서는 예기치 못한 위험이나 이후 평가에 영향을 받을 수 있으니 주의하십시오.
+            </p>
+        </div>
+    </section>
+
+    <section id="tab-academy" class="archive-section">
+        <h2 class="sec-title">HOUSES (기숙사 분류)</h2>
+        <div class="char-grid" style="margin-bottom: 50px;">
+            <div class="char-card"><h3>🦁 Vulcanus</h3><p>용기와 투지. 기사학부 중심.</p></div>
+            <div class="char-card"><h3>🐬 Neptunus</h3><p>지혜와 마법. 연구자들의 집합소.</p></div>
+            <div class="char-card"><h3>🦚 Aurelia</h3><p>고결과 사교. 황실/귀족 파벌.</p></div>
+            <div class="char-card"><h3>🦉 Minerva</h3><p>이성과 진리. 실무 위주 탐험가.</p></div>
+        </div>
+
+        <h2 class="sec-title">RANK SYSTEM (승급 규정)</h2>
+        <div class="notice-board">
+            <div class="notice-item">
+                <div class="notice-tag">NEWBIE</div>
+                <span class="rank-badge">F → E</span>
+                <span>시뮬레이션 환경 기초 전술 평가</span>
             </div>
-        </section>
-
-        <section id="tab-rank" class="archive-section">
-            <h2 class="sec-title">RANK ADVANCEMENT (승급 규정)</h2>
-            <div class="notice-board">
-                <div class="notice-item"><div class="notice-tag">NEWBIE</div><span class="rank-badge">F → E</span><span>시뮬레이션 환경 기초 전술 평가</span></div>
-                <div class="notice-item"><div class="notice-tag">TRAINEE</div><span class="rank-badge">E → D</span><span>하급 실전 파견 및 초동 대처 기록</span></div>
-                <div class="notice-item"><div class="notice-tag">REGULAR</div><span class="rank-badge">D → C</span><span>고위험 실무 조사 및 전투 지속력 측정</span></div>
-                <div class="notice-item" style="background:rgba(197,163,93,0.1);"><div class="notice-tag">ELITE</div><span class="rank-badge">C → B</span><span>중급 구역 운용 및 원외 사회 기여도 심사</span></div>
-                <div class="notice-item"><div class="notice-tag">EXPERT</div><span class="rank-badge">B → A</span><span>상급 토벌 기록 및 중대 사건 해결 증명</span></div>
-                <div class="notice-item"><div class="notice-tag" style="color:var(--danger);">MASTER</div><span class="rank-badge" style="color:var(--danger);">A → S</span><span>심연 궤적 공인 및 국가 안보 위원회 승인</span></div>
+            <div class="notice-item">
+                <div class="notice-tag">TRAINEE</div>
+                <span class="rank-badge">E → D</span>
+                <span>하급 실전 파견 및 초동 대처 기록</span>
             </div>
-        </section>
-
-        <section id="tab-character" class="archive-section">
-            <h2 class="sec-title">CHARACTER ARCHIVE</h2>
-            <h3 class="char-category-title">STUDENTS</h3>
-            <div class="char-grid" id="grid-student"></div>
-            <h3 class="char-category-title">PROFESSORS</h3>
-            <div class="char-grid" id="grid-professor"></div>
-            <h3 class="char-category-title">EXTERNAL (BELLUNA)</h3>
-            <div class="char-grid" id="grid-belluna"></div>
-        </section>
-    </main>
+            <div class="notice-item">
+                <div class="notice-tag">REGULAR</div>
+                <span class="rank-badge">D → C</span>
+                <span>고위험 실무 조사 및 전투 지속력 측정</span>
+            </div>
+            <div class="notice-item" style="background:rgba(197,163,93,0.15); border:1px solid var(--text-gold);">
+                <div class="notice-tag">ELITE</div>
+                <span class="rank-badge">C → B</span>
+                <span>중급 구역 운용 및 원외 사회 기여도 심사</span>
+            </div>
+            <div class="notice-item">
+                <div class="notice-tag">EXPERT</div>
+                <span class="rank-badge">B → A</span>
+                <span>상급 토벌 기록 및 중대 사건 해결 증명</span>
+            </div>
+            <div class="notice-item">
+                <div class="notice-tag" style="color:var(--danger);">MASTER</div>
+                <span class="rank-badge" style="color:var(--danger);">A → S</span>
+                <span>심연 궤적 공인 및 국가 안보 위원회 승인</span>
+            </div>
+        </div>
+    </section>
+</main>
 
     <div id="charModal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
