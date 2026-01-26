@@ -95,142 +95,242 @@
         <button class="tab-btn" onclick="switchTab(event, 'character')">CHARACTERS</button>
     </nav>
 
-    <section id="tab-world" class="archive-section active">
-        <div class="section-header-img">
-            <img src="https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/579d4411-d771-4529-a0d5-71a4311eae6e.png" alt="World Map" style="width:100%; height:100%; object-fit:cover; opacity:0.6; position:absolute;">
-            <h2 style="position:relative; color:var(--text-gold); letter-spacing:5px;">WORLD DATA</h2>
-        </div>
-        <h2 class="sec-title">아스트렐 아카데미 세계관 안내</h2>
-        <div class="char-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
-            <div class="rule-item">
-                <h4>🌐 세계 및 현상</h4>
-                <ul>
-                    <li><strong>세계관:</strong> 몬스터와 던전이 공존하며, 방치된 던전은 현실을 침식합니다.</li>
-                    <li><strong>던전:</strong> 중심 '핵'을 파괴하면 비활성화되나, 일정 시간 후 재생성됩니다.</li>
-                    <li><strong>붕괴 현상:</strong> 불안정한 던전에서 몬스터가 유출되는 국지적 침식 현상입니다.</li>
-                </ul>
-            </div>
-            <div class="rule-item">
-                <h4>✨ 마력과 속성</h4>
-                <ul>
-                    <li><strong>고유 마력:</strong> 원소, 상태, 개념 등 개인별 다양한 속성을 보유합니다.</li>
-                    <li><strong>희귀 속성:</strong> 빛과 어둠 속성은 매우 희귀하며 강력하지만 불안정합니다.</li>
-                    <li><strong>아카데미:</strong> 이러한 마력 운용과 팀 전술을 교육하는 전문 기관입니다.</li>
-                </ul>
-            </div>
-            <div class="rule-item">
-                <h4>🏙️ 주요 거점</h4>
-                <ul>
-                    <li><strong>마을:</strong> 보급, 숙박, 비공식 정보 취득의 장.</li>
-                    <li><strong>도시:</strong> 귀족 접견, 상단 거래 등 정치적 접촉이 일어나는 곳.</li>
-                    <li><strong>위험지:</strong> 폐허, 오염 구역 등. <span style="color:var(--danger);">※ 주의 요망</span></li>
-                </ul>
-            </div>
-        </div>
-        <div class="warning-box" style="margin-top:20px; border:1px solid rgba(255,77,77,0.3); background:rgba(255,77,77,0.05); padding:20px; border-radius:4px;">
-            <h4 style="color:var(--danger); margin-bottom:10px;">⚠️ 〈비공식 기밀: 벨루나 안내〉</h4>
-            <p style="font-size:0.95rem; color:#ddd;">벨루나는 기록상 범죄·테러 조직으로 분류되어 있습니다. 직접 모습을 드러내기보다 소문, 정보 왜곡 등으로 흔적을 남깁니다. 조우 시 예기치 못한 위험이나 평가에 악영향을 받을 수 있습니다.</p>
-        </div>
-    </section>
-
-    <section id="tab-academy" class="archive-section">
-        <div class="section-header-img">
-            <h2 style="color:var(--text-gold); letter-spacing:5px;">ACADEMY ARCHIVE</h2>
-        </div>
-        <h2 class="sec-title">아카데미의 구조</h2>
-        <div class="char-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
-            <div class="rule-item">
-                <h4>📍 구역 개방 원칙</h4>
-                <ul>
-                    <li>공간은 단계적으로 열리며, 이동에 따라 시야가 확장됩니다.</li>
-                    <li>경험치와 허가 등급에 따라 접근 가능 구역이 결정됩니다.</li>
-                </ul>
-            </div>
-            <div class="rule-item">
-                <h4>🏫 아카데미 내부</h4>
-                <ul>
-                    <li><strong>교육:</strong> 강의동, 실습장, 훈련장, 도서관</li>
-                    <li><strong>생활:</strong> 기숙사, 행정동, 포탈 대기실</li>
-                </ul>
-            </div>
-        </div>
-
-        <h2 class="sec-title">HOUSES (기숙사)</h2>
-        <div class="char-grid">
-            <div class="char-card house-vulcanus"><h3 style="color:var(--vulcanus)">🦁 불카누스</h3><p>용기와 투지. 기사학부 중심.</p></div>
-            <div class="char-card house-neptunus"><h3 style="color:var(--neptunus)">🐬 넵투누스</h3><p>지혜와 마법. 연구자 중심.</p></div>
-            <div class="char-card house-aurelia"><h3 style="color:var(--aurelia)">🦚 아우렐리아</h3><p>고결과 사교. 황실/귀족 파벌.</p></div>
-            <div class="char-card house-minerva"><h3 style="color:var(--minerva)">🦉 미네르바</h3><p>이성과 진리. 실무/탐험 중심.</p></div>
-        </div>
-
-        <h2 class="sec-title">RANKING (승급 규정)</h2>
-        <div class="notice-board">
-            <div class="notice-item"><span class="rank-badge">F → E</span><span>시뮬레이션 기초 전술 평가</span></div>
-            <div class="notice-item"><span class="rank-badge">E → D</span><span>하급 실전 파견 및 초동 대처</span></div>
-            <div class="notice-item"><span class="rank-badge">D → C</span><span>고위험 실무 조사 및 전투 지속력</span></div>
-            <div class="notice-item" style="background:rgba(197,163,93,0.1);"><span class="rank-badge">C → B</span><span>중급 구역 운용 및 공헌도 심사</span></div>
-            <div class="notice-item"><span class="rank-badge" style="color:var(--danger);">A → S</span><span>심연 궤적 공인 및 최종 승인</span></div>
-        </div>
-    </section>
-
-<section id="tab-dungeon" class="archive-section">
+<section id="tab-world" class="archive-section active">
     <div class="section-header-img">
-        <h2 style="color:var(--danger); letter-spacing:5px;">DUNGEON LOG</h2>
+        <img src="https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/579d4411-d771-4529-a0d5-71a4311eae6e.png" alt="World Map" style="width:100%; height:100%; object-fit:cover; opacity:0.6; position:absolute;">
+        <h2 style="position:relative; color:var(--text-gold); letter-spacing:5px; text-shadow: 0 0 10px #000;">WORLD DATA</h2>
     </div>
+
+    <h2 class="sec-title">아스트렐 아카데미 세계관 안내</h2>
     
-    <h2 class="sec-title" style="color:var(--danger); border-color:var(--danger);">포탈 게이트 조사 보고서</h2>
-    <div class="char-grid">
-        <div class="char-card" style="border-left: 5px solid #555;">
-            <h3>하급 (F~D)</h3>
-            <p>통제된 시뮬레이션 및 안전 교육 구역.</p>
-        </div>
-        <div class="char-card" style="border-left: 5px solid var(--text-gold);">
-            <h3>중급 (C~B)</h3>
-            <p>외부 위험지 노출 및 실전 운용 구역.</p>
-        </div>
-        <div class="char-card" style="border-left: 5px solid var(--danger);">
-            <h3>상급 (A~S)</h3>
-            <p>심연의 균열. 아카데미 핵심 전용 구역.</p>
-        </div>
-    </div>
-
-    <h2 class="sec-title">「던전 가이드라인」</h2>
-    <div class="rule-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-        <div class="rule-item">
-            <h4>🔑 1. 진입 조건</h4>
-            <ul>
-                <li><strong>관리 구역:</strong> 아카데미 관리 하에 있으나 완전 통제는 불가합니다.</li>
-                <li><strong>충족 요건:</strong> 수업, 시험, 정치 사건, 의뢰, 등급 조건 중 하나 이상 필요.</li>
-                <li><strong>제한 사항:</strong> 최소 2인 이상 파티 필수. 단독 진입 및 연속 탐험은 금지됩니다.</li>
-            </ul>
+    <div class="guide-section">
+        <div class="guide-box">
+            <div class="guide-header">
+                <div class="guide-number">🌐</div>
+                <div class="guide-title">세계 및 현상</div>
+            </div>
+            <div class="guide-content">
+                <ul>
+                    <li><strong>세계관:</strong> 몬스터와 던전이 공존하는 시대. 방치된 던전은 현실을 서서히 침식합니다.</li>
+                    <li><strong>던전의 핵:</strong> 중심의 '핵'을 파괴하면 비활성화되나, 일정 시간 후 재생성되는 특성을 가집니다.</li>
+                    <li><strong>붕괴 현상:</strong> 불안정한 던전에서 몬스터가 유출되는 국지적 침식 현상으로, 인류 최대의 위협입니다.</li>
+                </ul>
+            </div>
         </div>
 
-        <div class="rule-item">
-            <h4>🧭 2. 탐험 및 행동</h4>
-            <ul>
-                <li><strong>자율 행동:</strong> 단순 전투 외에도 회피, 협상, 봉인 등 다양한 접근이 가능합니다.</li>
-                <li><strong>결과 반영:</strong> 모든 행동은 학생 평가, 신체적 후유증, 평판 수치에 직접 기록됩니다.</li>
-            </ul>
+        <div class="guide-box">
+            <div class="guide-header">
+                <div class="guide-number">✨</div>
+                <div class="guide-title">마력과 속성</div>
+            </div>
+            <div class="guide-content">
+                <ul>
+                    <li><strong>고유 마력:</strong> 원소, 상태, 개념 등 개인별로 각기 다른 고유한 속성을 발현합니다.</li>
+                    <li><strong>희귀 속성:</strong> <strong>빛과 어둠</strong>은 극소수만이 보유하며, 강력한 힘만큼 극도의 불안정성을 띱니다.</li>
+                    <li><strong>전문 교육:</strong> 아카데미는 이러한 마력의 정교한 운용과 팀 전술을 교육하는 핵심 기관입니다.</li>
+                </ul>
+            </div>
         </div>
 
-        <div class="rule-item">
-            <h4>☣️ 3. 환경과 위험</h4>
-            <ul>
-                <li><strong>불안정성:</strong> 공간 왜곡으로 인한 시야 확보 방해 및 마력 제한 현상 발생.</li>
-                <li><strong>출현 개체:</strong> 야수형부터 지능형, 고위 개체까지 등급별 몬스터 서식.</li>
-                <li><strong>던전 폭주:</strong> 기한 내 완료 실패 시 몬스터가 현실로 유출되는 붕괴 현상이 시작됩니다.</li>
-            </ul>
+        <div class="guide-box">
+            <div class="guide-header">
+                <div class="guide-number">🏙️</div>
+                <div class="guide-title">주요 탐사 거점</div>
+            </div>
+            <div class="guide-content">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 10px;">
+                    <div style="padding: 15px; background: rgba(255,255,255,0.02); border-radius: 8px; border: 1px solid rgba(197,163,93,0.1);">
+                        <span style="color:var(--text-gold); font-weight: bold;">[마을]</span><br>보급, 숙박 및 비공식 정보 취득
+                    </div>
+                    <div style="padding: 15px; background: rgba(255,255,255,0.02); border-radius: 8px; border: 1px solid rgba(197,163,93,0.1);">
+                        <span style="color:var(--text-gold); font-weight: bold;">[도시]</span><br>귀족 접견 및 대규모 상단 거래
+                    </div>
+                    <div style="padding: 15px; background: rgba(255,255,255,0.02); border-radius: 8px; border: 1px solid var(--danger);">
+                        <span style="color:var(--danger); font-weight: bold;">[위험지]</span><br>폐허, 오염 구역 (접근 시 주의)
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="rule-item" style="border-color: var(--danger);">
-            <h4 style="color: var(--danger);">⚠️ 4. 기밀 주의 사항</h4>
-            <ul>
-                <li><strong>변수 발생:</strong> 탐험 중 미식별 세력의 개입이나 예기치 못한 환경 변화 주의.</li>
-                <li><strong>비가시 영향:</strong> 직접 관찰되지 않은 사건이라도 최종 결과와 평판에 영향을 줄 수 있습니다.</li>
-            </ul>
+        <div class="guide-box warning-highlight">
+            <div class="guide-header">
+                <div class="guide-number" style="background: var(--danger);">!</div>
+                <div class="guide-title" style="color: var(--danger);">비공식 기밀 보고서: 벨루나</div>
+            </div>
+            <div class="guide-content">
+                <p style="font-size: 1rem; color: #ccc; line-height: 1.6;">
+                    기록상 <strong>범죄·테러 조직</strong>으로 분류됨. 직접적인 무력 행사보다는 소문과 정보 왜곡을 통한 배후 공작에 능함. 조우 시 아카데미 평가에 막대한 악영향을 초래할 수 있으므로 즉시 보고를 권장함.
+                </p>
+            </div>
         </div>
     </div>
 </section>
+
+<section id="tab-academy" class="archive-section">
+    <div class="section-header-img">
+        <h2 style="color:var(--text-gold); letter-spacing:5px;">ACADEMY ARCHIVE</h2>
+    </div>
+
+    <h2 class="sec-title">아카데미 운영 정책</h2>
+    <div class="guide-section">
+        <div class="guide-box">
+            <div class="guide-header">
+                <div class="guide-number">📍</div>
+                <div class="guide-title">공간 개방 및 권한</div>
+            </div>
+            <div class="guide-content">
+                <ul>
+                    <li><strong>단계적 개방:</strong> 모든 구역은 탐사 진척도에 따라 순차적으로 개방됩니다.</li>
+                    <li><strong>접근 등급:</strong> 축적된 경험치와 허가 등급에 따라 보안 구역 진입 권한이 차등 부여됩니다.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="sec-title">기숙사</h2>
+    <div class="char-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+        <div class="char-card house-vulcanus" style="text-align: left; padding: 30px;">
+            <div style="font-size: 0.8rem; color: var(--vulcanus); font-weight: bold; margin-bottom: 5px;">KNIGHTS FACULTY</div>
+            <h3 style="color:var(--vulcanus); font-size: 1.6rem; margin-bottom: 10px;">🦁 불카누스</h3>
+            <p style="font-size: 0.95rem; opacity: 0.8;">용기와 투지를 상징합니다. 기사학부 소속 학생들이 주를 이루는 열정적인 공동체입니다.</p>
+        </div>
+        <div class="char-card house-neptunus" style="text-align: left; padding: 30px;">
+            <div style="font-size: 0.8rem; color: var(--neptunus); font-weight: bold; margin-bottom: 5px;">RESEARCHERS</div>
+            <h3 style="color:var(--neptunus); font-size: 1.6rem; margin-bottom: 10px;">🐬 넵투누스</h3>
+            <p style="font-size: 0.95rem; opacity: 0.8;">지혜와 심오한 마법 연구를 지향합니다. 주로 마법학부 및 연구자 중심의 학구적인 분위기입니다.</p>
+        </div>
+        <div class="char-card house-aurelia" style="text-align: left; padding: 30px;">
+            <div style="font-size: 0.8rem; color: var(--aurelia); font-weight: bold; margin-bottom: 5px;">ROYAL & NOBLE</div>
+            <h3 style="color:var(--aurelia); font-size: 1.6rem; margin-bottom: 10px;">🦚 아우렐리아</h3>
+            <p style="font-size: 0.95rem; opacity: 0.8;">고결함과 사교를 중시하며, 제국 황실 및 유력 귀족 가문의 파벌이 형성되어 있습니다.</p>
+        </div>
+        <div class="char-card house-minerva" style="text-align: left; padding: 30px;">
+            <div style="font-size: 0.8rem; color: var(--minerva); font-weight: bold; margin-bottom: 5px;">PRACTICAL WORK</div>
+            <h3 style="color:var(--minerva); font-size: 1.6rem; margin-bottom: 10px;">🦉 미네르바</h3>
+            <p style="font-size: 0.95rem; opacity: 0.8;">이성과 실리를 따집니다. 실무 위주의 훈련과 던전 탐험을 우선시하는 실전파들이 모입니다.</p>
+        </div>
+    </div>
+
+    <h2 class="sec-title">승급 로드맵</h2>
+    <div class="notice-board" style="border-radius: 12px; overflow: hidden; margin-bottom: 50px;">
+        <div class="notice-item" style="padding: 25px;">
+            <span class="rank-badge" style="font-size: 1.3rem;">F → E</span>
+            <div style="display:flex; flex-direction:column;">
+                <strong>기초 평가</strong>
+                <span style="font-size: 0.9rem; opacity: 0.6;">교내 시뮬레이션 및 기본 전술 운용 능력 검증</span>
+            </div>
+        </div>
+        <div class="notice-item" style="padding: 25px;">
+            <span class="rank-badge" style="font-size: 1.3rem;">E → D</span>
+            <div style="display:flex; flex-direction:column;">
+                <strong>실전 파견</strong>
+                <span style="font-size: 0.9rem; opacity: 0.6;">하급 구역 실전 파견 및 위기 초동 대처 능력 심사</span>
+            </div>
+        </div>
+        <div class="notice-item" style="padding: 25px; background: rgba(197,163,93,0.05);">
+            <span class="rank-badge" style="font-size: 1.3rem;">D → C</span>
+            <div style="display:flex; flex-direction:column;">
+                <strong>고위험 실무</strong>
+                <span style="font-size: 0.9rem; opacity: 0.6;">고위험 구역 조사 및 지속적인 전투 유지력 평가</span>
+            </div>
+        </div>
+        <div class="notice-item" style="padding: 25px; background: rgba(197,163,93,0.1);">
+            <span class="rank-badge" style="font-size: 1.3rem; color: var(--text-gold);">C → B</span>
+            <div style="display:flex; flex-direction:column;">
+                <strong>공헌도 심사</strong>
+                <span style="font-size: 0.9rem; color: var(--text-gold);">중급 구역 운용 전술 및 아카데미 기여도 종합 산출</span>
+            </div>
+        </div>
+        <div class="notice-item" style="padding: 25px; border-bottom: none;">
+            <span class="rank-badge" style="font-size: 1.3rem; color: var(--danger);">A → S</span>
+            <div style="display:flex; flex-direction:column;">
+                <strong>심연 공인</strong>
+                <span style="font-size: 0.9rem; color: var(--danger);">심연 궤적 기록 공인 및 위원회 최종 승인 절차</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="tab-dungeon">
+        <h2 class="sec-title">던전 종류</h2>
+
+        <div class="dungeon-rank-container">
+            <div class="dungeon-rank-card" style="border-color: #555;">
+                <div><h3>하급 <span style="font-size: 1rem; opacity: 0.6;">(F~D Class)</span></h3><p>통제된 시뮬레이션 및 안전 교육 구역</p></div>
+                <div style="font-size: 2rem; opacity: 0.2;">01</div>
+            </div>
+            <div class="dungeon-rank-card" style="border-color: var(--text-gold);">
+                <div><h3>중급 <span style="font-size: 1rem; color: var(--text-gold);">(C~B Class)</span></h3><p>외부 위험지 노출 및 실전 운용 구역</p></div>
+                <div style="font-size: 2rem; opacity: 0.2; color: var(--text-gold);">02</div>
+            </div>
+            <div class="dungeon-rank-card" style="border-color: var(--danger);">
+                <div><h3 style="color: var(--danger);">상급 (A~S Class)</h3><p>심연의 균열. 아카데미 핵심 전용 구역</p></div>
+                <div style="font-size: 2rem; opacity: 0.2; color: var(--danger);">03</div>
+            </div>
+        </div>
+
+        <div class="guide-section">
+            <h2 class="sec-title">「 던전 이용 수칙 」</h2>
+
+            <div class="guide-box">
+                <div class="guide-header">
+                    <div class="guide-number">1</div>
+                    <div class="guide-title">진입 및 자격 조건</div>
+                </div>
+                <div class="guide-content">
+                    <ul>
+                        <li>던전은 아카데미가 관리하나 <strong>완전히 통제되지 않는 위험 구역</strong>입니다.</li>
+                        <li><strong>자격:</strong> 수업, 시험, 정치 사건, 의뢰, 혹은 등급 조건 중 하나를 충족해야 합니다.</li>
+                        <li><strong>제한:</strong> <strong>최소 2인 이상의 파티</strong>가 필수적이며, 단독 진입 및 동일 던전 연속 탐험은 엄격히 금지됩니다.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="guide-box">
+                <div class="guide-header">
+                    <div class="guide-number">2</div>
+                    <div class="guide-title">탐험 및 의사결정</div>
+                </div>
+                <div class="guide-content">
+                    <ul>
+                        <li>전투뿐만 아니라 <strong>회피, 협상, 봉인</strong> 등 다양한 전략적 선택이 가능합니다.</li>
+                        <li>수행한 행동의 결과는 학생의 <strong>종합 평가, 신체적 후유증, 평판</strong>에 직접 반영됩니다.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="guide-box">
+                <div class="guide-header">
+                    <div class="guide-number">3</div>
+                    <div class="guide-title">불안정 환경 요소</div>
+                </div>
+                <div class="guide-content">
+                    <ul>
+                        <li><strong>마력 제한:</strong> 공간의 불안정성으로 인해 시야와 마력 운용이 제한될 수 있습니다.</li>
+                        <li><strong>개체 식별:</strong> 야수형, 변이형, 지능형부터 고위 개체까지 등급에 따라 조우합니다.</li>
+                        <li><strong>던전 폭주:</strong> 완료 기한 초과 시 <strong>'몬스터 유출'</strong>이 발생하는 폭주 상태에 돌입합니다.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="guide-box warning-highlight">
+                <div class="guide-header">
+                    <div class="guide-number" style="background: var(--danger);">4</div>
+                    <div class="guide-title" style="color: var(--danger);">⚠️ 비공식 주의 사항</div>
+                </div>
+                <div class="guide-content">
+                    <ul>
+                        <li>탐험 도중 <strong>의문의 외부 세력 개입</strong> 등 예상치 못한 변수가 발생할 수 있습니다.</li>
+                        <li>시스템상 <strong>관찰되지 않은 사건</strong>이라 할지라도 최종 결과와 평판에 막대한 영향을 줄 수 있으니 주의하십시오.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>
 
     <section id="tab-character" class="archive-section">
         <h2 class="sec-title">등장인물 아카이브</h2>
