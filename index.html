@@ -154,7 +154,7 @@
         <div class="guide-box">
             <div class="guide-header">
                 <div class="guide-number">🏙️</div>
-                <div class="guide-title">주요 탐사 거점 <small style="opacity: 0.5; font-weight: normal; margin-left: 8px;">Outposts</small></div>
+                <div class="guide-title">주요 지역역 <small style="opacity: 0.5; font-weight: normal; margin-left: 8px;">Outposts</small></div>
             </div>
             <div class="guide-content">
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 10px;">
@@ -179,9 +179,22 @@
 
         <div class="guide-box" style="background: rgba(255, 77, 77, 0.03); border: 1px dashed var(--danger); position: relative; overflow: hidden;">
             <div style="position: absolute; top: -10px; right: -10px; font-size: 4rem; opacity: 0.05; transform: rotate(20deg); pointer-events: none; color: var(--danger);">CONFIDENTIAL</div>
-            <div class="guide-header">
-                <div class="guide-number" style="background: var(--danger); color: #fff; animation: pulse 2s infinite;">!</div>
-                <div class="guide-title" style="color: var(--danger); font-family: 'Courier New', Courier, monospace;">UNOFFICIAL REPORT: VELUNA</div>
+<div class="guide-header">
+    <div class="guide-number" style="
+        background: var(--danger); 
+        color: #fff; 
+        animation: pulse 2s infinite; 
+        width: auto;              /* 너비를 글자에 맞게 자동으로 변경 */
+        padding: 5px 20px;       /* 좌우 여백 추가 */
+        border-radius: 4px;      /* 동그라미에서 네모난 배지 형태로 변경 */
+        font-family: 'Courier New', Courier, monospace; 
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    ">
+        UNOFFICIAL REPORT: VELUNA
             </div>
             <div class="guide-content">
                 <p style="font-size: 0.95rem; color: #eee; line-height: 1.8; position: relative; z-index: 1;">
@@ -224,7 +237,7 @@
         </div>
         <div class="guide-content">
             <p style="line-height: 1.8;">
-                특수 시설 및 기밀 구역은 학생 개인의 <span style="color: #fff; font-weight: bold; text-decoration: underline;">허가 등급(Clearance)</span>에 따라 접근 권한이 차등 부여됩니다.
+                특수 시설 및 기밀 구역은 학생 개인의 <span style="color: #fff; font-weight: bold; text-decoration: underline;">허가 등급</span>에 따라 접근 권한이 차등 부여됩니다.
             </p>
             <ul style="margin-top: 15px; padding-left: 18px; font-size: 0.9rem; opacity: 0.9;">
                 <li style="margin-bottom: 8px;"><strong>일반 등급:</strong> 생활 시설 및 기초 훈련장</li>
@@ -382,10 +395,10 @@
         <div class="guide-box warning-highlight">
             <div class="guide-header">
                 <div class="guide-number" style="background: var(--danger);">!</div>
-                <div class="guide-title" style="color: var(--danger);">긴급 프로토콜: 던전 폭주 (Outbreak)</div>
+                <div class="guide-title" style="color: var(--danger);">긴급 프로토콜: 던전 폭주</div>
             </div>
             <div class="guide-content">
-                <p>던전 내에서 정해진 시간(Time-Limit)을 초과할 경우, 핵이 폭주하며 몬스터가 외부로 쏟아져 나옵니다. 이 경우 탐사팀은 **'실패'** 처리되며, 도시 평판이 대폭 하락합니다.</p>
+                <p>던전 내에서 정해진 시간을 초과할 경우, 핵이 폭주하며 몬스터가 외부로 쏟아져 나옵니다. 이 경우 탐사팀은 <span style="color:var(--vulcanus); font-weight: bold;">실패</span> 처리되며, 도시 평판이 대폭 하락합니다.</p>
             </div>
         </div>
     </div>
