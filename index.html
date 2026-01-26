@@ -95,126 +95,116 @@
         <button class="tab-btn" onclick="switchTab(event, 'character')">CHARACTERS</button>
     </nav>
 
-    <section id="tab-world" class="archive-section active">
-        <div class="section-header-img">
-            <img src="https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/579d4411-d771-4529-a0d5-71a4311eae6e.png" alt="World Map" style="width:100%; height:100%; object-fit:cover; opacity:0.6; position:absolute;">
-        </div>
-        
-        <h2 class="sec-title">아카데미의 구조</h2>
-        <div class="rule-box">
-            <ul style="list-style: '◈ '; padding-left: 20px; font-size: 0.9rem; color: var(--text-gold);">
-                <li>아카데미는 단계적으로 공간이 열리도록 설계되어 있습니다.</li>
-                <li>가까운 장소부터 파악되며, 이동에 따라 시야가 넓어집니다.</li>
-                <li>경험과 허가에 따라 접근 가능한 구역이 달라집니다.</li>
+<section id="tab-world" class="archive-section active">
+    <div class="section-header-img">
+        <img src="https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/579d4411-d771-4529-a0d5-71a4311eae6e.png" alt="World Map" style="width:100%; height:100%; object-fit:cover; opacity:0.6; position:absolute;">
+    </div>
+    
+    <h2 class="sec-title">아스트렐 아카데미 세계관 안내</h2>
+    
+    <div class="rule-grid">
+        <div class="rule-item">
+            <h4>🌐 세계 및 현상</h4>
+            <ul>
+                <li><strong>세계관:</strong> 몬스터와 던전이 공존하며, 방치된 던전은 현실을 침식합니다.</li>
+                <li><strong>던전:</strong> 중심 '핵'을 파괴하면 비활성화되나, 일정 시간 후 재생성됩니다.</li>
+                <li><strong>붕괴 현상:</strong> 불안정한 던전에서 몬스터가 유출되는 국지적 침식 현상입니다.</li>
             </ul>
         </div>
-
-        <div class="rule-grid">
-            <div class="rule-item">
-                <h4>아카데미 내부</h4>
-                <ul>
-                    <li>교육: 강의동, 실습장, 훈련장, 도서관</li>
-                    <li>생활: 기숙사, 행정동, 포탈 대기실</li>
-                    <li>출입 기록은 안전 확인을 위해 관리됩니다.</li>
-                    <li>일부 지하 구역은 던전과 연결되어 있으며, 기준 충족 시 접근 가능합니다.</li>
-                </ul>
-            </div>
-            <div class="rule-item">
-                <h4>외부 구역</h4>
-                <ul>
-                    <li>아카데미 밖으로 나가는 일은 학생의 안전을 위해 관리되고 있습니다.</li>
-                    <li>출처가 불분명한 소문과 반복적으로 언급되는 세력에는 신중한 태도가 요구됩니다.</li>
-                </ul>
-            </div>
-            <div class="rule-item">
-                <h4>마을 · 도시</h4>
-                <ul>
-                    <li>마을: 보급, 숙박, 비공식 정보 취득</li>
-                    <li>도시: 귀족 접견, 상단 거래, 정치적 접촉</li>
-                    <li>위험지: 폐허, 오염 구역, 비공식 던전 입구</li>
-                    <li>※위험 지역: 주의 요망</li>
-                </ul>
-            </div>
+        <div class="rule-item">
+            <h4>✨ 마력과 속성</h4>
+            <ul>
+                <li><strong>고유 마력:</strong> 원소, 상태, 개념 등 개인별 다양한 속성을 보유합니다.</li>
+                <li><strong>희귀 속성:</strong> 빛과 어둠 속성은 매우 희귀하며 강력하지만 불안정합니다.</li>
+                <li><strong>아카데미:</strong> 이러한 마력 운용과 팀 전술을 교육하는 전문 기관입니다.</li>
+            </ul>
         </div>
-
-        <div class="warning-box" style="margin-top:20px; border:1px solid rgba(255,77,77,0.3); background:rgba(255,77,77,0.05); padding:15px; border-radius:4px;">
-            <h4 style="color:var(--danger); margin-bottom:10px;">〈벨루나 안내〉</h4>
-            <p style="font-size:0.85rem; line-height:1.6; color:#ddd;">
-                벨루나는 기록상 범죄·테러 조직으로 분류되어 있습니다. 직접 모습을 드러내기보다 소문·정보 왜곡·이상한 흐름으로 흔적을 남기는 경우가 많습니다. 관련 상황에서는 예기치 못한 위험이나 이후 평가에 영향을 받을 수 있으니 주의하십시오.
-            </p>
-        </div>
-    </section>
-
-    <section id="tab-academy" class="archive-section">
-        <h2 class="sec-title">HOUSES (기숙사 분류)</h2>
-        <div class="char-grid" style="margin-bottom: 50px;">
-            <div class="char-card"><h3>🦁 Vulcanus</h3><p>용기와 투지. 기사학부 중심.</p></div>
-            <div class="char-card"><h3>🐬 Neptunus</h3><p>지혜와 마법. 연구자들의 집합소.</p></div>
-            <div class="char-card"><h3>🦚 Aurelia</h3><p>고결과 사교. 황실/귀족 파벌.</p></div>
-            <div class="char-card"><h3>🦉 Minerva</h3><p>이성과 진리. 실무 위주 탐험가.</p></div>
-        </div>
-
-        <h2 class="sec-title">RANK SYSTEM (승급 규정)</h2>
-        <div class="notice-board">
-            <div class="notice-item">
-                <div class="notice-tag">NEWBIE</div>
-                <span class="rank-badge">F → E</span>
-                <span>시뮬레이션 환경 기초 전술 평가</span>
-            </div>
-            <div class="notice-item">
-                <div class="notice-tag">TRAINEE</div>
-                <span class="rank-badge">E → D</span>
-                <span>하급 실전 파견 및 초동 대처 기록</span>
-            </div>
-            <div class="notice-item">
-                <div class="notice-tag">REGULAR</div>
-                <span class="rank-badge">D → C</span>
-                <span>고위험 실무 조사 및 전투 지속력 측정</span>
-            </div>
-            <div class="notice-item" style="background:rgba(197,163,93,0.15); border:1px solid var(--text-gold);">
-                <div class="notice-tag">ELITE</div>
-                <span class="rank-badge">C → B</span>
-                <span>중급 구역 운용 및 원외 사회 기여도 심사</span>
-            </div>
-            <div class="notice-item">
-                <div class="notice-tag">EXPERT</div>
-                <span class="rank-badge">B → A</span>
-                <span>상급 토벌 기록 및 중대 사건 해결 증명</span>
-            </div>
-            <div class="notice-item">
-                <div class="notice-tag" style="color:var(--danger);">MASTER</div>
-                <span class="rank-badge" style="color:var(--danger);">A → S</span>
-                <span>심연 궤적 공인 및 국가 안보 위원회 승인</span>
-            </div>
-        </div>
-    </section>
-</main>
-
-    <div id="charModal" class="modal" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div class="modal-left">
-                <img id="modalImg" src="">
-            </div>
-            <div class="modal-right">
-                <h2 id="modalName" style="color:var(--text-gold); font-size: 1.8rem;"></h2>
-                <p id="modalQuote" style="font-style:italic; margin: 10px 0 20px; color:#888; border-left: 2px solid #444; padding-left: 10px;"></p>
-                
-                <table class="profile-table">
-                    <tr><td class="profile-label">나이</td><td id="modalAge"></td><td class="profile-label">학년/직책</td><td id="modalYear"></td></tr>
-                    <tr><td class="profile-label">신장</td><td id="modalHeight"></td><td class="profile-label">체중</td><td id="modalWeight"></td></tr>
-                    <tr><td class="profile-label">소속</td><td id="modalFaction"></td><td class="profile-label">학부</td><td id="modalFaculty"></td></tr>
-                    <tr><td class="profile-label">속성</td><td colspan="3" id="modalAttr"></td></tr>
-                </table>
-
-                <div id="modalStory" style="color:#bbb; line-height: 1.8; font-size: 0.95rem;"></div>
-                <div class="thumb-nav" id="thumbNav"></div>
-            </div>
+        <div class="rule-item">
+            <h4>🏙️ 주요 거점</h4>
+            <ul>
+                <li><strong>마을:</strong> 보급, 숙박, 비공식 정보 취득의 장.</li>
+                <li><strong>도시:</strong> 귀족 접견, 상단 거래 등 정치적 접촉이 일어나는 곳.</li>
+                <li><strong>위험지:</strong> 폐허, 오염 구역 등. <span style="color:var(--danger);">※ 주의 요망</span></li>
+            </ul>
         </div>
     </div>
 
-    <script>
-        
+    <div class="warning-box" style="margin-top:20px; border:1px solid rgba(255,77,77,0.3); background:rgba(255,77,77,0.05); padding:15px; border-radius:4px;">
+        <h4 style="color:var(--danger); margin-bottom:10px;">⚠️ 〈비공식 기밀: 벨루나 안내〉</h4>
+        <p style="font-size:0.85rem; line-height:1.6; color:#ddd;">
+            벨루나는 기록상 범죄·테러 조직으로 분류되어 있습니다. 직접 모습을 드러내기보다 소문, 정보 왜곡 등으로 흔적을 남깁니다. 조우 시 예기치 못한 위험이나 평가에 악영향을 받을 수 있습니다.
+        </p>
+    </div>
+</section>
+
+<section id="tab-academy" class="archive-section">
+    <div class="section-header-img">
+        <img src="https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/579d4411-d771-4529-a0d5-71a4311eae6e.png" alt="Academy Map" style="width:100%; height:100%; object-fit:cover; opacity:0.4; position:absolute;">
+    </div>
+
+    <div class="rule-box" style="text-align: center; border-color: var(--text-gold); margin-bottom: 30px;">
+        <h3 style="color: var(--text-gold); margin-bottom: 10px;">「아스트렐 아카데미 공간 안내」</h3>
+        <p style="font-size: 0.9rem; color: #bbb;">아카데미에 온 것을 환영합니다. 신입생을 위한 기본 가이드라인입니다.</p>
+    </div>
+
+    <h2 class="sec-title">아카데미의 구조</h2>
+    <div class="rule-grid">
+        <div class="rule-item">
+            <h4>📍 구역 개방 원칙</h4>
+            <ul>
+                <li>공간은 단계적으로 열리며, 이동에 따라 시야가 확장됩니다.</li>
+                <li>경험치와 허가 등급에 따라 접근 가능 구역이 결정됩니다.</li>
+            </ul>
+        </div>
+        <div class="rule-item">
+            <h4>🏫 아카데미 내부</h4>
+            <ul>
+                <li><strong>교육:</strong> 강의동, 실습장, 훈련장, 도서관</li>
+                <li><strong>생활:</strong> 기숙사, 행정동, 포탈 대기실</li>
+                <li>지하 일부는 던전과 연결되어 기준 충족 시 입장이 가능합니다.</li>
+            </ul>
+        </div>
+        <div class="rule-item">
+            <h4>🚧 외부 및 보안</h4>
+            <ul>
+                <li>학생 안전을 위해 외부 출입은 엄격히 관리됩니다.</li>
+                <li>출처가 불분명한 외부 세력의 소문에 주의하십시오.</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2 class="sec-title">HOUSES (기숙사)</h2>
+    <div class="char-grid" style="margin-bottom: 50px;">
+        <div class="char-card"><h3>🦁 불카누스</h3><p>용기와 투지. 기사학부 중심.</p></div>
+        <div class="char-card"><h3>🐬 넵투누스</h3><p>지혜와 마법. 연구자 중심.</p></div>
+        <div class="char-card"><h3>🦚 아우렐리아</h3><p>고결과 사교. 황실/귀족 파벌.</p></div>
+        <div class="char-card"><h3>🦉 미네르바</h3><p>이성과 진리. 실무/탐험 중심.</p></div>
+    </div>
+
+    <h2 class="sec-title">RANKING (승급 규정)</h2>
+    <div class="notice-board">
+        <div class="notice-item"><div class="notice-tag">NEWBIE</div><span class="rank-badge">F → E</span><span>시뮬레이션 기초 전술 평가</span></div>
+        <div class="notice-item"><div class="notice-tag">TRAINEE</div><span class="rank-badge">E → D</span><span>하급 실전 파견 및 초동 대처</span></div>
+        <div class="notice-item"><div class="notice-tag">REGULAR</div><span class="rank-badge">D → C</span><span>고위험 실무 조사 및 전투 지속력</span></div>
+        <div class="notice-item" style="background:rgba(197,163,93,0.1); border:1px solid var(--text-gold);"><div class="notice-tag">ELITE</div><span class="rank-badge">C → B</span><span>중급 구역 운용 및 공헌도 심사</span></div>
+        <div class="notice-item"><div class="notice-tag">EXPERT</div><span class="rank-badge">B → A</span><span>상급 토벌 및 사건 해결 증명</span></div>
+        <div class="notice-item"><div class="notice-tag" style="color:var(--danger);">MASTER</div><span class="rank-badge" style="color:var(--danger);">A → S</span><span>심연 궤적 공인 및 최종 승인</span></div>
+    </div>
+</section>
+
+<section id="tab-dungeon" class="archive-section">
+    <div class="section-header-img">
+        <img src="https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/579d4411-d771-4529-a0d5-71a4311eae6e.png" alt="Dungeon Map" style="width:100%; height:100%; object-fit:cover; opacity:0.3; filter: grayscale(100%) sepia(100%) hue-rotate(-50deg);">
+    </div>
+    <h2 class="sec-title" style="color:var(--danger); border-color:var(--danger);">포탈 게이트 조사 보고서</h2>
+    <div class="char-grid">
+        <div class="char-card" style="border-left: 4px solid #555;"><h3>하급 (F~D)</h3><p>통제된 시뮬레이션 및 안전 교육 구역.</p></div>
+        <div class="char-card" style="border-left: 4px solid var(--text-gold);"><h3>중급 (C~B)</h3><p>외부 위험지 노출 및 실전 운용 구역.</p></div>
+        <div class="char-card" style="border-left: 4px solid var(--danger);"><h3>상급 (A~S)</h3><p>심연의 균열. 아카데미 핵심 전력 전용.</p></div>
+</section>
+</main>
+
+<script>
         const charactersData = {
             '엘리오': {
                 type:'student',
@@ -360,91 +350,98 @@
             }
         };
 
-function startArchive() {
-            document.getElementById('prologue').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('prologue').style.display = 'none';
-                document.getElementById('mainArchive').style.display = 'block';
-                renderChars();
-                setTimeout(() => document.getElementById('mainArchive').style.opacity = '1', 50);
-            }, 800);
-        }
+// 1. 아카이브 시작 함수
+    function startArchive() {
+        const prologue = document.getElementById('prologue');
+        const main = document.getElementById('mainArchive');
+        
+        prologue.style.opacity = '0';
+        setTimeout(() => {
+            prologue.style.display = 'none';
+            main.style.display = 'block';
+            renderChars(); // 캐릭터 그리드 생성
+            setTimeout(() => main.style.opacity = '1', 50);
+        }, 800);
+    }
 
-        function switchTab(e, id) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.archive-section').forEach(s => s.classList.remove('active'));
-            e.target.classList.add('active');
-            document.getElementById('tab-' + id).classList.add('active');
-        }
+    // 2. 탭 전환 함수 (ID 일치 확인)
+    function switchTab(e, id) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.archive-section').forEach(s => s.classList.remove('active'));
+        e.target.classList.add('active');
+        const targetSection = document.getElementById('tab-' + id);
+        if(targetSection) targetSection.classList.add('active');
+    }
 
-        function renderChars() {
-            const grids = {
-                'student': document.getElementById('grid-student'),
-                'professor': document.getElementById('grid-professor'),
-                'belluna': document.getElementById('grid-belluna')
-            };
-            
-            Object.values(grids).forEach(g => { if(g) g.innerHTML = ''; });
+    // 3. 캐릭터 렌더링 함수
+    function renderChars() {
+        const grids = {
+            'student': document.getElementById('grid-student'),
+            'professor': document.getElementById('grid-professor'),
+            'belluna': document.getElementById('grid-belluna')
+        };
+        
+        // 초기화
+        Object.values(grids).forEach(g => { if(g) g.innerHTML = ''; });
 
-            for (let key in charactersData) {
-                const c = charactersData[key];
-                const grid = grids[c.type];
-                if(grid) {
-                    const card = document.createElement('div');
-                    card.className = 'char-card';
-                    card.onclick = () => openModal(key);
-                    card.innerHTML = `
-                        <div style="color:var(--text-gold); font-size:0.75rem; margin-bottom:5px;">${c.faculty}</div>
-                        <h3 style="color:#fff;">${key}</h3>
-                        <div style="font-size:0.7rem; opacity:0.6; margin-top:5px;">${c.year}</div>
-                    `;
-                    grid.appendChild(card);
-                }
+        for (let key in charactersData) {
+            const c = charactersData[key];
+            const grid = grids[c.type];
+            if(grid) {
+                const card = document.createElement('div');
+                card.className = 'char-card';
+                card.onclick = () => openModal(key);
+                card.innerHTML = `
+                    <div style="color:var(--text-gold); font-size:0.75rem; margin-bottom:5px;">${c.faculty}</div>
+                    <h3 style="color:#fff;">${key}</h3>
+                    <div style="font-size:0.7rem; opacity:0.6; margin-top:5px;">${c.year}</div>
+                `;
+                grid.appendChild(card);
             }
         }
+    }
 
-        function openModal(key) {
-            const c = charactersData[key];
-            document.getElementById('modalName').innerText = c.name;
-            document.getElementById('modalQuote').innerText = c.quote;
-            document.getElementById('modalStory').innerText = c.story;
-            document.getElementById('modalAge').innerText = c.age;
-            document.getElementById('modalHeight').innerText = c.height;
-            document.getElementById('modalWeight').innerText = c.weight;
-            document.getElementById('modalYear').innerText = c.year;
-            document.getElementById('modalFaction').innerText = c.faction;
-            document.getElementById('modalFaculty').innerText = c.faculty;
-            document.getElementById('modalAttr').innerText = c.attr;
-            document.getElementById('modalImg').src = c.images[0];
-            
-            const thumbNav = document.getElementById('thumbNav');
-            thumbNav.innerHTML = '';
-            c.images.forEach(imgUrl => {
-                const thumb = document.createElement('img');
-                thumb.src = imgUrl;
-                thumb.onclick = () => document.getElementById('modalImg').src = imgUrl;
-                thumbNav.appendChild(thumb);
-            });
-            document.getElementById('charModal').style.display = 'flex';
-        }
+    // 4. 모달 열기/닫기
+    function openModal(key) {
+        const c = charactersData[key];
+        document.getElementById('modalName').innerText = c.name;
+        document.getElementById('modalQuote').innerText = c.quote;
+        document.getElementById('modalStory').innerText = c.story;
+        document.getElementById('modalAge').innerText = c.age;
+        document.getElementById('modalHeight').innerText = c.height;
+        document.getElementById('modalWeight').innerText = c.weight;
+        document.getElementById('modalYear').innerText = c.year;
+        document.getElementById('modalFaction').innerText = c.faction;
+        document.getElementById('modalFaculty').innerText = c.faculty;
+        document.getElementById('modalAttr').innerText = c.attr;
+        document.getElementById('modalImg').src = c.images[0];
+        
+        const thumbNav = document.getElementById('thumbNav');
+        thumbNav.innerHTML = '';
+        c.images.forEach(imgUrl => {
+            const thumb = document.createElement('img');
+            thumb.src = imgUrl;
+            thumb.onclick = () => document.getElementById('modalImg').src = imgUrl;
+            thumbNav.appendChild(thumb);
+        });
+        document.getElementById('charModal').style.display = 'flex';
+    }
 
-        function closeModal() { document.getElementById('charModal').style.display = 'none'; }
+    function closeModal() { document.getElementById('charModal').style.display = 'none'; }
 
-        // 입자 효과
-        const canvas = document.getElementById('particle-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        function initCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('resize', initCanvas);
-        initCanvas();
-        class Particle {
-            constructor() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.size = Math.random() * 2; this.speedY = Math.random() * 0.4; this.opacity = Math.random() * 0.4; }
-            update() { this.y -= this.speedY; if (this.y < 0) this.y = canvas.height; }
-            draw() { ctx.fillStyle = `rgba(197, 163, 93, ${this.opacity})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
-        }
-        for(let i=0; i<60; i++) particles.push(new Particle());
-        function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
-        animate();
-    </script>
-</body>
-</html>
+    // 5. 입자 효과 (기존 코드 유지)
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    function initCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('resize', initCanvas);
+    initCanvas();
+    class Particle {
+        constructor() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.size = Math.random() * 2; this.speedY = Math.random() * 0.4; this.opacity = Math.random() * 0.4; }
+        update() { this.y -= this.speedY; if (this.y < 0) this.y = canvas.height; }
+        draw() { ctx.fillStyle = `rgba(197, 163, 93, ${this.opacity})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
+    }
+    for(let i=0; i<60; i++) particles.push(new Particle());
+    function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
+    animate();
+</script>
