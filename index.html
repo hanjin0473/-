@@ -20,7 +20,12 @@
         * { margin:0; padding:0; box-sizing:border-box; }
         body { background:var(--bg-color); color:var(--text-dim); font-family: 'Pretendard', serif; line-height:1.8; overflow-x:hidden; }
         
-        #particle-canvas { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+      #particle-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none; /* 이게 있어야 버튼 클릭이 됩니다! */
+    z-index: 0;
+}
 
         /* 진입 화면 */
         .prologue-overlay { position:fixed; inset:0; background:#050507; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:99999; transition:1s; }
@@ -766,112 +771,125 @@ JavaScript
         }
     };
 
-    // 2. 핵심 실행 로직 (통합)
+// 2. 초기 설정 (DOMContentLoaded 사용이 더 빠르고 안전합니다)
+    document.addEventListener('DOMContentLoaded', () => {
+        const main = document.getElementById('mainArchive');
+        if (main) {
+            main.style.display = 'none';
+            main.style.opacity = '0';
+        }
+    });
+
+    // 3. 진입 버튼 함수
     function startArchive() {
+        console.log("Archive Access Granted.");
         const pro = document.getElementById('prologue');
         const main = document.getElementById('mainArchive');
-        if(pro) pro.style.opacity = '0';
+
+        if (!pro || !main) return;
+
+        pro.style.opacity = '0';
+        pro.style.transition = 'opacity 0.5s';
+
         setTimeout(() => {
-            if(pro) pro.style.display = 'none';
-            if(main) {
-                main.style.display = 'block';
-                renderChars(); // 시작 시 미리 렌더링
-                setTimeout(() => main.style.opacity = '1', 50);
-            }
-        }, 800);
+            pro.style.display = 'none';
+            main.style.display = 'block';
+            renderChars(); // 진입 시 렌더링 실행
+            
+            setTimeout(() => {
+                main.style.opacity = '1';
+                main.style.transition = 'opacity 0.5s';
+            }, 50);
+        }, 500);
     }
 
-    function switchTab(e, id) {
-        // 모든 탭 버튼과 섹션 비활성화
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.archive-section').forEach(s => {
-            s.style.display = 'none';
-            s.classList.remove('active');
+    // 4. 탭 전환 함수
+    function switchTab(e, tabName) {
+        // 모든 섹션 숨기기
+        document.querySelectorAll('.archive-section').forEach(sec => {
+            sec.style.display = 'none';
+            sec.classList.remove('active');
         });
 
-        // 클릭한 탭 활성화
-        e.target.classList.add('active');
+        // 모든 버튼 비활성화
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+        // 선택한 탭 활성화 (ID 보정: tab-world, tab-characters 등)
+        const targetId = tabName === 'character' ? 'tab-character' : 'tab-' + tabName;
+        const targetSec = document.getElementById(targetId);
         
-        // 대상 섹션 ID 찾기 (id가 character일 경우 characters로 보정)
-        const targetId = id === 'character' ? 'tab-characters' : 'tab-' + id;
-        const targetTab = document.getElementById(targetId);
-        
-        if (targetTab) {
-            targetTab.style.display = 'block';
-            targetTab.classList.add('active');
-            // 캐릭터 탭 진입 시 다시 렌더링
-            if (id === 'character') renderChars();
+        if (targetSec) {
+            targetSec.style.display = 'block';
+            targetSec.classList.add('active');
+            e.currentTarget.classList.add('active');
+        }
+
+        if (tabName.includes('character')) {
+            renderChars();
         }
     }
 
+    // 5. 캐릭터 렌더링 함수
     function renderChars() {
         const grids = {
-            'student': document.getElementById('grid-student'),
-            'professor': document.getElementById('grid-professor'),
-            'belluna': document.getElementById('grid-belluna')
+            student: document.getElementById('grid-student'),
+            professor: document.getElementById('grid-professor'),
+            belluna: document.getElementById('grid-belluna')
         };
-        
-        // 그리드 내용 초기화
-        Object.values(grids).forEach(g => { if(g) g.innerHTML = ''; });
+
+        for (let g in grids) { if (grids[g]) grids[g].innerHTML = ''; }
 
         for (let key in charactersData) {
             const c = charactersData[key];
-            const grid = grids[c.type];
-            if (grid) {
+            const targetGrid = grids[c.type];
+            if (targetGrid) {
                 const card = document.createElement('div');
                 card.className = 'char-card';
+                card.style.cursor = 'pointer';
                 card.onclick = () => openModal(key);
                 card.innerHTML = `
-                    <div style="color:var(--text-gold); font-size:0.85rem; margin-bottom:5px;">${c.faculty}</div>
-                    <h3 style="margin-bottom:5px; color:#fff;">${c.name}</h3>
-                    <div style="font-size:0.8rem; opacity:0.6; color:#ccc;">${c.year} · ${c.attr}</div>
+                    <div style="color:var(--text-gold); font-size:0.8rem;">${c.faculty}</div>
+                    <h3 style="margin:5px 0; color:#fff;">${c.name}</h3>
+                    <div style="font-size:0.8rem; opacity:0.6; color:#ccc;">${c.year}</div>
                 `;
-                grid.appendChild(card);
+                targetGrid.appendChild(card);
             }
         }
     }
 
+    // 6. 모달 제어
     function openModal(key) {
         const c = charactersData[key];
-        if (!c) return;
+        if(!c) return;
 
-        // 텍스트 정보 삽입
-        const ids = ['modalName', 'modalQuote', 'modalStory', 'modalAge', 'modalHeight', 'modalWeight', 'modalYear', 'modalFaction', 'modalFaculty', 'modalAttr'];
-        ids.forEach(id => {
-            const el = document.getElementById(id);
-            if(el) {
-                const dataKey = id.replace('modal', '').toLowerCase();
-                // 키값이 불일치하는 일부 예외 처리
-                if(id === 'modalName') el.innerText = c.name;
-                else if(id === 'modalQuote') el.innerText = c.quote;
-                else if(id === 'modalStory') el.innerText = c.story;
-                else el.innerText = c[dataKey] || "";
-            }
-        });
-
-        // 이미지 및 썸네일
-        const mImg = document.getElementById('modalImg');
-        if(mImg) mImg.src = c.images[0];
+        document.getElementById('modalName').innerText = c.name;
+        document.getElementById('modalQuote').innerText = c.quote;
+        document.getElementById('modalStory').innerText = c.story;
+        document.getElementById('modalAge').innerText = c.age;
+        document.getElementById('modalHeight').innerText = c.height;
+        document.getElementById('modalWeight').innerText = c.weight;
+        document.getElementById('modalYear').innerText = c.year;
+        document.getElementById('modalFaction').innerText = c.faction;
+        document.getElementById('modalFaculty').innerText = c.faculty;
+        document.getElementById('modalAttr').innerText = c.attr;
+        document.getElementById('modalImg').src = c.images[0];
 
         const tNav = document.getElementById('thumbNav');
-        if(tNav) {
-            tNav.innerHTML = '';
-            c.images.forEach(img => {
-                const t = document.createElement('img');
-                t.src = img; t.style.width="50px"; t.style.height="50px"; t.style.cursor="pointer";
-                t.style.border="1px solid #444"; t.style.objectFit="cover";
-                t.onclick = () => { if(mImg) mImg.src = img; };
-                tNav.appendChild(t);
-            });
-        }
+        tNav.innerHTML = '';
+        c.images.forEach(img => {
+            const t = document.createElement('img');
+            t.src = img; t.style.width="50px"; t.style.height="50px"; 
+            t.style.objectFit="cover"; t.style.cursor="pointer";
+            t.style.border="1px solid var(--text-gold)";
+            t.onclick = () => document.getElementById('modalImg').src = img;
+            tNav.appendChild(t);
+        });
         document.getElementById('charModal').style.display = 'flex';
     }
 
-    function closeModal() {
-        document.getElementById('charModal').style.display = 'none';
-    }
+    function closeModal() { document.getElementById('charModal').style.display = 'none'; }
 
-    // 3. 파티클 애니메이션
+    // 7. 파티클 애니메이션 (기존과 동일)
     const canvas = document.getElementById('particle-canvas');
     if (canvas) {
         const ctx = canvas.getContext('2d');
@@ -879,7 +897,6 @@ JavaScript
         const init = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
         window.addEventListener('resize', init);
         init();
-
         class P {
             constructor() {
                 this.x = Math.random() * canvas.width;
