@@ -462,22 +462,6 @@
     </div>
 </section>
     
-    <section id="tab-characters" class="archive-section">
-    <h2 class="sec-title">登場人物 아카이브</h2>
-
-    <div class="char-category-title">ACADEMY STUDENTS</div>
-    <div id="grid-student" class="char-grid">
-        </div>
-
-    <div class="char-category-title">ACADEMY PROFESSORS</div>
-    <div id="grid-professor" class="char-grid">
-        </div>
-
-    <div class="char-category-title">THREAT: BELLUNA</div>
-    <div id="grid-belluna" class="char-grid">
-        </div>
-</section>
-    
 </main>
 
 <div id="charModal" class="modal" onclick="if(event.target==this) closeModal()">
@@ -637,45 +621,198 @@
             }
         };
 
-// 2. 아카이브 시작 및 탭 전환 로직
+보내주신 HTML 구조를 확인해 보니, 탭의 ID와 JavaScript에서 호출하는 ID가 살짝 달라서 그 부분만 맞추면 완벽하게 작동할 것 같습니다!
+
+현재 HTML의 탭 버튼은 switchTab(event, 'character') (단수)인데, 실제 섹션 ID는 id="tab-characters" (복수)로 되어 있습니다. 이 부분을 하나로 통일해주어야 캐릭터가 나타납니다.
+
+가장 깔끔하게 통합된 최종 스크립트 코드를 코드블럭에 담아드립니다. 기존 <script> 태그 안의 내용을 모두 지우고 이걸로 덮어씌우세요.
+
+JavaScript
+
+<script>
+    // 1. 캐릭터 데이터
+    const charactersData = {
+        '엘리오': {
+            type: 'student',
+            name: "엘리오 루멘", quote: "음... 아까 한 말, 다시 해줄래? 자느라 못 들었어...",
+            age: "20", height: "175cm", weight: "71kg", year: "1학년",
+            faction: "아카데미", faculty: "🪄 마법학부", attr: "🌈 다속성",
+            story: "고위 마법 공작 가문 출신의 천재 마법사. 늘 서적과 실험에 파묻혀 지낸 탓에 만성적인 졸음에 시달리며 현실 회피 성향이 있으며, 다속성 마법을 자유자재로 다루는 실력자이다.",
+            images: [
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/770af73e-0453-48df-9e1b-dda27bbdbd0a.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/f0defc27-a029-492f-85ea-38f5edad9475.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/3186a523-0589-48b6-a92e-b7f038a8b94b.png'
+            ]
+        },
+        '아델': {
+            type: 'student',
+            name: "아델 폰 슈타인", quote: "불필요한 대화는 생략하지. 결론부터 내놔.",
+            age: "20", height: "182cm", weight: "74kg", year: "1학년",
+            faction: "아카데미", faculty: "🪄 마법학부", attr: "🌪️ 바람",
+            story: "재상 가문의 후계자로, 어린 시절부터 카이렌의 측근으로서 전략과 전술을 담당해왔으며, 안경 너머의 날카로운 눈빛처럼 논리적이고 분석적이며 감정 개입을 최소화합니다.",
+            images: [
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/7008b293-4f7d-4de3-a903-b04f68ae246d.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/1c2dad27-9ba5-4d7c-a8fc-06383132a074.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/d3eccfff-1c9a-4e6e-8937-4e014d2fb81a.png'
+            ]
+        },
+        '리나': {
+            type: 'student',
+            name: "리나", quote: "기사로서 당연한 일을... 앗, 방금 제 검이 헛나간 건 못 본 걸로 해주세요!",
+            age: "20", height: "169cm", weight: "57kg", year: "1학년",
+            faction: "아카데미", faculty: "🛡️ 기사학부", attr: "⚔️ 물리",
+            story: "평민 출신의 입지전적인 모범 기사. 동료 보호를 최우선으로 여기는 신념을 가졌다. 의외로 허당끼가 있다.",
+            images: [
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/854ed1c0-e0c7-409c-86fc-f91b1ac84b62.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/18251d78-ce34-44d5-b9be-0a5eecbf6927.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/7affcccd-be1c-4cc1-bca9-2bff530f246d.png'
+            ]
+        },
+        '라파엘': {
+            type: 'student',
+            name: "라파엘", quote: "이 근처에 정말 맛있는 빵집이 있는데... 같이 갈래? 아, 물론 수업은 다 듣고 말이야.",
+            age: "21", height: "178cm", weight: "70kg", year: "2학년",
+            faction: "아카데미", faculty: "🛡️ 기사학부", attr: "🌑 어둠",
+            story: "선한 인상의 소유자. 누구에게나 다정하고 친근하게 다가가며, 주변 사람들로부터 깊은 신뢰를 받는 분위기 메이커이다. 의외로 음식의 맛에 매우 깐깐한 먹보 기질이 있다.",
+            images: [
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/2c240dd2-8337-4955-b9f1-be07c9b995a0.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/dc0d3411-9e78-487b-b485-4da756b50183.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/de0b1268-1d43-4104-8dda-c8a93b68755b.png'
+            ]
+        },
+        '이벨린': {
+            type: 'student',
+            name: "이벨린 드 아르노", quote: "있지, 저 구름 마시멜로 맛일 것 같지 않아? 내가 가서 떼어줄까?",
+            age: "21", height: "165cm", weight: "55kg", year: "2학년",
+            faction: "아카데미", faculty: "🪄 마법학부", attr: "⛰️ 땅",
+            story: "공작 가문의 영애이나 자유로운 환경에서 자라 규칙에 얽매이지 않습니다.",
+            images: [
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/a3fd1845-e387-46b3-9017-25045ca46ad9.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/50d3cdee-3805-4ad1-b552-4f7f2be3e497.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/d767e9cf-c0e9-4f81-af76-c94834477bce.png'
+            ]
+        },
+        '카이렌': {
+            type: 'student',
+            name: "카이렌 알테어 솔라리스", quote: "미안하지만, 정해진 시간 내에 끝내줬으면 좋겠어. 난 낭비되는 시간을 보는 게 세상에서 제일 곤혹스럽거든.",
+            age: "22", height: "186cm", weight: "75kg", year: "3학년",
+            faction: "아카데미", faculty: "🛡️ 기사학부", attr: "🔥 화염",
+            story: "제국의 황태자. 겉으로는 상냥한 성자처럼 보이지만 속은 철저한 효율주의자로, 분노할수록 더 나긋나긋하게 웃으며 상대를 압박합니다. 동료들을 유능한 장기말로 관리하며 감정을 통제한다.",
+            images: [
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/2d033a4f-f8e5-44df-ad1a-decb9646da4c.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/434899b4-8362-48b7-96cf-0ca7480e0f0a.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/55130244-e05c-4653-8541-07c4ade9696a.png'
+            ]
+        },
+        '카엘': {
+            type: 'student',
+            name: "카엘 로젠", quote: "에이, 이 정도로 충분하잖아? 적당히 이기고 퇴장하는 게 내 스타일이거든.",
+            age: "22", height: "185cm", weight: "72kg", year: "3학년",
+            faction: "아카데미", faculty: "🛡️ 기사학부", attr: "⚔️ 물리",
+            story: "후작 가문의 기민한 쌍검사. 활기차고 장난기 넘치는 성격으로 분위기를 주도하며, 실전 감각이 매우 뛰어나지만 적당히 싸우는 경향이 있다.",
+            images: [
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/c35a2462-7ab8-411c-8d66-618a92a63cfb.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/455c611a-b5b5-4a6e-9ecc-48e389219fef.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/9b1b2b39-911a-4987-b9c2-4d4c35382187.png'
+            ]
+        },
+        '요한': {
+            type: 'professor',
+            name: "요한 크라프트", quote: "이론 따윈 던전에서 안 통한다. 몸으로 기억해라.",
+            age: "45", height: "190cm", weight: "90kg", year: "전투학 교수",
+            faction: "아카데미", faculty: "🗡️ 전투학", attr: "⚔️ 물리",
+            story: "수많은 전장을 누빈 베테랑. 결과와 생존만을 강조하는 무자비한 교육 방식을 고수한다.",
+            images: [
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/21cbcc32-515f-4187-82db-d520f4c5e87b.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/35eaffc2-35c8-4514-bd31-8e3a139e7076.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/901a77a3-f265-483d-b33f-d84b1bb9c5eb.png'
+            ]
+        },
+        '헬레나': {
+            type: 'professor',
+            name: "헬레나 바이스", quote: "착한 아이네... 이제 선생님한테 다 말하렴.",
+            age: "36", height: "172cm", weight: "58kg", year: "마법이론 교수",
+            faction: "아카데미", faculty: "📜 마법이론", attr: "🌌 정신",
+            story: "자애로운 미소로 제자들의 안식처를 자처하지만, 실상은 상대를 정신적으로 의존하게 만들어 장악하는 스승이다.",
+            images: [
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/73d30672-e39a-4686-92d3-b1d97bf63c4d.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/d39d412a-bab8-462e-a8cb-bad4160b342a.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/0d15fce9-f81e-45dc-bae4-93463446be60.png'
+            ]
+        },
+        '아리시아': {
+            type: 'belluna',
+            name: "아리시아 블랙하트", quote: "당신이 무너지는 소리가 가장 달콤하네요... 이제 내 품 안 말고는 갈 곳이 없죠?",
+            age: "34", height: "168cm", weight: "52kg", year: "벨루나 리더",
+            faction: "벨루나", faculty: "총괄", attr: "🌑 어둠",
+            story: "벨루나의 수장. 우아한 태도로 완벽한 전략을 구사하지만, 실상은 마음에 든 대상을 사회적으로 매장시켜 오직 자신에게만 의존하게 만드는 탐욕스러운 포식자이다.",
+            images: [
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/3aa53c61-de77-41f7-bccd-90d8e16a1f04.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/6212d235-85dc-4ebd-b987-63ca955ccac1.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/a4a70981-01be-4144-98ca-a2c79cdadc5a.png'
+            ]
+        },
+        '바르칸': {
+            type: 'belluna',
+            name: "바르칸", quote: "공격이 그게 끝이야? 더 해보라고.",
+            age: "26", height: "178cm", weight: "70kg", year: "실행부",
+            faction: "벨루나", faculty: "전투", attr: "🌑 어둠",
+            story: "벨루나의 핵심 공격수. 생존 경쟁에서 살아남은 독종으로, 평소엔 도발적인 비아냥을 일삼지만 리더에겐 집요하리만큼 충성한다.",
+            images: [
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/29199464-9246-43e0-9658-380ba82375a1.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/ba666b0c-1f06-4476-8d80-cbbc385d0e4b.png',
+                'https://d394jeh9729epj.cloudfront.net/8DfAkDwViKY-KKKOOUNVOUpV/270fd17a-b89b-40c2-a89a-93c6152d1a7b.png'
+            ]
+        }
+    };
+
+    // 2. 핵심 실행 로직 (통합)
     function startArchive() {
-        const prologue = document.getElementById('prologue');
+        const pro = document.getElementById('prologue');
         const main = document.getElementById('mainArchive');
-        if (prologue) prologue.style.opacity = '0';
+        if(pro) pro.style.opacity = '0';
         setTimeout(() => {
-            if (prologue) prologue.style.display = 'none';
-            if (main) {
+            if(pro) pro.style.display = 'none';
+            if(main) {
                 main.style.display = 'block';
-                renderChars();
+                renderChars(); // 시작 시 미리 렌더링
                 setTimeout(() => main.style.opacity = '1', 50);
             }
         }, 800);
     }
 
     function switchTab(e, id) {
+        // 모든 탭 버튼과 섹션 비활성화
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.querySelectorAll('.archive-section').forEach(s => {
             s.style.display = 'none';
             s.classList.remove('active');
         });
+
+        // 클릭한 탭 활성화
         e.target.classList.add('active');
-        const targetTab = document.getElementById('tab-' + id);
+        
+        // 대상 섹션 ID 찾기 (id가 character일 경우 characters로 보정)
+        const targetId = id === 'character' ? 'tab-characters' : 'tab-' + id;
+        const targetTab = document.getElementById(targetId);
+        
         if (targetTab) {
             targetTab.style.display = 'block';
             targetTab.classList.add('active');
-            // 'characters' 탭일 때 렌더링 호출 (HTML상 id 확인 필요)
-            if (id === 'characters' || id === 'academy') renderChars();
+            // 캐릭터 탭 진입 시 다시 렌더링
+            if (id === 'character') renderChars();
         }
     }
 
-    // 3. 캐릭터 렌더링 및 모달 로직
     function renderChars() {
         const grids = {
             'student': document.getElementById('grid-student'),
             'professor': document.getElementById('grid-professor'),
             'belluna': document.getElementById('grid-belluna')
         };
-        Object.values(grids).forEach(g => { if (g) g.innerHTML = ''; });
+        
+        // 그리드 내용 초기화
+        Object.values(grids).forEach(g => { if(g) g.innerHTML = ''; });
 
         for (let key in charactersData) {
             const c = charactersData[key];
@@ -697,69 +834,73 @@
     function openModal(key) {
         const c = charactersData[key];
         if (!c) return;
-        const fields = {
-            'modalName': c.name, 'modalQuote': c.quote, 'modalStory': c.story,
-            'modalAge': c.age, 'modalHeight': c.height, 'modalWeight': c.weight,
-            'modalYear': c.year, 'modalFaction': c.faction, 'modalFaculty': c.faculty, 'modalAttr': c.attr
-        };
-        Object.entries(fields).forEach(([id, val]) => {
+
+        // 텍스트 정보 삽입
+        const ids = ['modalName', 'modalQuote', 'modalStory', 'modalAge', 'modalHeight', 'modalWeight', 'modalYear', 'modalFaction', 'modalFaculty', 'modalAttr'];
+        ids.forEach(id => {
             const el = document.getElementById(id);
-            if (el) el.innerText = val;
+            if(el) {
+                const dataKey = id.replace('modal', '').toLowerCase();
+                // 키값이 불일치하는 일부 예외 처리
+                if(id === 'modalName') el.innerText = c.name;
+                else if(id === 'modalQuote') el.innerText = c.quote;
+                else if(id === 'modalStory') el.innerText = c.story;
+                else el.innerText = c[dataKey] || "";
+            }
         });
 
+        // 이미지 및 썸네일
         const mImg = document.getElementById('modalImg');
-        if (mImg) mImg.src = c.images[0];
+        if(mImg) mImg.src = c.images[0];
 
-        const thumbNav = document.getElementById('thumbNav');
-        if (thumbNav) {
-            thumbNav.innerHTML = '';
+        const tNav = document.getElementById('thumbNav');
+        if(tNav) {
+            tNav.innerHTML = '';
             c.images.forEach(img => {
                 const t = document.createElement('img');
-                t.src = img; t.style.width = "50px"; t.style.height = "50px"; t.style.cursor = "pointer";
-                t.style.border = "1px solid #444"; t.style.objectFit = "cover";
-                t.onclick = () => { if (mImg) mImg.src = img; };
-                thumbNav.appendChild(t);
+                t.src = img; t.style.width="50px"; t.style.height="50px"; t.style.cursor="pointer";
+                t.style.border="1px solid #444"; t.style.objectFit="cover";
+                t.onclick = () => { if(mImg) mImg.src = img; };
+                tNav.appendChild(t);
             });
         }
-        const modal = document.getElementById('charModal');
-        if (modal) modal.style.display = 'flex';
+        document.getElementById('charModal').style.display = 'flex';
     }
 
     function closeModal() {
-        const modal = document.getElementById('charModal');
-        if (modal) modal.style.display = 'none';
+        document.getElementById('charModal').style.display = 'none';
     }
 
-    // 4. 파티클 애니메이션 (기존 유지)
+    // 3. 파티클 애니메이션
     const canvas = document.getElementById('particle-canvas');
     if (canvas) {
         const ctx = canvas.getContext('2d');
         let particles = [];
-        const initCanvas = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
-        window.addEventListener('resize', initCanvas);
-        initCanvas();
+        const init = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+        window.addEventListener('resize', init);
+        init();
 
-        class Particle {
+        class P {
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2;
-                this.speedY = Math.random() * 0.4;
-                this.opacity = Math.random() * 0.4;
+                this.s = Math.random() * 2;
+                this.v = Math.random() * 0.4;
+                this.o = Math.random() * 0.4;
             }
-            update() { this.y -= this.speedY; if (this.y < 0) this.y = canvas.height; }
-            draw() {
-                ctx.fillStyle = `rgba(197, 163, 93, ${this.opacity})`;
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+            u() { this.y -= this.v; if (this.y < 0) this.y = canvas.height; }
+            d() {
+                ctx.fillStyle = `rgba(197, 163, 93, ${this.o})`;
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.s, 0, Math.PI * 2); ctx.fill();
             }
         }
-        for (let i = 0; i < 60; i++) particles.push(new Particle());
-        const animate = () => {
+        for (let i = 0; i < 60; i++) particles.push(new P());
+        function anim() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animate);
-        };
-        animate();
+            particles.forEach(p => { p.u(); p.d(); });
+            requestAnimationFrame(anim);
+        }
+        anim();
     }
 </script>
 </body>
